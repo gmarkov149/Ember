@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.ember.ember.R;
 import com.ember.ember.helper.http.HttpHelper;
+import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -32,44 +33,45 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-//        Intent intent = new Intent(this, RegisterActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public void login(View v) {
-        String username = getEditText(R.id.username);
-        String password = getEditText(R.id.password);
-        if (username.isEmpty() || password.isEmpty()) {
-            raiseToast(Problem.EMPTY_FIELDS);
+        TextInputEditText username = findViewById(R.id.username);
+        String usernameStr = username.getText().toString();
+        TextInputEditText password = findViewById(R.id.password);
+        String passwordStr = password.getText().toString();
+        if (usernameStr.isEmpty()) {
+            ErrorHelper.setError(username, ErrorHelper.Problem.USERNAME_EMPTY);
             return;
         }
-        String hashedPassword = new String(Hex.encodeHex(DigestUtils.sha(password)));
+        if (passwordStr.isEmpty()) {
+            ErrorHelper.setError(password, ErrorHelper.Problem.PASSWORD_EMPTY);
+            return;
+        }
+        String hashedPassword = new String(Hex.encodeHex(DigestUtils.sha(passwordStr)));
         Toast.makeText(this, hashedPassword, Toast.LENGTH_SHORT).show();
 
         try {
-            Call<UserDetails> call = HttpHelper.login(username, hashedPassword);
+            Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
             Response<UserDetails> res = call.execute();
             if (!res.isSuccessful()) {
-                raiseToast(Problem.CALL_FAILED);
+                ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
             }
             else if (!res.body().isSuccess()) {
-                raiseToast(Problem.LOGIN_FAILED);
+                ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
             }
             else {
-//                Intent intent = new Intent(this, MainActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("user", res.body());
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-                // TODO: navigate to main page here
+                Intent intent = new Intent(this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", res.body());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         } catch (IOException e) {
-            raiseToast(Problem.CALL_FAILED);
+            ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
         }
-    }
-
-    private String getEditText(int id) {
-        return ((TextInputEditText) findViewById(id)).getText().toString();
     }
 
     private void setSubmitWhenDoneListener() {
@@ -82,25 +84,5 @@ public class LoginActivity extends AppCompatActivity {
             }
             return false;
         });
-    }
-
-    private enum Problem {
-        CALL_FAILED, LOGIN_FAILED, EMPTY_FIELDS
-    }
-
-    private void raiseToast(Problem problem) {
-        String problemAlert = "";
-        switch(problem) {
-            case CALL_FAILED:
-                problemAlert = "Login failed, are you connected to the Internet?";
-                break;
-            case EMPTY_FIELDS:
-                problemAlert = "Username and password cannot be empty!";
-                break;
-            case LOGIN_FAILED:
-                problemAlert = "Username/password is incorrect!";
-                break;
-        }
-        Toast.makeText(this, problemAlert, Toast.LENGTH_SHORT).show();
     }
 }

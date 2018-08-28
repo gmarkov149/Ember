@@ -7,7 +7,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public interface LoginInterface {
-    @POST("users/new")
-    Call<UserDetails> createUser(@Body Login login);
+public interface HttpInterface {
+    @POST("login")
+    Call<UserDetails> login(@Body Login login);
+
+    @POST("register")
+    Call<Void> register(@Body UserDetails userDetails);
 }
