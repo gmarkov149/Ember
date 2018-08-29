@@ -66,8 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
         setupValidationMap();
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(mViewPager);
-        tabs.getTabAt(0).setIcon(R.drawable.baseline_face_black_18dp);
-        tabs.getTabAt(1).setIcon(R.drawable.baseline_favorite_black_18dp);
+        tabs.getTabAt(0).setIcon(R.drawable.ic_baseline_face_24px);
+        tabs.getTabAt(1).setIcon(R.drawable.ic_baseline_favorite_24px);
     }
 
     private void setupValidationMap() {
@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             setPic();
         }
-        if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK) {
+        else if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK) {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 bitmap = BitmapFactory.decodeStream(inputStream);
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void submit(View v) {
-        if (validateEditTextEmpty()) return;
+        if (validateEditText() || checkPasswordsMatch()) return;
         if (mViewPager.getCurrentItem() == 0) {
             mViewPager.setCurrentItem(1);
             return;
@@ -177,23 +177,26 @@ public class RegisterActivity extends AppCompatActivity {
                 ((CheckBox) findViewById(R.id.men)).isChecked(),
                 ((CheckBox) findViewById(R.id.women)).isChecked()
             );
-            Call<Void> call = HttpHelper.register(userDetails);
-
-            Response<Void> res = call.execute();
-            if (!res.isSuccessful()) {
-                ErrorHelper.raiseToast(this, ErrorHelper.Problem.CALL_FAILED);
-            }
-            else {
-                Intent intent = new Intent(this, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", userDetails);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+            executeCall(userDetails);
         } catch (IOException e) {}
     }
 
-    private boolean validateEditTextEmpty() {
+    private void executeCall(UserDetails userDetails) throws IOException {
+        Call<Void> call = HttpHelper.register(userDetails);
+        Response<Void> res = call.execute();
+        if (!res.isSuccessful()) {
+            ErrorHelper.raiseToast(this, ErrorHelper.Problem.CALL_FAILED);
+        }
+        else {
+            Intent intent = new Intent(this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", userDetails);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
+
+    private boolean validateEditText() {
         boolean hasError = false;
         for (Map.Entry<Integer, ErrorHelper.Problem> entry : toValidate.entrySet()) {
             TextInputEditText input = findViewById(entry.getKey());
@@ -203,14 +206,18 @@ public class RegisterActivity extends AppCompatActivity {
                 hasError = true;
             }
         }
+        return hasError;
+    }
+
+    private boolean checkPasswordsMatch() {
         String password = getTextField(R.id.password);
         TextInputEditText repeatedPassword = findViewById(R.id.repeat_password);
         String repeatedPasswordStr = repeatedPassword.getText().toString();
         if (!password.equals(repeatedPasswordStr)) {
             ErrorHelper.setError(repeatedPassword, ErrorHelper.Problem.PASSWORDS_NO_MATCH);
-            hasError = true;
+            return true;
         }
-        return hasError;
+        return false;
     }
 
     private String getTextField(int id) {

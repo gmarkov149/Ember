@@ -109,6 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Select Date"
+            android:id="@+id/dob_button"
             android:backgroundTint="@color/colorAccent"
             android:onClick="showDatePickerDialog" />
 

@@ -1,11 +1,14 @@
 package com.ember.ember.fragment;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ember.ember.R;
+import com.google.android.material.button.MaterialButton;
 
 import androidx.fragment.app.Fragment;
 
@@ -37,9 +40,15 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        int selectedResource = getArguments().getInt(ARG_SECTION_NUMBER) == 1 ?
+        boolean isDetailsPage = getArguments().getInt(ARG_SECTION_NUMBER) == 1;
+        int selectedResource = isDetailsPage ?
                 R.layout.fragment_account_details : R.layout.fragment_more_about_you;
         View rootView = inflater.inflate(selectedResource, container, false);
+        if (isDetailsPage) {
+            MaterialButton dob = rootView.findViewById(R.id.dob_button);
+            dob.setIconResource(R.drawable.ic_baseline_date_range_24px);
+            dob.setIconTint(ColorStateList.valueOf(Color.WHITE));
+        }
         return rootView;
     }
 }

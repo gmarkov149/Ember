@@ -42,17 +42,21 @@ public class LoginActivity extends AppCompatActivity {
         String usernameStr = username.getText().toString();
         TextInputEditText password = findViewById(R.id.password);
         String passwordStr = password.getText().toString();
+        boolean hasError = false;
         if (usernameStr.isEmpty()) {
             ErrorHelper.setError(username, ErrorHelper.Problem.USERNAME_EMPTY);
-            return;
+            hasError = true;
         }
         if (passwordStr.isEmpty()) {
             ErrorHelper.setError(password, ErrorHelper.Problem.PASSWORD_EMPTY);
-            return;
+            hasError = true;
         }
+        if (hasError) return;
         String hashedPassword = new String(Hex.encodeHex(DigestUtils.sha(passwordStr)));
-        Toast.makeText(this, hashedPassword, Toast.LENGTH_SHORT).show();
+        loginCall(usernameStr, hashedPassword, password);
+    }
 
+    private void loginCall(String usernameStr, String hashedPassword, TextInputEditText password) {
         try {
             Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
             Response<UserDetails> res = call.execute();

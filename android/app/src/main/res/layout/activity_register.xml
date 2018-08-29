@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/baseline_check_white_18dp"
+        android:src="@drawable/ic_baseline_done_24px"
+        android:tint="@android:color/white"
         android:layout_margin="30dp"
         android:onClick="submit"/>
 
