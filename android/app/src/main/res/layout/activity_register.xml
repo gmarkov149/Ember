@@ -9,9 +9,10 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
         <com.google.android.material.tabs.TabLayout
             style="@style/Widget.MaterialComponents.TabLayout"
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top" />

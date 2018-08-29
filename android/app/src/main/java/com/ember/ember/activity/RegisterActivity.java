@@ -19,11 +19,14 @@ import com.ember.ember.fragment.DatePickerFragment;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.UserDetails;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,8 +43,10 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    String mCurrentPhotoPath;
+    private String mCurrentPhotoPath;
+    private boolean photoChanged;
     static final int REQUEST_TAKE_PHOTO = 1;
+    static final int REQUEST_PICK_PHOTO = 2;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -53,11 +58,16 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        photoChanged = false;
         setContentView(R.layout.activity_register);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setupValidationMap();
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(mViewPager);
+        tabs.getTabAt(0).setIcon(R.drawable.baseline_face_black_18dp);
+        tabs.getTabAt(1).setIcon(R.drawable.baseline_favorite_black_18dp);
     }
 
     private void setupValidationMap() {
@@ -86,10 +96,25 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    public void pickImage(View v) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_PICK_PHOTO);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             setPic();
+        }
+        if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK) {
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                bitmap = BitmapFactory.decodeStream(inputStream);
+                ImageView mImageView = findViewById(R.id.pic);
+                mImageView.setImageBitmap(bitmap);
+                photoChanged = true;
+            } catch (FileNotFoundException e) {}
         }
     }
 
@@ -126,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
         bmOptions.inPurgeable = true;
         bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         mImageView.setImageBitmap(bitmap);
+        photoChanged = true;
     }
 
     public void submit(View v) {
@@ -147,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
                 gender,
                 getTextField(R.id.address),
                 getTextField(R.id.languages),
-                bitmap == null ? null : convertBmpToByteArr(),
+                photoChanged ? convertBmpToByteArr() : null,
                 ((CheckBox) findViewById(R.id.men)).isChecked(),
                 ((CheckBox) findViewById(R.id.women)).isChecked()
             );
