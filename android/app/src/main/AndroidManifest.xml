@@ -16,8 +16,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name=".activity.LoginActivity"
             android:label="Ember">
@@ -33,6 +34,7 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:label="Register" />
+        <activity android:name=".activity.OtherProfileActivity" />
     </application>
 
 </manifest>

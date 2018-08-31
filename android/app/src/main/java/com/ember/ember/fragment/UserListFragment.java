@@ -1,10 +1,13 @@
 package com.ember.ember.fragment;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.UserRecyclerViewAdapter;
@@ -30,7 +33,7 @@ public class UserListFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_IS_MATCHED = "is-matched";
     // TODO: Customize parameters
-    private int mColumnCount = 2;
+    private int mColumnCount = 1;
     private boolean isMatched;
 
     private OnListFragmentInteractionListener mListener;
