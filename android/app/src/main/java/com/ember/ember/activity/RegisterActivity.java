@@ -106,16 +106,10 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            setPic();
+            setCameraPic();
         }
-        else if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK) {
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                bitmap = BitmapFactory.decodeStream(inputStream);
-                ImageView mImageView = findViewById(R.id.pic);
-                mImageView.setImageBitmap(bitmap);
-                photoChanged = true;
-            } catch (FileNotFoundException e) {}
+        else if (requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK && data.getData() != null) {
+            setGalleryPic(data.getData());
         }
     }
 
@@ -137,13 +131,25 @@ public class RegisterActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private void setPic() {
+    private void setCameraPic() {
         ImageView mImageView = findViewById(R.id.pic);
         int targetW = mImageView.getWidth();
         int targetH = mImageView.getHeight();
-        bitmap = BitmapHelper.scaleBmp(mCurrentPhotoPath, targetW, targetH);
+        bitmap = BitmapHelper.scaleBmpFromFile(mCurrentPhotoPath, targetW, targetH);
         mImageView.setImageBitmap(bitmap);
         photoChanged = true;
+    }
+
+    private void setGalleryPic(Uri data) {
+        try {
+            ImageView mImageView = findViewById(R.id.pic);
+            int targetW = mImageView.getWidth();
+            int targetH = mImageView.getHeight();
+            InputStream inputStream = getContentResolver().openInputStream(data);
+            bitmap = BitmapHelper.scaleBmpFromStream(inputStream, targetW, targetH);
+            mImageView.setImageBitmap(bitmap);
+            photoChanged = true;
+        } catch (FileNotFoundException e) {}
     }
 
     public void submit(View v) {

@@ -80,19 +80,19 @@ public class UserListFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
         //TODO: change to actual api call
-        List<UserDetails> list = new ArrayList<>();
+        List<UserDetails> users = new ArrayList<>();
         if (isMatched) {
 
         }
         else {
-            list.add(new UserDetails());
-            list.add(new UserDetails());
+            users.add(new UserDetails());
+            users.add(new UserDetails());
         }
-        if (isMatched && list.isEmpty()) {
+        if (isMatched && users.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             view.findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
         }
-        recyclerView.setAdapter(new UserRecyclerViewAdapter(list, mListener));
+        recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener));
 
         return view;
     }

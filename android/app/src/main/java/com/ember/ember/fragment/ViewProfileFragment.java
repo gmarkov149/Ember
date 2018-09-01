@@ -56,13 +56,6 @@ public class ViewProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userDetails = (UserDetails) getArguments().getSerializable(ARG_USER_DETAILS);
-            ImageView profilePic = getActivity().findViewById(R.id.profile_pic);
-            if (userDetails.getProfilePic() == null) {
-                profilePic.setImageResource(R.drawable.ic_baseline_account_circle_24px);
-            }
-            else {
-                profilePic.setImageBitmap(userDetails.getProfilePic());
-            }
         }
     }
 
@@ -70,7 +63,16 @@ public class ViewProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_profile, container, false);
+
+        ImageView profilePic = rootView.findViewById(R.id.profile_pic);
+        if (userDetails.getProfilePic() == null) {
+            profilePic.setImageResource(R.drawable.ic_baseline_account_circle_24px);
+        }
+        else {
+            profilePic.setImageBitmap(userDetails.getProfilePic());
+        }
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

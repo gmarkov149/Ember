@@ -53,9 +53,8 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
             return true;
         });
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         navigation.setSelectedItemId(R.id.navigation_match);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, UserListFragment.newInstance(1, false));
         transaction.commit();
     }
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void collapseCard() {
-        cardTransition(R.layout.fragment_user);
+        cardTransition(R.layout.fragment_user_list);
         expanded = false;
     }
 
@@ -84,13 +83,20 @@ public class MainActivity extends AppCompatActivity
         ViewGroup mSceneRoot = findViewById(R.id.scene_root);
         Scene targetScene = Scene.getSceneForLayout(mSceneRoot, targetLayout, this);
         Transition transition = new AutoTransition();
+        transition.addTarget(R.id.thumbnail);
+        transition.addTarget(R.id.name);
         TransitionManager.go(targetScene, transition);
     }
 
     @Override
     public void onBackPressed() {
-        if (expanded) {
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        int selected = navigation.getSelectedItemId();
+        if (expanded && selected != R.id.navigation_self) {
             collapseCard();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content, UserListFragment.newInstance(1, selected == R.id.navigation_matched));
+            transaction.commit();
             return;
         }
         super.onBackPressed();
