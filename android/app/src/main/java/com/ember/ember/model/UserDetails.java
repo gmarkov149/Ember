@@ -1,7 +1,10 @@
 package com.ember.ember.model;
 
+import android.graphics.Bitmap;
+
+import com.ember.ember.helper.BitmapHelper;
+
 import java.io.Serializable;
-import java.util.Date;
 
 public class UserDetails implements Serializable {
     private boolean success;
@@ -15,6 +18,7 @@ public class UserDetails implements Serializable {
     private String location;
     private String languages;
     private String profilePicBytes;
+    private Bitmap profilePic;
     private boolean interestedInMen;
     private boolean interestedInWomen;
 
@@ -35,6 +39,7 @@ public class UserDetails implements Serializable {
         this.profilePicBytes = profilePicBytes;
         this.interestedInMen = interestedInMen;
         this.interestedInWomen = interestedInWomen;
+        this.profilePic = null;
     }
 
     public boolean isSuccess() {
@@ -87,5 +92,14 @@ public class UserDetails implements Serializable {
 
     public boolean isInterestedInWomen() {
         return interestedInWomen;
+    }
+
+    public Bitmap getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic() {
+        if (profilePicBytes == null) return;
+        profilePic = BitmapHelper.convertStringToBmp(profilePicBytes);
     }
 }

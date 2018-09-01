@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import com.ember.ember.R;
 import com.ember.ember.adapter.SectionsPagerAdapter;
 import com.ember.ember.fragment.DatePickerFragment;
+import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.UserDetails;
@@ -140,16 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
         ImageView mImageView = findViewById(R.id.pic);
         int targetW = mImageView.getWidth();
         int targetH = mImageView.getHeight();
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-        bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        bitmap = BitmapHelper.scaleBmp(mCurrentPhotoPath, targetW, targetH);
         mImageView.setImageBitmap(bitmap);
         photoChanged = true;
     }
@@ -173,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
                 gender,
                 getTextField(R.id.address),
                 getTextField(R.id.languages),
-                photoChanged ? convertBmpToByteArr() : null,
+                photoChanged ? BitmapHelper.convertBmpToString(bitmap) : null,
                 ((CheckBox) findViewById(R.id.men)).isChecked(),
                 ((CheckBox) findViewById(R.id.women)).isChecked()
             );
@@ -182,18 +174,23 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void executeCall(UserDetails userDetails) throws IOException {
-        Call<Void> call = HttpHelper.register(userDetails);
-        Response<Void> res = call.execute();
-        if (!res.isSuccessful()) {
-            ErrorHelper.raiseToast(this, ErrorHelper.Problem.CALL_FAILED);
-        }
-        else {
-            Intent intent = new Intent(this, MainActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("user", userDetails);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
+//        Call<Void> call = HttpHelper.register(userDetails);
+//        Response<Void> res = call.execute();
+//        if (!res.isSuccessful()) {
+//            ErrorHelper.raiseToast(this, ErrorHelper.Problem.CALL_FAILED);
+//        }
+//        else {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("user", userDetails);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//        }
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", userDetails);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private boolean validateEditText() {
@@ -222,12 +219,5 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String getTextField(int id) {
         return ((TextInputEditText) findViewById(id)).getText().toString();
-    }
-
-    private String convertBmpToByteArr() throws UnsupportedEncodingException {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return new String(byteArray, "UTF-8");
     }
 }

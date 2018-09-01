@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ember.ember.R;
 import com.ember.ember.model.UserDetails;
@@ -55,6 +56,13 @@ public class ViewProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userDetails = (UserDetails) getArguments().getSerializable(ARG_USER_DETAILS);
+            ImageView profilePic = getActivity().findViewById(R.id.profile_pic);
+            if (userDetails.getProfilePic() == null) {
+                profilePic.setImageResource(R.drawable.ic_baseline_account_circle_24px);
+            }
+            else {
+                profilePic.setImageBitmap(userDetails.getProfilePic());
+            }
         }
     }
 

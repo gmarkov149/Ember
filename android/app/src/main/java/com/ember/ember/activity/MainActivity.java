@@ -1,11 +1,10 @@
 package com.ember.ember.activity;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ember.ember.R;
 import com.ember.ember.fragment.UserListFragment;
@@ -15,24 +14,31 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.transition.AutoTransition;
+import androidx.transition.Scene;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 public class MainActivity extends AppCompatActivity
         implements UserListFragment.OnListFragmentInteractionListener, ViewProfileFragment.OnFragmentInteractionListener {
+
+    private boolean expanded;
+    private UserDetails userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userDetails = (UserDetails) getIntent().getSerializableExtra("user");
+        userDetails.setProfilePic();
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener((@NonNull MenuItem item) -> {
             Fragment selectedFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_self:
-                    selectedFragment = ViewProfileFragment.newInstance(new UserDetails());
+                    selectedFragment = ViewProfileFragment.newInstance(userDetails);
                     break;
                 case R.id.navigation_match:
                     selectedFragment = UserListFragment.newInstance(1, false);
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.content, selectedFragment);
+            expanded = false;
             transaction.commit();
             return true;
         });
@@ -64,11 +71,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void expandCard(View v) {
-        Intent intent = new Intent(this, OtherProfileActivity.class);
-        View sourceView = (View) v.getParent().getParent();
-        Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
-                sourceView, 0, 0, sourceView.getWidth(), sourceView.getHeight()).toBundle();
+        cardTransition(R.layout.card_expanded);
+        expanded = true;
+    }
 
-        ActivityCompat.startActivity(this, intent, options);
+    public void collapseCard() {
+        cardTransition(R.layout.fragment_user);
+        expanded = false;
+    }
+
+    private void cardTransition(int targetLayout) {
+        ViewGroup mSceneRoot = findViewById(R.id.scene_root);
+        Scene targetScene = Scene.getSceneForLayout(mSceneRoot, targetLayout, this);
+        Transition transition = new AutoTransition();
+        TransitionManager.go(targetScene, transition);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (expanded) {
+            collapseCard();
+            return;
+        }
+        super.onBackPressed();
     }
 }

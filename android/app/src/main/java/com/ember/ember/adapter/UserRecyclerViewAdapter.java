@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ember.ember.R;
 import com.ember.ember.fragment.UserListFragment.OnListFragmentInteractionListener;
+import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.model.UserDetails;
 
 import java.util.List;
@@ -46,8 +47,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             holder.thumbnail.setImageResource(R.drawable.round_account_circle_black_48);
         }
         else {
-            byte[] thumbnailByteArr = profilePicBytes.getBytes();
-            holder.thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(thumbnailByteArr, 0, thumbnailByteArr.length));
+            holder.thumbnail.setImageBitmap(BitmapHelper.convertStringToBmp(profilePicBytes));
         }
         holder.name.setText(currentUser.getName());
 
