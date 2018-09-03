@@ -57,29 +57,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginCall(String usernameStr, String hashedPassword, TextInputEditText password) {
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        intent.putExtras(bundle);
-        startActivity(intent);
-//        try {
-//            Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
-//            Response<UserDetails> res = call.execute();
-//            if (!res.isSuccessful()) {
-//                ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
-//            }
-//            else if (!res.body().isSuccess()) {
-//                ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
-//            }
-//            else {
-//                Intent intent = new Intent(this, MainActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("user", res.body());
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        } catch (IOException e) {
-//            ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
-//        }
+        try {
+            Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
+            Response<UserDetails> res = call.execute();
+            if (!res.isSuccessful()) {
+                ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
+            }
+            else if (!res.body().isSuccess()) {
+                ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
+            }
+            else {
+                Intent intent = new Intent(this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", res.body());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        } catch (IOException e) {
+            ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
+        }
     }
 
     private void setSubmitWhenDoneListener() {
