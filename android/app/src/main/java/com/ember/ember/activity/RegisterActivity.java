@@ -145,11 +145,10 @@ public class RegisterActivity extends AppCompatActivity {
             ImageView mImageView = findViewById(R.id.pic);
             int targetW = mImageView.getWidth();
             int targetH = mImageView.getHeight();
-            InputStream inputStream = getContentResolver().openInputStream(data);
-            bitmap = BitmapHelper.scaleBmpFromStream(inputStream, targetW, targetH);
+            bitmap = BitmapHelper.scaleBmpFromStream(getContentResolver(), data, targetW, targetH);
             mImageView.setImageBitmap(bitmap);
             photoChanged = true;
-        } catch (FileNotFoundException e) {}
+        } catch (IOException e) {}
     }
 
     public void submit(View v) {

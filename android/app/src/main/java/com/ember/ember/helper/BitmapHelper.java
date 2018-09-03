@@ -1,15 +1,18 @@
 package com.ember.ember.helper;
 
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import android.net.Uri;
 
 public class BitmapHelper {
 
-    private static final int SCALE_FACTOR = 2;
+    private static int MAX_BITMAP_SIZE = 900000;
 
     public static String convertBmpToString(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -26,11 +29,14 @@ public class BitmapHelper {
         return BitmapFactory.decodeFile(photoPath, bmOptions);
     }
 
-    public static Bitmap scaleBmpFromStream(InputStream inputStream, int targetW, int targetH) {
+    public static Bitmap scaleBmpFromStream(ContentResolver contentResolver, Uri data, int targetW, int targetH) throws IOException {
+        InputStream inputStream = contentResolver.openInputStream(data);
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(inputStream, null, bmOptions);
+        inputStream.close();
         bmOptions = getBitmapOptions(bmOptions, targetW, targetH);
+        inputStream = contentResolver.openInputStream(data);
         return BitmapFactory.decodeStream(inputStream, null, bmOptions);
     }
 
@@ -38,8 +44,11 @@ public class BitmapHelper {
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
         int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        scaleFactor = scaleFactor > 0 ? scaleFactor : 1;
+        int size = photoH * photoW / scaleFactor / scaleFactor;
+        int scaling = (size + MAX_BITMAP_SIZE - 1) / MAX_BITMAP_SIZE + 1;
         bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor * SCALE_FACTOR;
+        bmOptions.inSampleSize = scaleFactor * scaling;
         bmOptions.inPurgeable = true;
         return bmOptions;
     }
