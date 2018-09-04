@@ -6,7 +6,10 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing">
 
         <ImageView
             android:layout_width="match_parent"
@@ -28,7 +31,8 @@
             android:textSize="10sp"
             android:text="Match"
             android:backgroundTint="@color/colorAccent"
-            android:onClick="match"/>
+            android:onClick="match"
+            android:layout_gravity="right"/>
 
     </LinearLayout>
 

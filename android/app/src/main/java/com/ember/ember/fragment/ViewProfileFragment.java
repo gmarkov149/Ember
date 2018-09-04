@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ember.ember.R;
 import com.ember.ember.model.UserDetails;
@@ -72,6 +73,7 @@ public class ViewProfileFragment extends Fragment {
         else {
             profilePic.setImageBitmap(userDetails.getProfilePic());
         }
+        ((TextView) rootView.findViewById(R.id.name)).setText(userDetails.getName());
         return rootView;
     }
 

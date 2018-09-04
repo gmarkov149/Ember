@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ember.ember.R;
 import com.ember.ember.fragment.UserListFragment;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void expandCard(View v) {
-        cardTransition(R.layout.card_expanded);
+        getUserDetailsCardTransition((LinearLayout) v.getParent(), R.layout.card_expanded);
         expanded = true;
     }
 
@@ -83,8 +86,18 @@ public class MainActivity extends AppCompatActivity
         ViewGroup mSceneRoot = findViewById(R.id.scene_root);
         Scene targetScene = Scene.getSceneForLayout(mSceneRoot, targetLayout, this);
         Transition transition = new AutoTransition();
-        transition.addTarget(R.id.thumbnail);
-        transition.addTarget(R.id.name);
+        TransitionManager.go(targetScene, transition);
+    }
+
+    private void getUserDetailsCardTransition(View sourceView, int targetLayout) {
+        ViewGroup mSceneRoot = findViewById(R.id.scene_root);
+        ImageView thumbnail = sourceView.findViewById(R.id.thumbnail);
+        TextView name = sourceView.findViewById(R.id.name);
+        ViewGroup targetView = (ViewGroup) getLayoutInflater().inflate(targetLayout, null);
+        ((ImageView) targetView.findViewById(R.id.thumbnail)).setImageDrawable(thumbnail.getDrawable());
+        ((TextView) targetView.findViewById(R.id.name)).setText(name.getText());
+        Scene targetScene = new Scene(mSceneRoot, targetView);
+        Transition transition = new AutoTransition();
         TransitionManager.go(targetScene, transition);
     }
 
