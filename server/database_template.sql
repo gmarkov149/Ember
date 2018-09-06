@@ -1,8 +1,4 @@
--- Class: CSE 3330
--- Semester: Spring 2018
--- Student Name: Delago, Daniel, dbd0927
--- Student ID: 1001060927
--- Assignment: project #1
+-- 
 
 -- Tables dropped in the order that they were created
 DROP TABLE IF EXISTS `Reservation`;
