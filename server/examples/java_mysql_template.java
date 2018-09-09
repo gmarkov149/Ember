@@ -8,9 +8,7 @@ public class Test {
     final static String user = "root";
     final static String password = "0596";
     final static String db = "db_class";
-    // final static String user = "dbd0927";
-    // final static String password = "Apple123";
-    // final static String db = "dbd0927";
+    // This is the location of the MySql server on the host machine
     final static String jdbc = "jdbc:mysql://localhost/"+db+"?user="+user+"&password="+password;
 
     public static void main(String[] args) {
@@ -162,9 +160,6 @@ public class Test2 {
     final static String user = "root";
     final static String password = "0596";
     final static String db = "db_class";
-    // final static String user = "dbd0927";
-    // final static String password = "Apple123";
-    // final static String db = "dbd0927";
     final static String jdbc = "jdbc:mysql://localhost/"+db+"?user="+user+"&password="+password;
 
     public static void main(String[] args) {

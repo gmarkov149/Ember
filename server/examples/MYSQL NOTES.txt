@@ -1,0 +1,14 @@
+MYSQL NOTES
+
+# Make sure Driver is in classpath
+export set CLASSPATH=.:~/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar:$CLASSPATH
+
+# Log into mysql on my machine
+-- mysql -u root -p
+-- {Password}
+-- SHOW databases;
+-- CREATE DATABASE testDB;
+-- USE database;
+-- SHOW tables;
+-- SOURCE *.sql;
+
