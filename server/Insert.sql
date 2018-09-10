@@ -1,7 +1,7 @@
 -- Daniel Delago
 
-LOCK TABLES `User` WRITE;
-INSERT INTO `User`
+LOCK TABLES `Users` WRITE;
+INSERT INTO `Users`
 VALUES
 	(1,'nahmed','Nuha Ahmed', 'nahmed@gmail.com', '10/26/1998', 'Female', 'Los Angeles', '1', '0'),
 	(9,'ddelago','Daniel Delago', 'ddelago@gmail.com', '05/07/1996', 'Male', 'Singapore', '0', '1'),

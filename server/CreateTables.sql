@@ -8,10 +8,10 @@ DROP TABLE IF EXISTS `Hobbies`;
 DROP TABLE IF EXISTS `Media`;
 DROP TABLE IF EXISTS `Languages`;
 DROP TABLE IF EXISTS `Login`;
-DROP TABLE IF EXISTS `User`;
+DROP TABLE IF EXISTS `Users`;
 
 -- Tables that do not reference other tables: 
-CREATE TABLE `User` (
+CREATE TABLE `Users` (
 	`ID` 		int NOT NULL,
 	`Username` 	varchar(50) NOT NULL,
 	`Name` 		varchar(50) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `Login` (
 	`Password` 	varchar(50) NOT NULL,
 	`UserID` 	int NOT NULL,
 	PRIMARY KEY (`Username`, `Password`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 );
 
 CREATE TABLE `Languages` (
@@ -40,7 +40,7 @@ CREATE TABLE `Languages` (
 	`Mandarin` 	char(1) NOT NULL DEFAULT '0',
 	`Tamil` 	char(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`UserID`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 );
 
 CREATE TABLE `Media` (
@@ -48,7 +48,7 @@ CREATE TABLE `Media` (
 	`ProfilePicBytes` 	int NOT NULL,
 	`ProfilePicPath` 	varchar(255) NOT NULL,
 	PRIMARY KEY (`UserID`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 );
 
 -- Alter when new hobbies added (Add tanking to hobbies)
@@ -66,7 +66,7 @@ CREATE TABLE `Hobbies` (
 	`Hiking` 	char(1) NOT NULL DEFAULT '0',
 	`Animals` 	char(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`UserID`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 );
 
 -- New entry for each new match/Suggestion/Like
@@ -75,22 +75,22 @@ CREATE TABLE `Matches` (
 	`MatchID` 	int NOT NULL,
 	`ChatPath`	varchar(255) NOT NULL,
 	PRIMARY KEY (`UserID`, `MatchID`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`),
-	FOREIGN KEY (`MatchID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),
+	FOREIGN KEY (`MatchID`) REFERENCES Users(`ID`)
 );
 
 CREATE TABLE `SuggestedPartners` (
 	`UserID` 	int NOT NULL,
 	`PartnerID` int NOT NULL,
 	PRIMARY KEY (`UserID`, `PartnerID`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`),
-	FOREIGN KEY (`PartnerID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),
+	FOREIGN KEY (`PartnerID`) REFERENCES Users(`ID`)
 );
 
 CREATE TABLE `LikedUsers` (
 	`UserID` 	int NOT NULL,
 	`LikesID` 	int NOT NULL,
 	PRIMARY KEY (`UserID`, `LikesID`),
-	FOREIGN KEY (`UserID`) REFERENCES User(`ID`),
-	FOREIGN KEY (`LikesID`) REFERENCES User(`ID`)
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),
+	FOREIGN KEY (`LikesID`) REFERENCES Users(`ID`)
 );
