@@ -12,6 +12,14 @@ import android.widget.TextView;
 import com.ember.ember.R;
 import com.ember.ember.model.UserDetails;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import androidx.fragment.app.Fragment;
 
 /**
@@ -73,8 +81,24 @@ public class ViewProfileFragment extends Fragment {
         else {
             profilePic.setImageBitmap(userDetails.getProfilePic());
         }
-        ((TextView) rootView.findViewById(R.id.name)).setText(userDetails.getName());
+        try {
+            Date today = new Date();
+            Date dob = new SimpleDateFormat("yyyy/MM/dd").parse(userDetails.getDob());
+            long age = TimeUnit.DAYS.convert(today.getTime() - dob.getTime(), TimeUnit.MILLISECONDS) / 365;
+            ((TextView) rootView.findViewById(R.id.name_and_age)).setText(userDetails.getName() + ", " + age);
+        } catch (ParseException e) {}
+        setTextIfFilled(rootView, R.id.languages, userDetails.getLanguages(), "Speaks: ");
+        setTextIfFilled(rootView, R.id.hobbies, userDetails.getHobbies(), "Enjoys: ");
+        setTextIfFilled(rootView, R.id.address, userDetails.getLocation(), "Lives at: ");
         return rootView;
+    }
+
+    private void setTextIfFilled(View v, int id, String field, String prefix) {
+        if (field != null && !field.isEmpty()) {
+            TextView textView = v.findViewById(id);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(prefix + field);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

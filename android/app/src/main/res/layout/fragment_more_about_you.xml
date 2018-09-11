@@ -47,7 +47,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Languages"
+            android:hint="English, Tamil, Malay..."
             android:id="@+id/languages"
             android:inputType="text"/>
 
@@ -61,7 +61,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hobbies"
+            android:hint="Reading, cooking, sleeping..."
             android:id="@+id/hobbies"
             android:inputType="text"/>
 

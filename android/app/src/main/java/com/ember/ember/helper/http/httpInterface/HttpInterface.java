@@ -11,6 +11,6 @@ public interface HttpInterface {
     @POST("login")
     Call<UserDetails> login(@Body Login login);
 
-    @POST("register")
+    @POST("users")
     Call<Void> register(@Body UserDetails userDetails);
 }
