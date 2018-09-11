@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ember.ember.R;
+import com.ember.ember.helper.FieldFillHelper;
 import com.ember.ember.model.UserDetails;
 
 import java.text.DateFormat;
@@ -74,31 +75,9 @@ public class ViewProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_view_profile, container, false);
 
-        ImageView profilePic = rootView.findViewById(R.id.profile_pic);
-        if (userDetails.getProfilePic() == null) {
-            profilePic.setImageResource(R.drawable.ic_baseline_account_circle_24px);
-        }
-        else {
-            profilePic.setImageBitmap(userDetails.getProfilePic());
-        }
-        try {
-            Date today = new Date();
-            Date dob = new SimpleDateFormat("yyyy/MM/dd").parse(userDetails.getDob());
-            long age = TimeUnit.DAYS.convert(today.getTime() - dob.getTime(), TimeUnit.MILLISECONDS) / 365;
-            ((TextView) rootView.findViewById(R.id.name_and_age)).setText(userDetails.getName() + ", " + age);
-        } catch (ParseException e) {}
-        setTextIfFilled(rootView, R.id.languages, userDetails.getLanguages(), "Speaks: ");
-        setTextIfFilled(rootView, R.id.hobbies, userDetails.getHobbies(), "Enjoys: ");
-        setTextIfFilled(rootView, R.id.address, userDetails.getLocation(), "Lives at: ");
+        FieldFillHelper.fillFields(userDetails, rootView.findViewById(R.id.profile_pic), rootView.findViewById(R.id.name_and_age), rootView.findViewById(R.id.languages),
+                rootView.findViewById(R.id.hobbies), rootView.findViewById(R.id.address));
         return rootView;
-    }
-
-    private void setTextIfFilled(View v, int id, String field, String prefix) {
-        if (field != null && !field.isEmpty()) {
-            TextView textView = v.findViewById(id);
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(prefix + field);
-        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

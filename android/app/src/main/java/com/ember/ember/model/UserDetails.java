@@ -24,6 +24,7 @@ public class UserDetails implements Serializable {
 
     public UserDetails() {
         this.name = "test";
+        this.dob = "1990/01/01";
     }
 
     public UserDetails(String username, String name, String password, String email, String dob, String hobbies, String gender, String location, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {

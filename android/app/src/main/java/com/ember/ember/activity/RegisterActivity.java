@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.SectionsPagerAdapter;
@@ -19,6 +20,7 @@ import com.ember.ember.fragment.DatePickerFragment;
 import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
+import com.ember.ember.model.Hobbies;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean photoChanged;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_PICK_PHOTO = 2;
+    ArrayList<Hobbies> hobbiesList;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -69,6 +73,24 @@ public class RegisterActivity extends AppCompatActivity {
         tabs.setupWithViewPager(mViewPager);
         tabs.getTabAt(0).setIcon(R.drawable.ic_baseline_face_24px);
         tabs.getTabAt(1).setIcon(R.drawable.ic_baseline_favorite_24px);
+
+        final String[] selectHobbies = {
+                "Hobbies", "Fitness", "Music", "Dancing", "Reading",
+                "Walking", "Traveling", "Eating", "Crafts", "Fishing",
+                "Hiking", "Animals"};
+
+        hobbiesList = new ArrayList<>();
+
+        for (int i = 0; i < selectHobbies.length; i++) {
+            Hobbies hobbies = new Hobbies();
+            hobbies.setHobby(selectHobbies[i]);
+            hobbies.setSelected(false);
+            hobbiesList.add(hobbies);
+        }
+    }
+
+    public ArrayList<Hobbies> getHobbiesList() {
+        return hobbiesList;
     }
 
     private void setupValidationMap() {
@@ -157,6 +179,13 @@ public class RegisterActivity extends AppCompatActivity {
             mViewPager.setCurrentItem(1);
             return;
         }
+        StringBuilder hobbiesString = new StringBuilder();
+        for (Hobbies hobby : hobbiesList) {
+            if (hobby.isSelected()) {
+                hobbiesString.append(hobby.getHobby() + ", ");
+            }
+        }
+        if (hobbiesString.length() > 0) hobbiesString.setLength(hobbiesString.length() - 2);
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
         try {
@@ -166,7 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
                 getTextField(R.id.password),
                 getTextField(R.id.email),
                 getTextField(R.id.dob),
-                getTextField(R.id.hobbies),
+                hobbiesString.toString(),
                 gender,
                 getTextField(R.id.address),
                 getTextField(R.id.languages),

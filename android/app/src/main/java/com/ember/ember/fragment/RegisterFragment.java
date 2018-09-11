@@ -6,9 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import com.ember.ember.R;
+import com.ember.ember.activity.RegisterActivity;
+import com.ember.ember.adapter.HobbiesAdapter;
+import com.ember.ember.model.Hobbies;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
 
@@ -48,6 +54,11 @@ public class RegisterFragment extends Fragment {
             MaterialButton dob = rootView.findViewById(R.id.dob_button);
             dob.setIconResource(R.drawable.ic_baseline_date_range_24px);
             dob.setIconTint(ColorStateList.valueOf(Color.WHITE));
+        }
+        else {
+            Spinner spinner = rootView.findViewById(R.id.hobbies);
+            HobbiesAdapter hobbiesAdapter = new HobbiesAdapter(getActivity(), 0, ((RegisterActivity) getActivity()).getHobbiesList());
+            spinner.setAdapter(hobbiesAdapter);
         }
         return rootView;
     }

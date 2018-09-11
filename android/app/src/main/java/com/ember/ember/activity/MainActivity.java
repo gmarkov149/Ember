@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ember.ember.R;
 import com.ember.ember.fragment.UserListFragment;
 import com.ember.ember.fragment.ViewProfileFragment;
+import com.ember.ember.helper.FieldFillHelper;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -64,17 +65,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(UserDetails item) {
-
+        getUserDetailsCardTransition(item, R.layout.card_expanded);
+        expanded = true;
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
-
-    public void expandCard(View v) {
-        getUserDetailsCardTransition((LinearLayout) v.getParent(), R.layout.card_expanded);
-        expanded = true;
     }
 
     public void collapseCard() {
@@ -89,13 +86,11 @@ public class MainActivity extends AppCompatActivity
         TransitionManager.go(targetScene, transition);
     }
 
-    private void getUserDetailsCardTransition(View sourceView, int targetLayout) {
+    private void getUserDetailsCardTransition(UserDetails userDetails, int targetLayout) {
         ViewGroup mSceneRoot = findViewById(R.id.scene_root);
-        ImageView thumbnail = sourceView.findViewById(R.id.thumbnail);
-        TextView name = sourceView.findViewById(R.id.name);
         ViewGroup targetView = (ViewGroup) getLayoutInflater().inflate(targetLayout, null);
-        ((ImageView) targetView.findViewById(R.id.thumbnail)).setImageDrawable(thumbnail.getDrawable());
-        ((TextView) targetView.findViewById(R.id.name)).setText(name.getText());
+        FieldFillHelper.fillFields(userDetails, targetView.findViewById(R.id.thumbnail), targetView.findViewById(R.id.name),
+                targetView.findViewById(R.id.languages), targetView.findViewById(R.id.hobbies), targetView.findViewById(R.id.address));
         Scene targetScene = new Scene(mSceneRoot, targetView);
         Transition transition = new AutoTransition();
         TransitionManager.go(targetScene, transition);

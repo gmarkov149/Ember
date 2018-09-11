@@ -9,28 +9,48 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/mtrl_card_spacing"
         android:layout_marginTop="@dimen/mtrl_card_spacing"
-        android:layout_marginRight="@dimen/mtrl_card_spacing">
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:gravity="center_horizontal">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             android:id="@+id/thumbnail"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="50sp"
+            android:textColor="@color/colorName"
             android:id="@+id/name"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/viewDetails"
-            style="@style/Widget.MaterialComponents.Button"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:visibility="gone"
+            android:id="@+id/languages"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:visibility="gone"
+            android:id="@+id/hobbies"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:visibility="gone"
+            android:id="@+id/address"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:textSize="10sp"
-            android:text="Match"
-            android:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ember"
+            android:tint="@android:color/white"
+            android:layout_margin="10dp"
             android:onClick="match"
             android:layout_gravity="right"/>
 

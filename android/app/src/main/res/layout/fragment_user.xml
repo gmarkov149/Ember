@@ -18,8 +18,11 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/thumbnail"
-            android:onClick="expandCard"/>
+            android:id="@+id/thumbnail"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,32 +30,20 @@
             android:textSize="30sp"
             android:id="@+id/name"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/viewDetails"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:textSize="10sp"
-                android:text="View"
-                android:backgroundTint="@color/colorAccent"
-                android:onClick="view"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/match"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="Match"
-                android:backgroundTint="@color/colorAccent"
-                android:onClick="match"/>
+            android:src="@drawable/ember"
+            android:tint="@android:color/white"
+            android:layout_margin="10dp"
+            android:onClick="match"/>
 
         </LinearLayout>
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

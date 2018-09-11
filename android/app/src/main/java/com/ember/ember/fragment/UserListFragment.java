@@ -1,13 +1,10 @@
 package com.ember.ember.fragment;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.UserRecyclerViewAdapter;

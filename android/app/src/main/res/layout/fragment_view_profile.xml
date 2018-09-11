@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="50sp"
-        android:textColor="#0e84f9"
+        android:textColor="@color/colorName"
         android:id="@+id/name_and_age"
         android:textAlignment="center"/>
 
