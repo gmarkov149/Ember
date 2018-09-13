@@ -1,37 +1,52 @@
+import java.util.ArrayList;
 
 public class User 
 {
-	private String id;
 	private String username;
 	private String password;
 	private String email;
-	private String fName;
-	private String lName;
+	private String name;
+	private String dob;
+	private ArrayList<Boolean> hobbies;
 	private String gender;
+	private String location;
+	private String languages;
+	private String profilePicBytes;
 	private boolean interestedInMen;
 	private boolean interestedInWomen;
-	private boolean interestedInNeither;
 	
+	
+	public User()
+	{
+		hobbies = new ArrayList<>();
+	}
 	
 
-	public User(String id, String username, String password, String email, String fName, String gender) {
+	public User(String username, String password, String email, String name, String dob, String gender) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.fName = fName;
+		this.name = name;
+		this.dob = dob;
 		this.gender = gender;
 		
-		
 	}
 
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
+	public User(String username, String password, String email, String name, String dob, ArrayList<Boolean> hobbies,
+			String gender, String location, String languages, String profilePicBytes) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.dob = dob;
+		this.hobbies = hobbies;
+		this.gender = gender;
+		this.location = location;
+		this.languages = languages;
+		this.profilePicBytes = profilePicBytes;
 	}
 
 	public String getUsername() {
@@ -58,21 +73,15 @@ public class User
 		this.email = email;
 	}
 
-	public String getfName() {
-		return fName;
+	public String getName() {
+		return name;
 	}
 
-	public void setfName(String fName) {
-		this.fName = fName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getlName() {
-		return lName;
-	}
-
-	public void setlName(String lName) {
-		this.lName = lName;
-	}
+	
 
 	public String getGender() {
 		return gender;
@@ -98,19 +107,18 @@ public class User
 		this.interestedInWomen = interestedInWomen;
 	}
 
-	public boolean isInterestedInNeither() {
-		return interestedInNeither;
-	}
-
-	public void setInterestedInNeither(boolean interestedInNeither) {
-		this.interestedInNeither = interestedInNeither;
-	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password.hashCode() + ", email=" + email + ", fName="
-				+ fName + ", gender=" + gender + "Women?" + " " + interestedInWomen +  "]";
+		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name
+				+ ", dob=" + dob + ", hobbies=" + hobbies + ", gender=" + gender + ", location=" + location
+				+ ", languages=" + languages + ", profilePicBytes=" + profilePicBytes + ", interestedInMen="
+				+ interestedInMen + ", interestedInWomen=" + interestedInWomen + "]";
 	}
+
+	
+
+	
 	
 	
 

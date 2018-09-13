@@ -12,7 +12,6 @@ public class App
         post("/users", (request, response) -> {
 			response.type("application/json");
 		    User user = new Gson().fromJson(request.body(), User.class);
-		    user.getGender();
 		    system.addUser(user);
 		 
 		    return new Gson()
@@ -28,5 +27,12 @@ public class App
      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
      	        .toJsonTree(system.getSystem())));
          });
+        options("/users/:username/:password", (request, response) -> {
+        	response.type("application/json");
+            return new Gson().toJson(
+              new StandardResponse(StatusResponse.SUCCESS, 
+                (system.userExists(
+                  request.params(":username"), request.params(":password"))) ? "User exists" : "User does not exists" ));
+          });
     }
 }
