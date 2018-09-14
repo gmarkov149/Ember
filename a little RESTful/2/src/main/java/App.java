@@ -27,6 +27,15 @@ public class App
      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
      	        .toJsonTree(system.getSystem())));
          });
+        //get  matched for username
+        get("/users/matched/:username/:password", (request, response) -> {
+      	   response.type("application/json");
+      	   User currentUser = system.findUser(request.params(":username"), request.params(":password"));
+      	   system.initCurrentMatched(currentUser);
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+      	        .toJsonTree(currentUser.getMatched())));
+          });
         options("/users/:username/:password", (request, response) -> {
         	response.type("application/json");
             return new Gson().toJson(

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class User 
 {
@@ -7,20 +8,23 @@ public class User
 	private String email;
 	private String name;
 	private String dob;
-	private ArrayList<Boolean> hobbies;
+	private String hobbies;
 	private String gender;
 	private String location;
 	private String languages;
 	private String profilePicBytes;
 	private boolean interestedInMen;
 	private boolean interestedInWomen;
-	
+	private ArrayList<User> matched;
 	
 	public User()
 	{
-		hobbies = new ArrayList<>();
+		matched = new ArrayList<>();
 	}
 	
+
+	
+
 
 	public User(String username, String password, String email, String name, String dob, String gender) {
 		super();
@@ -42,7 +46,7 @@ public class User
 		this.email = email;
 		this.name = name;
 		this.dob = dob;
-		this.hobbies = hobbies;
+		//this.hobbies = hobbies;
 		this.gender = gender;
 		this.location = location;
 		this.languages = languages;
@@ -72,6 +76,66 @@ public class User
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getDob() {
+		return dob;
+	}
+
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+
+	//public ArrayList<Boolean> getHobbies() {
+	//	return hobbies;
+	//}
+
+
+	/*public void setHobbies(String hobbies) {
+		Scanner in = new Scanner(hobbies);
+		switch(in.nextByte())
+		{
+		case 't': this.hobbies.add(true);
+				  break;
+				  
+		case 'f': this.hobbies.add(false);
+				  break;
+		
+		}
+		
+	}
+*/
+
+	public String getLocation() {
+		return location;
+	}
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
+	public String getLanguages() {
+		return languages;
+	}
+
+
+	public void setLanguages(String languages) {
+		this.languages = languages;
+	}
+
+
+	public String getProfilePicBytes() {
+		return profilePicBytes;
+	}
+
+
+	public void setProfilePicBytes(String profilePicBytes) {
+		this.profilePicBytes = profilePicBytes;
+	}
+
 
 	public String getName() {
 		return name;
@@ -107,6 +171,9 @@ public class User
 		this.interestedInWomen = interestedInWomen;
 	}
 
+	public ArrayList<User> getMatched() {
+		return matched;
+	}
 
 	@Override
 	public String toString() {

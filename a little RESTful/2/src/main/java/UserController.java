@@ -27,5 +27,24 @@ public class UserController
 		}
 		return false;
 	}
+	public User findUser(String username, String password)
+	{
+		for(User user: system)
+		{
+			if(user.getUsername().equals(username) && user.getPassword().equals(password))
+			{
+				return user;
+			}
+		}
+		return null;
+	}
+	public void initCurrentMatched(User user)
+	{
+		if(system.get(1) != null)
+		{
+			user.getMatched().add(system.get(1));
+		}
+		
+	}
 
 }
