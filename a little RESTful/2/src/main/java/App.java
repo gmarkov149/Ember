@@ -36,6 +36,16 @@ public class App
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(currentUser.getMatched())));
           });
+        post("/users/matched", (request, response) -> {
+			response.type("application/json");
+		    User toReturnMatches = new Gson().fromJson(request.body(), User.class);
+		    User currentUser = system.findUser(toReturnMatches.getUsername(), toReturnMatches.getPassword());
+		 
+		    system.initCurrentMatched(currentUser);
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+      	        .toJsonTree(currentUser.getMatched())));
+        });
         options("/users/:username/:password", (request, response) -> {
         	response.type("application/json");
             return new Gson().toJson(
@@ -43,5 +53,17 @@ public class App
                 (system.userExists(
                   request.params(":username"), request.params(":password"))) ? "User exists" : "User does not exists" ));
           });
+        post("/users/exists", (request, response) -> {
+			response.type("application/json");
+		    User temp = new Gson().fromJson(request.body(), User.class);
+		    
+		 
+		    
+		    return new Gson().toJson(
+		              new StandardResponse(StatusResponse.SUCCESS, 
+		                (system.userExists(
+		                  temp.getUsername(), temp.getPassword())) ? "User exists" : "User does not exists" ));
+        });
+        
     }
 }
