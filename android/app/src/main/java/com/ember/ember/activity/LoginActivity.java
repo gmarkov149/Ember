@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
@@ -57,25 +58,40 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginCall(String usernameStr, String hashedPassword, TextInputEditText password) {
-        try {
-            Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
-            Response<UserDetails> res = call.execute();
-            if (!res.isSuccessful()) {
+        Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
+        call.enqueue(new Callback<UserDetails>() {
+            @Override
+            public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", response.body());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDetails> call, Throwable t) {
                 ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
             }
-            else if (!res.body().isSuccess()) {
-                ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
-            }
-            else {
-                Intent intent = new Intent(this, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", res.body());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        } catch (IOException e) {
-            ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
-        }
+        });
+//            Response<UserDetails> res = call.execute();
+//            if (!res.isSuccessful()) {
+//                ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
+//            }
+//            else if (!res.body().isSuccess()) {
+//                ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
+//            }
+//            else {
+//                Intent intent = new Intent(this, MainActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("user", res.body());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
     }
 
     private void setSubmitWhenDoneListener() {

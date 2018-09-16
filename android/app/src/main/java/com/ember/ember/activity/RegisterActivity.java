@@ -42,6 +42,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -188,43 +189,49 @@ public class RegisterActivity extends AppCompatActivity {
         if (hobbiesString.length() > 0) hobbiesString.setLength(hobbiesString.length() - 2);
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
-        try {
-            UserDetails userDetails = new UserDetails(
-                getTextField(R.id.username),
-                getTextField(R.id.name),
-                getTextField(R.id.password),
-                getTextField(R.id.email),
-                getTextField(R.id.dob),
-                hobbiesString.toString(),
-                gender,
-                getTextField(R.id.address),
-                getTextField(R.id.languages),
-                photoChanged ? BitmapHelper.convertBmpToString(bitmap) : null,
-                ((CheckBox) findViewById(R.id.men)).isChecked(),
-                ((CheckBox) findViewById(R.id.women)).isChecked()
-            );
-            executeCall(userDetails);
-        } catch (IOException e) {}
+        UserDetails userDetails = new UserDetails(
+            getTextField(R.id.username),
+            getTextField(R.id.name),
+            getTextField(R.id.password),
+            getTextField(R.id.email),
+            getTextField(R.id.dob),
+            hobbiesString.toString(),
+            gender,
+            getTextField(R.id.address),
+            getTextField(R.id.languages),
+            photoChanged ? BitmapHelper.convertBmpToString(bitmap) : null,
+            ((CheckBox) findViewById(R.id.men)).isChecked(),
+            ((CheckBox) findViewById(R.id.women)).isChecked()
+        );
+        executeCall(userDetails);
     }
 
-    private void executeCall(UserDetails userDetails) throws IOException {
-//        Call<Void> call = HttpHelper.register(userDetails);
-//        Response<Void> res = call.execute();
-//        if (!res.isSuccessful()) {
-//            ErrorHelper.raiseToast(this, ErrorHelper.Problem.CALL_FAILED);
-//        }
-//        else {
-//            Intent intent = new Intent(this, MainActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("user", userDetails);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//        }
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("user", userDetails);
-        intent.putExtras(bundle);
-        startActivity(intent);
+    private void executeCall(UserDetails userDetails) {
+        Call<Void> call = HttpHelper.register(userDetails);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", userDetails);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    ErrorHelper.raiseToast(RegisterActivity.this, ErrorHelper.Problem.CALL_FAILED);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                    ErrorHelper.raiseToast(RegisterActivity.this, ErrorHelper.Problem.CALL_FAILED);
+            }
+        });
+//        Intent intent = new Intent(this, MainActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("user", userDetails);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
     }
 
     private boolean validateEditText() {
