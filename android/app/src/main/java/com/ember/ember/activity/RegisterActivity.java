@@ -25,6 +25,9 @@ import com.ember.ember.model.UserDetails;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -189,10 +192,11 @@ public class RegisterActivity extends AppCompatActivity {
         if (hobbiesString.length() > 0) hobbiesString.setLength(hobbiesString.length() - 2);
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
+        String hashedPassword = new String(Hex.encodeHex(DigestUtils.sha(getTextField(R.id.password))));
         UserDetails userDetails = new UserDetails(
             getTextField(R.id.username),
             getTextField(R.id.name),
-            getTextField(R.id.password),
+            hashedPassword,
             getTextField(R.id.email),
             getTextField(R.id.dob),
             hobbiesString.toString(),
@@ -217,6 +221,7 @@ public class RegisterActivity extends AppCompatActivity {
                     bundle.putSerializable("user", userDetails);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 } else {
                     ErrorHelper.raiseToast(RegisterActivity.this, ErrorHelper.Problem.CALL_FAILED);
                 }

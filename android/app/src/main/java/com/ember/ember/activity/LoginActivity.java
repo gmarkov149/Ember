@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.ember.ember.R;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.model.LoginResponse;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -58,14 +59,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginCall(String usernameStr, String hashedPassword, TextInputEditText password) {
-        Call<UserDetails> call = HttpHelper.login(usernameStr, hashedPassword);
-        call.enqueue(new Callback<UserDetails>() {
+        Call<LoginResponse> call = HttpHelper.login(usernameStr, hashedPassword);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<UserDetails> call, Response<UserDetails> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("user", response.body());
+                    bundle.putSerializable("user", response.body().getData());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else {
@@ -74,24 +75,10 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserDetails> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
             }
         });
-//            Response<UserDetails> res = call.execute();
-//            if (!res.isSuccessful()) {
-//                ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
-//            }
-//            else if (!res.body().isSuccess()) {
-//                ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
-//            }
-//            else {
-//                Intent intent = new Intent(this, MainActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("user", res.body());
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
     }
 
     private void setSubmitWhenDoneListener() {

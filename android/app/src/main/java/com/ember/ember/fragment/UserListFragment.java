@@ -7,16 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ember.ember.R;
+import com.ember.ember.activity.MainActivity;
 import com.ember.ember.adapter.UserRecyclerViewAdapter;
+import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.UserDetails;
+import com.ember.ember.model.UserDetailsList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -32,6 +38,7 @@ public class UserListFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private boolean isMatched;
+    private Context context;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -76,20 +83,30 @@ public class UserListFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        //TODO: change to actual api call
-        List<UserDetails> users = new ArrayList<>();
-        if (isMatched) {
 
-        }
-        else {
-            users.add(new UserDetails());
-            users.add(new UserDetails());
-        }
-        if (isMatched && users.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            view.findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
-        }
-        recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener));
+        UserDetails userDetails = ((MainActivity) getActivity()).getUserDetails();
+
+        Call<UserDetailsList> call = HttpHelper.getMatches(userDetails.getUsername(), userDetails.getPassword());
+        call.enqueue(new Callback<UserDetailsList>() {
+            @Override
+            public void onResponse(Call<UserDetailsList> call, Response<UserDetailsList> response) {
+                if (response.isSuccessful()) {
+                    List<UserDetails> users = response.body().getData();
+                    if (isMatched && users.isEmpty()) {
+                        recyclerView.setVisibility(View.GONE);
+                        view.findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
+                    }
+                    recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener));
+                } else {
+                    ErrorHelper.raiseToast(context, ErrorHelper.Problem.CALL_FAILED);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDetailsList> call, Throwable t) {
+                ErrorHelper.raiseToast(context, ErrorHelper.Problem.CALL_FAILED);
+            }
+        });
 
         return view;
     }
@@ -98,6 +115,7 @@ public class UserListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {

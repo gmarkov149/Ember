@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity
     private boolean expanded;
     private UserDetails userDetails;
 
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

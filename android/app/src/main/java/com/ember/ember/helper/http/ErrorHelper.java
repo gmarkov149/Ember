@@ -1,6 +1,7 @@
 package com.ember.ember.helper.http;
 
 import android.app.Activity;
+import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ public class ErrorHelper {
         text.setError(problemAlert);
     }
 
-    public static void raiseToast(Activity context, Problem problem) {
+    public static void raiseToast(Context context, Problem problem) {
         String problemAlert = getStatement(problem);
         Toast.makeText(context, problemAlert, Toast.LENGTH_SHORT).show();
     }

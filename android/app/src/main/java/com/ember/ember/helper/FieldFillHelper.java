@@ -22,10 +22,15 @@ public class FieldFillHelper {
             thumbnail.setImageBitmap(userDetails.getProfilePic());
         }
         try {
-            Date today = new Date();
-            Date dob = new SimpleDateFormat("yyyy/MM/dd").parse(userDetails.getDob());
-            long age = TimeUnit.DAYS.convert(today.getTime() - dob.getTime(), TimeUnit.MILLISECONDS) / 365;
-            nameField.setText(userDetails.getName() + ", " + age);
+            if (userDetails.getDob() != null) {
+                Date today = new Date();
+                Date dob = new SimpleDateFormat("yyyy/MM/dd").parse(userDetails.getDob());
+                long age = TimeUnit.DAYS.convert(today.getTime() - dob.getTime(), TimeUnit.MILLISECONDS) / 365;
+                nameField.setText(userDetails.getName() + ", " + age);
+            }
+            else {
+                nameField.setText(userDetails.getName());
+            }
         } catch (ParseException e) {}
         setTextIfFilled(langField, userDetails.getLanguages(), "Speaks: ");
         setTextIfFilled(hobbiesField, userDetails.getHobbies(), "Enjoys: ");
