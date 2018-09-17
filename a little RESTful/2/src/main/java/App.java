@@ -58,11 +58,21 @@ public class App
 		    User temp = new Gson().fromJson(request.body(), User.class);
 		    
 		 
+		    if(system.userExists(
+	                  temp.getUsername(), temp.getPassword()))
+		    {
+		    	return new Gson().toJson(
+		        	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+		        	        .toJsonTree(temp)));
+		    }
+		    else
+		    {
+		    	return new Gson().toJson(
+		                new StandardResponse(StatusResponse.SUCCESS, 
+		                  "User does not exist"));
+		            
+		    }
 		    
-		    return new Gson().toJson(
-		              new StandardResponse(StatusResponse.SUCCESS, 
-		                (system.userExists(
-		                  temp.getUsername(), temp.getPassword())) ? "User exists" : "User does not exists" ));
         });
         
     }

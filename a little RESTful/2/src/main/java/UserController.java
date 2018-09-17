@@ -44,6 +44,9 @@ public class UserController
 		{
 			user.getMatched().add(system.get(1));
 		}
-		
+		else
+		{
+			user.getMatched().add(new User());
+		}
 	}
 }
