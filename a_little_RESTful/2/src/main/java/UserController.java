@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 public class UserController 
 {
@@ -16,18 +16,7 @@ public class UserController
 		system.add(user);
 		
 	}
-	public boolean userExists(String username, String password)
-	{
-		for(User user: system)
-		{
-			if(user.getUsername().equals(username) && user.getPassword().equals(password))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	public User findUser(String username, String password)
+	public User userExists(String username, String password)
 	{
 		for(User user: system)
 		{
@@ -38,15 +27,43 @@ public class UserController
 		}
 		return null;
 	}
+	public User findUser(String username)
+	{
+		for(User user: system)
+		{
+			if(user.getUsername().equals(username))
+			{
+				return user;
+			}
+		}
+		return null;
+	}
 	public void initCurrentMatched(User user)
 	{
-		if(system.get(1) != null)
+		
+		if(system.get(1) != null && !system.get(1).equals(user))
 		{
 			user.getMatched().add(system.get(1));
 		}
 		else
 		{
-			user.getMatched().add(new User());
+			user.getMatched().add(system.get(0));
 		}
+		
+		
+		
+	}
+	public void editUser(User toEdit)
+	{
+		int currentIndex = 0;
+		for(User user: system)
+		{
+			if(user.getUsername().equals(toEdit.getUsername()))
+			{
+				currentIndex = system.indexOf(user);
+				break;
+			}
+		}
+		system.set(currentIndex, toEdit);
 	}
 }
