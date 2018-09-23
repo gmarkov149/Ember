@@ -4,8 +4,8 @@
 DROP TABLE IF EXISTS `Matches`;
 DROP TABLE IF EXISTS `SuggestedPartners`;
 DROP TABLE IF EXISTS `LikedUsers`;
+DROP TABLE IF EXISTS `Chat`;
 DROP TABLE IF EXISTS `Hobbies`;
-DROP TABLE IF EXISTS `Media`;
 DROP TABLE IF EXISTS `Languages`;
 DROP TABLE IF EXISTS `Login`;
 DROP TABLE IF EXISTS `Users`;
@@ -19,6 +19,8 @@ CREATE TABLE `Users` (
 	`DOB` 		char(10) NOT NULL,
 	`Gender` 	varchar(10) NOT NULL,
 	`Location` 	varchar(50) NOT NULL,
+	`ProfilePicBytes` 	int NOT NULL,
+	`ProfilePicPath` 	varchar(255) NOT NULL,
 	`InterestedInMen` 	char(1) NOT NULL DEFAULT '0',
 	`InterestedInWomen` char(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`ID`)
@@ -39,14 +41,6 @@ CREATE TABLE `Languages` (
 	`Malay` 	char(1) NOT NULL DEFAULT '0',
 	`Mandarin` 	char(1) NOT NULL DEFAULT '0',
 	`Tamil` 	char(1) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`UserID`),
-	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
-);
-
-CREATE TABLE `Media` (
-	`UserID` 			int NOT NULL,
-	`ProfilePicBytes` 	int NOT NULL,
-	`ProfilePicPath` 	varchar(255) NOT NULL,
 	PRIMARY KEY (`UserID`),
 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 );
@@ -93,4 +87,15 @@ CREATE TABLE `LikedUsers` (
 	PRIMARY KEY (`UserID`, `LikesID`),
 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),
 	FOREIGN KEY (`LikesID`) REFERENCES Users(`ID`)
+);
+
+CREATE TABLE `Chat` (
+	`SenderID`		int NOT NULL,
+	`ReceiverID` 	int NOT NULL,
+	`Datestamp`		date NOT NULL DEFAULT '0000-00-00',
+	`Timestamp`		time DEFAULT NULL,
+	`Message`		varchar(255) NOT NULL,
+	PRIMARY KEY (`SenderID`, `ReceiverID`, `Datestamp`, `Timestamp`, `Message`),
+	FOREIGN KEY (`SenderID`) REFERENCES Users(`ID`),
+	FOREIGN KEY (`ReceiverID`) REFERENCES Users(`ID`)
 );
