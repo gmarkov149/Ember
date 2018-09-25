@@ -32,15 +32,6 @@ VALUES
 	(4, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
 UNLOCK TABLES;
 
-LOCK TABLES `Matches` WRITE;
-INSERT INTO `Matches`
-VALUES
-	(1, 4, '/fake/path/chat.txt'),
-	(1, 9, '/fake/path/chat.txt'),
-	(4, 1, '/fake/path/chat.txt'),
-	(9, 1, '/fake/path/chat.txt');
-UNLOCK TABLES;
-
 LOCK TABLES `SuggestedPartners` WRITE;
 INSERT INTO `SuggestedPartners`
 VALUES

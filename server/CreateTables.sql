@@ -1,7 +1,6 @@
 -- Daniel Delago
 
 -- Tables dropped in the reverse order that they were created to prevent reference errors
-DROP TABLE IF EXISTS `Matches`;
 DROP TABLE IF EXISTS `SuggestedPartners`;
 DROP TABLE IF EXISTS `LikedUsers`;
 DROP TABLE IF EXISTS `Chat`;
@@ -61,16 +60,6 @@ CREATE TABLE `Hobbies` (
 	`Animals` 	char(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`UserID`),
 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
-);
-
--- New entry for each new match/Suggestion/Like
-CREATE TABLE `Matches` (
-	`UserID` 	int NOT NULL,
-	`MatchID` 	int NOT NULL,
-	`ChatPath`	varchar(255) NOT NULL,
-	PRIMARY KEY (`UserID`, `MatchID`),
-	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),
-	FOREIGN KEY (`MatchID`) REFERENCES Users(`ID`)
 );
 
 CREATE TABLE `SuggestedPartners` (
