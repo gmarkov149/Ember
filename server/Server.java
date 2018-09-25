@@ -36,17 +36,16 @@ public class Server {
         while(true) {
             System.out.println("Choose an option");
             System.out.println("Enter 1 : View all user profiles");
-            System.out.println("Enter 2 : View all Matches");
-            System.out.println("Enter 3 : View a users profile");
-            System.out.println("Enter 4 : Edit a users profile");
-            System.out.println("Enter 5 : Create new user");
-            System.out.println("Enter 6 : Like a user");
-            System.out.println("Enter 7 : View a users suggested matches");
-            System.out.println("Enter 8 : View a users likes");
-            System.out.println("Enter 9 : View a users matches");
-            System.out.println("Enter 10 : View a users chat");
-            System.out.println("Enter 11 : Send a message to another user");
-            System.out.println("Enter 12 : Simulate Ember");
+            System.out.println("Enter 2 : View a users profile");
+            System.out.println("Enter 3 : Edit a users profile");
+            System.out.println("Enter 4 : Create new user");
+            System.out.println("Enter 5 : Like a user");
+            System.out.println("Enter 6 : View a users suggested matches");
+            System.out.println("Enter 7 : View a users likes");
+            System.out.println("Enter 8 : View a users matches");
+            System.out.println("Enter 9 : View a users chat");
+            System.out.println("Enter 10 : Send a message to another user");
+            System.out.println("Enter 11 : Simulate Ember");
             System.out.println("Enter 0 : Quit");
 
             choice = in.nextInt();
@@ -67,17 +66,8 @@ public class Server {
                             "WHERE Users.ID=Hobbies.UserID AND Users.ID=Languages.UserID");
                         printAllProfile = true;
                     } catch(SQLException e){ e.printStackTrace(); } break;
-                // View all matches
-                case 2:
-                    try {
-                        statement1 = conn.createStatement();
-                        rs = statement1.executeQuery(
-                            "SELECT Matches.UserID, Matches.MatchID, Matches.ChatPath " + 
-                            "FROM Users AS User, Users AS Partner, Matches " + 
-                            "WHERE User.ID=Matches.UserID AND Partner.ID=Matches.MatchID");
-                    } catch(SQLException e){ e.printStackTrace(); } break;
                 // View a users profile
-                case 3:
+                case 2:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     try {
@@ -89,7 +79,7 @@ public class Server {
                         printSingleProfile = true;
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // Edit a users profile
-                case 4:
+                case 3:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     System.out.print("Enter users new location: ");
@@ -103,7 +93,7 @@ public class Server {
                         continue;
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // Create a new user
-                case 5:
+                case 4:
                     // System.out.print("Enter users ID: ");
                     // userID = in.nextInt();
                     try {
@@ -123,7 +113,7 @@ public class Server {
                         continue;
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // Like a user
-                case 6:
+                case 5:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     System.out.print("User likes (Enter users ID): ");
@@ -137,7 +127,7 @@ public class Server {
                         continue;
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // View a users suggested matches
-                case 7:
+                case 6:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     try {
@@ -148,7 +138,7 @@ public class Server {
                             "WHERE SuggestedPartners.UserID=" + userID);
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // View a users likes
-                case 8:
+                case 7:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     try {
@@ -159,7 +149,7 @@ public class Server {
                             "WHERE LikedUsers.UserID=" + userID);
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // View a users matches
-                case 9:
+                case 8:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     try {
@@ -173,7 +163,7 @@ public class Server {
                                 "WHERE LikedUsers.LikesID=" + userID + ")");
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // View a users chat
-                case 10:
+                case 9:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     System.out.print("Enter users match ID: ");
@@ -187,7 +177,7 @@ public class Server {
                             "ORDER BY Datestamp ASC, Timestamp ASC");
                     } catch(SQLException e){ e.printStackTrace(); } break;
                 // Send a message to another user
-                case 11:
+                case 10:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     System.out.print("Enter users match ID: ");
@@ -202,8 +192,8 @@ public class Server {
                             String.format("(%d, %d, '2018-10-06', '12:00:00', '%s')", userID, matchID, message));
                         continue;
                     } catch(SQLException e){ e.printStackTrace(); } break;
-                // Simulate Ember
-                case 12:
+                // Simulate Ember DOEs NOT WORk CURRENTLY
+                case 11:
                     System.out.print("Enter users ID: ");
                     userID = in.nextInt();
                     try {
