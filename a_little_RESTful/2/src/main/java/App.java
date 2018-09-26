@@ -6,10 +6,15 @@ public class App
 {
     public static void main( String[] args )
     {
+    	//open a potentialMatches endpoint
+    	//add potential matches for previous users
+    	//add the filtering functionality
         UserController system = new UserController();
         post("/users", (request, response) -> {
 			response.type("application/json");
 		    User user = new Gson().fromJson(request.body(), User.class);
+		    user.parseHobbies();
+		    system.getPotentialMatches(user);
 		    system.addUser(user);
 		 
 		    return new Gson()
@@ -17,10 +22,10 @@ public class App
         });
         get("/users", (request, response) -> {
      	   response.type("application/json");
-     	   for(User user: system.getSystem())
+     	   /*for(User user: system.getSystem())
      	   {
      		   System.out.println(user);
-     	   }
+     	   }*/
      	    return new Gson().toJson(
      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
      	        .toJsonTree(system.getSystem())));

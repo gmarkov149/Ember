@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 
 public class UserController 
@@ -7,6 +11,9 @@ public class UserController
 	public UserController()
 	{
 		system = new ArrayList<User>();
+		//Daniel, here you need to add every User that exists in the database to system
+		//somehow you also need to save every user whenever the app is exited
+		//be careful of the users that already exist in the database
 	}
 	public ArrayList<User> getSystem() {
 		return system;
@@ -65,5 +72,44 @@ public class UserController
 			}
 		}
 		system.set(currentIndex, toEdit);
+	}
+	public void getPotentialMatches(User user)
+	{
+		int matchScore = 0;
+		ArrayList<Key_Value_Pair> temp = new ArrayList<Key_Value_Pair>();
+		for(int i=0;i<system.size();i++)
+		{
+			temp.add(i, new Key_Value_Pair());
+			temp.get(i).setKey(system.get(i));
+			
+		}
+		for(int j=0;j<system.size();j++)
+		{
+			for(int i=0;i<10;i++)
+			{
+				if((user.getParsedHobbies())[i] = (system.get(j).getParsedHobbies())[i])
+				{
+					matchScore++;
+				}
+			}
+			temp.get(j).setValue(matchScore);
+		}
+		Collections.sort(temp, new Comparator<Key_Value_Pair>() 
+				{
+					@Override
+					public int compare(Key_Value_Pair n1, Key_Value_Pair n2)
+					{
+						if(n1.getValue() > n2.getValue())
+						{
+							return 1;
+						}
+						if(n1.getValue() < n2.getValue())
+						{
+							return -1;
+						}
+						return 0;
+					}
+				});
+		user.setPotential(temp);
 	}
 }

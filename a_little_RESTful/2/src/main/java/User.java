@@ -9,22 +9,42 @@ public class User
 	private String name;
 	private String dob;
 	private String hobbies;
+	private boolean[] parsedHobbies;
 	private String gender;
 	private String location;
+	public boolean[] getParsedHobbies() {
+		return parsedHobbies;
+	}
 	private String languages;
 	private String profilePicBytes;
 	private boolean interestedInMen;
 	private boolean interestedInWomen;
 	private ArrayList<User> matched;
-	
+	private ArrayList<Key_Value_Pair> potential;
 	public User()
 	{
 		matched = new ArrayList<>();
-		
+		potential = new ArrayList<>();
 	}
 	
 
 	
+
+
+	public ArrayList<Key_Value_Pair> getPotential() {
+		return potential;
+	}
+
+
+
+
+
+	public void setPotential(ArrayList<Key_Value_Pair> potential) {
+		this.potential = potential;
+	}
+
+
+
 
 
 	public User(String username, String password, String email, String name, String dob, String gender) {
@@ -176,6 +196,28 @@ public class User
 		return matched;
 	}
 
+	public void parseHobbies()
+	{
+		Scanner tempHobbies = new Scanner(hobbies);
+		parsedHobbies = new boolean[10];
+		String temp;
+		int count = 0;
+		while(tempHobbies.hasNext())
+		{
+			temp = tempHobbies.next();
+
+			if(temp.equals("true"))
+			{
+				parsedHobbies[count] = true;
+			}
+			if(temp.equals("false"))
+			{
+				parsedHobbies[count] = false;
+			}
+			count++;
+		}
+
+	}
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name
