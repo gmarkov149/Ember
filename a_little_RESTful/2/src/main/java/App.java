@@ -2,6 +2,10 @@ import com.google.gson.Gson;
 
 import static spark.Spark.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class App 
 {
     public static void main( String[] args )
@@ -88,5 +92,35 @@ public class App
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(currentUser)));
         });
+        //get potential
+        get("/users/potentialMatches/:username", (request, response) -> {
+      	   response.type("application/json");
+      	   User currentUser = system.findUser(request.params(":username"));
+      	   ArrayList<Key_Value_Pair> key_valueList = currentUser.getPotential();
+      	   Collections.sort(key_valueList, new Comparator<Key_Value_Pair>() 
+			  {
+				  @Override
+				  public int compare(Key_Value_Pair n1, Key_Value_Pair n2)
+				  {
+					  if(n1.getValue() < n2.getValue())
+					  {
+					    	return 1;
+					  }
+					  if(n1.getValue() > n2.getValue())
+					   {
+						    return -1;
+					   }
+					  return 0;
+				  }
+			  });
+      	   ArrayList<User> returnList = new ArrayList<User>();
+      	   for(int i=0;i<key_valueList.size();i++)
+      	   {
+      		   returnList.add(system.findUser(key_valueList.get(i).getKey()));
+      	   }
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+      	        .toJsonTree(returnList)));
+          });
     }
 }

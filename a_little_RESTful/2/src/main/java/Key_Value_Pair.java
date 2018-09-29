@@ -1,17 +1,17 @@
 
 public class Key_Value_Pair
 {
-	private User key;
+	private String key;
 	private int value;
-	public Key_Value_Pair(User key, int value) {
+	public Key_Value_Pair(String key, int value) {
 		super();
 		this.key = key;
 		this.value = value;
 	}
-	public User getKey() {
+	public String getKey() {
 		return key;
 	}
-	public void setKey(User key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 	public int getValue() {

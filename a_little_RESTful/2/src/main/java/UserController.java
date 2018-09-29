@@ -80,36 +80,22 @@ public class UserController
 		for(int i=0;i<system.size();i++)
 		{
 			temp.add(i, new Key_Value_Pair());
-			temp.get(i).setKey(system.get(i));
+			temp.get(i).setKey(system.get(i).getUsername());
 			
 		}
 		for(int j=0;j<system.size();j++)
 		{
 			for(int i=0;i<10;i++)
 			{
-				if((user.getParsedHobbies())[i] = (system.get(j).getParsedHobbies())[i])
+				if((user.getParsedHobbies())[i] == (system.get(j).getParsedHobbies())[i])
 				{
 					matchScore++;
 				}
 			}
 			temp.get(j).setValue(matchScore);
+			system.get(j).getPotential().add(new Key_Value_Pair(user.getUsername(), matchScore));
+			matchScore = 0;
 		}
-		Collections.sort(temp, new Comparator<Key_Value_Pair>() 
-				{
-					@Override
-					public int compare(Key_Value_Pair n1, Key_Value_Pair n2)
-					{
-						if(n1.getValue() > n2.getValue())
-						{
-							return 1;
-						}
-						if(n1.getValue() < n2.getValue())
-						{
-							return -1;
-						}
-						return 0;
-					}
-				});
 		user.setPotential(temp);
 	}
 }
