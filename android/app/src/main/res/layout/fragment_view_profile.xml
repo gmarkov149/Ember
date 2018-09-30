@@ -42,4 +42,23 @@
         android:visibility="gone"
         android:id="@+id/address"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_edit_24px"
+            android:tint="@android:color/white"
+            android:layout_margin="10dp"
+            android:onClick="editProfile"/>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -39,4 +39,8 @@ public class HttpHelper {
     public static Call<UserDetailsList> getMatches(String username, String password) {
         return httpInterface.getMatches(new Login(username, password));
     }
+
+    public static Call<UserDetailsList> getPotentialMatches(String username) {
+        return httpInterface.getPotentialMatches(username);
+    }
 }

@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.ember.ember.R;
 import com.ember.ember.activity.RegisterActivity;
 import com.ember.ember.adapter.HobbiesAdapter;
 import com.ember.ember.model.Hobbies;
+import com.ember.ember.model.UserDetails;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -49,17 +54,45 @@ public class RegisterFragment extends Fragment {
         boolean isDetailsPage = getArguments().getInt(ARG_SECTION_NUMBER) == 1;
         int selectedResource = isDetailsPage ?
                 R.layout.fragment_account_details : R.layout.fragment_more_about_you;
+        UserDetails userDetails = ((RegisterActivity) getActivity()).getUserDetails();
         View rootView = inflater.inflate(selectedResource, container, false);
         if (isDetailsPage) {
             MaterialButton dob = rootView.findViewById(R.id.dob_button);
             dob.setIconResource(R.drawable.ic_baseline_date_range_24px);
             dob.setIconTint(ColorStateList.valueOf(Color.WHITE));
+            if (userDetails != null) existingUserSetupDetails(rootView, userDetails);
         }
         else {
             Spinner spinner = rootView.findViewById(R.id.hobbies);
             HobbiesAdapter hobbiesAdapter = new HobbiesAdapter(getActivity(), 0, ((RegisterActivity) getActivity()).getHobbiesList());
             spinner.setAdapter(hobbiesAdapter);
+            if (userDetails != null) existingUserSetupMore(rootView, userDetails);
         }
         return rootView;
+    }
+
+    private void existingUserSetupDetails(View v, UserDetails userDetails) {
+        v.findViewById(R.id.username).setVisibility(View.GONE);
+        v.findViewById(R.id.password).setVisibility(View.GONE);
+        v.findViewById(R.id.repeat_password).setVisibility(View.GONE);
+        fillExistingUserField(R.id.name, userDetails.getName(), v);
+        fillExistingUserField(R.id.email, userDetails.getEmail(), v);
+        fillExistingUserField(R.id.dob, userDetails.getDob(), v);
+        ((RadioGroup) v.findViewById(R.id.gender)).check(
+                userDetails.getGender() == null || userDetails.getGender().equals("Other") ? R.id.radio_other :
+                userDetails.getGender().equals("Male") ? R.id.radio_male : R.id.radio_female );
+    }
+
+    private void existingUserSetupMore(View v, UserDetails userDetails) {
+        if (userDetails.getProfilePic()!= null)
+            ((ImageView) v.findViewById(R.id.pic)).setImageBitmap(userDetails.getProfilePic());
+        fillExistingUserField(R.id.languages, userDetails.getLanguages(), v);
+        fillExistingUserField(R.id.address, userDetails.getLocation(), v);
+        ((CheckBox) v.findViewById(R.id.men)).setChecked(userDetails.isInterestedInMen());
+        ((CheckBox) v.findViewById(R.id.women)).setChecked(userDetails.isInterestedInWomen());
+    }
+
+    private void fillExistingUserField(int field, String text, View v) {
+        ((TextInputEditText) v.findViewById(field)).setText(text == null ? "" : text);
     }
 }

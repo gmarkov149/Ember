@@ -7,7 +7,9 @@ import com.ember.ember.model.UserDetailsList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface HttpInterface {
     @POST("users/exists")
@@ -18,4 +20,7 @@ public interface HttpInterface {
 
     @POST("users/matched")
     Call<UserDetailsList> getMatches(@Body Login login);
+
+    @GET("users/potentialMatches/{username}")
+    Call<UserDetailsList> getPotentialMatches(@Path("username") String username);
 }

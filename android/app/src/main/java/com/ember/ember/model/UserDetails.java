@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.ember.ember.helper.BitmapHelper;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserDetails implements Serializable {
     private boolean success;
@@ -21,6 +22,7 @@ public class UserDetails implements Serializable {
     private Bitmap profilePic;
     private boolean interestedInMen;
     private boolean interestedInWomen;
+    private String hobbyBooleanStringForBackend;
 
     public UserDetails(String username, String name, String password, String email, String dob, String hobbies, String gender, String location, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {
         this.username = username;

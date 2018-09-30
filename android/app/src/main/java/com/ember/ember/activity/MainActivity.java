@@ -1,5 +1,6 @@
 package com.ember.ember.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -76,6 +77,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void editProfile(View v) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", userDetails);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public void collapseCard() {

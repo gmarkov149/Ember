@@ -2,17 +2,16 @@ package com.ember.ember.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.SectionsPagerAdapter;
@@ -28,12 +27,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,12 +50,13 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean photoChanged;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_PICK_PHOTO = 2;
-    ArrayList<Hobbies> hobbiesList;
+    private ArrayList<Hobbies> hobbiesList;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private UserDetails userDetails;
     private Map<Integer, ErrorHelper.Problem> toValidate;
     private Bitmap bitmap;
 
@@ -77,7 +73,12 @@ public class RegisterActivity extends AppCompatActivity {
         tabs.setupWithViewPager(mViewPager);
         tabs.getTabAt(0).setIcon(R.drawable.ic_baseline_face_24px);
         tabs.getTabAt(1).setIcon(R.drawable.ic_baseline_favorite_24px);
+        setupHobbiesList();
+        userDetails = getIntent().hasExtra("user") ?
+                (UserDetails) getIntent().getSerializableExtra("user") : null;
+    }
 
+    private void setupHobbiesList() {
         final String[] selectHobbies = {
                 "Hobbies", "Fitness", "Music", "Dancing", "Reading",
                 "Walking", "Traveling", "Eating", "Crafts", "Fishing",
@@ -93,15 +94,21 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
     public ArrayList<Hobbies> getHobbiesList() {
         return hobbiesList;
     }
 
     private void setupValidationMap() {
         toValidate = new HashMap<>();
-        toValidate.put(R.id.username, ErrorHelper.Problem.USERNAME_EMPTY);
+        if (userDetails != null) {
+            toValidate.put(R.id.username, ErrorHelper.Problem.USERNAME_EMPTY);
+            toValidate.put(R.id.password, ErrorHelper.Problem.PASSWORD_EMPTY);
+        }
         toValidate.put(R.id.name, ErrorHelper.Problem.NAME_EMPTY);
-        toValidate.put(R.id.password, ErrorHelper.Problem.PASSWORD_EMPTY);
         toValidate.put(R.id.email, ErrorHelper.Problem.EMAIL_EMPTY);
         toValidate.put(R.id.dob, ErrorHelper.Problem.DOB_EMPTY);
     }
@@ -178,13 +185,15 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void submit(View v) {
-        if (validateEditText() || checkPasswordsMatch()) return;
+        if (validateEditText() || userDetails == null && checkPasswordsMatch()) return;
         if (mViewPager.getCurrentItem() == 0) {
             mViewPager.setCurrentItem(1);
             return;
         }
         StringBuilder hobbiesString = new StringBuilder();
         for (Hobbies hobby : hobbiesList) {
+//            TODO: change hobby true/false logic depending on backend
+//            hobbiesString.append(String.valueOf(hobby.isSelected()));
             if (hobby.isSelected()) {
                 hobbiesString.append(hobby.getHobby() + ", ");
             }
@@ -192,11 +201,11 @@ public class RegisterActivity extends AppCompatActivity {
         if (hobbiesString.length() > 0) hobbiesString.setLength(hobbiesString.length() - 2);
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
-        String hashedPassword = new String(Hex.encodeHex(DigestUtils.sha(getTextField(R.id.password))));
-        UserDetails userDetails = new UserDetails(
-            getTextField(R.id.username),
+        userDetails = new UserDetails(
+            userDetails == null ? getTextField(R.id.username) : userDetails.getUsername(),
             getTextField(R.id.name),
-            hashedPassword,
+            userDetails == null ? new String(Hex.encodeHex(DigestUtils.sha(getTextField(R.id.password))))
+                    : userDetails.getPassword(),
             getTextField(R.id.email),
             getTextField(R.id.dob),
             hobbiesString.toString(),
@@ -264,6 +273,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private String getTextField(int id) {
-        return ((TextInputEditText) findViewById(id)).getText().toString();
+        Editable text = ((TextInputEditText) findViewById(id)).getText();
+        return text == null ? "" : text.toString();
     }
 }
