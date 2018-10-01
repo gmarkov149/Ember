@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.SectionsPagerAdapter;
+import com.ember.ember.fragment.AddressFragment;
 import com.ember.ember.fragment.DatePickerFragment;
 import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.helper.http.ErrorHelper;
@@ -157,6 +158,11 @@ public class RegisterActivity extends AppCompatActivity {
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment(this, R.id.dob);
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void showMapDialog(View v) {
+        DialogFragment newFragment = new AddressFragment(this, R.id.dob);
+        newFragment.show(getSupportFragmentManager(), "map");
     }
 
     private void setCameraPic() {

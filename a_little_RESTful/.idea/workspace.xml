@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c15e876-72ee-4a8a-a66d-98a166253164" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/2/target/classes/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/2/target/classes/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/activity/OtherProfileActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/fragment/ViewProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/fragment/ViewProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android/app/src/main/res/layout/activity_other_profile.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android/app/src/main/res/layout/card_expanded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android/app/src/main/res/layout/card_expanded.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android/app/src/main/res/layout/fragment_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android/app/src/main/res/layout/fragment_user.xml" afterDir="false" />
+    <list default="true" id="dddd0063-1ae6-415b-94a6-1d1b9507c021" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/activity/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/activity/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android/app/src/main/java/com/ember/ember/activity/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android/app/src/main/res/layout/fragment_account_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android/app/src/main/res/layout/fragment_account_details.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,11 +15,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FUSProjectUsageTrigger">
-    <session id="-373167354">
+    <session id="1404079316">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="1" />
-          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.4" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
@@ -42,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/2/src/main/java/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="187">
+              <caret line="17" column="46" lean-forward="true" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -71,39 +69,29 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="a little RESTful" type="b2602c69:ProjectViewProjectNode" />
+              <item name="a_little_RESTful" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="a little RESTful" type="b2602c69:ProjectViewProjectNode" />
+              <item name="a_little_RESTful" type="b2602c69:ProjectViewProjectNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="a little RESTful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="a little RESTful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536669928343" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -122,11 +110,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1c15e876-72ee-4a8a-a66d-98a166253164" name="Default Changelist" comment="" />
-      <created>1536669542307</created>
+      <changelist id="dddd0063-1ae6-415b-94a6-1d1b9507c021" name="Default Changelist" comment="" />
+      <created>1538334479758</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1536669542307</updated>
+      <updated>1538334479758</updated>
     </task>
     <servers />
   </component>
@@ -154,7 +142,7 @@
       <window_info anchor="right" id="Theme Preview" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Maven Projects" visible="true" weight="0.32955465" />
+      <window_info anchor="right" id="Maven Projects" weight="0.32955465" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -166,10 +154,26 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/2/src/main/java/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="187">
+          <caret line="17" column="46" lean-forward="true" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
