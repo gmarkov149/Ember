@@ -161,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void showMapDialog(View v) {
-        DialogFragment newFragment = new AddressFragment(this, R.id.dob);
+        DialogFragment newFragment = new AddressFragment(this, R.id.address);
         newFragment.show(getSupportFragmentManager(), "map");
     }
 

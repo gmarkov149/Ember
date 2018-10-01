@@ -10,23 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ember.ember.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.textfield.TextInputEditText;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
-public class AddressFragment extends DialogFragment implements OnMapReadyCallback {
+public class AddressFragment extends DialogFragment implements OnMapReadyCallback, MapboxMap.OnMapClickListener {
 
-    Activity activity;
-    int resource;
-    private GoogleMap googleMap;
+    private Activity activity;
+    private int resource;
+    private MapView mapView;
+    private Marker marker;
+    private MapboxMap mapboxMap;
+    private LatLng selectedPoint;
 
     public AddressFragment() {
 
@@ -41,34 +44,89 @@ public class AddressFragment extends DialogFragment implements OnMapReadyCallbac
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//        View map = inflater.inflate(R.layout.dialog_map, null);
 
-//        SupportMapFragment mapFragment = getActivity().getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(R.layout.dialog_map)
-                // Add action buttons
+        Mapbox.getInstance(getContext(), getString(R.string.access_token));
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View map = inflater.inflate(R.layout.dialog_map, null);
+        mapView = map.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+        builder.setView(map)
                 .setPositiveButton("Confirm", (DialogInterface dialog, int id) -> {
-                    // sign in the user ...
+                    TextInputEditText text = activity.findViewById(resource);
+                    LatLng position = marker.getPosition();
+                    text.setText(position.getLatitude() + "," +  position.getLongitude());
                 })
                 .setNegativeButton("Cancel", (DialogInterface dialog, int id) -> {
-                    AddressFragment.this.getDialog().cancel();
                 });
         return builder.create();
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    public void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onMapClick(@NonNull LatLng point) {
+        if (marker != null) {
+            mapboxMap.removeMarker(marker);
+        }
+        selectedPoint = point;
+        marker = mapboxMap.addMarker(new MarkerOptions()
+                .position(selectedPoint)
+        );
+    }
+
+    @Override
+    public void onMapReady(MapboxMap map) {
+        mapboxMap = map;
+        marker = mapboxMap.addMarker(new MarkerOptions()
+                .position(new LatLng(1.3521, 103.8198))
+                .title("Your Location")
+        );
+        mapboxMap.addOnMapClickListener(this);
     }
 }
