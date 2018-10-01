@@ -1,5 +1,6 @@
 package com.ember.ember.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -19,6 +20,9 @@ public class DatePickerFragment extends DialogFragment
     Activity activity;
     int resource;
 
+    public DatePickerFragment() {}
+
+    @SuppressLint("ValidFragment")
     public DatePickerFragment(Activity activity, int resource) {
         this.activity = activity;
         this.resource = resource;
