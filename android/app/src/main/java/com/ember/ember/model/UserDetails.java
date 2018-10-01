@@ -1,14 +1,15 @@
 package com.ember.ember.model;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.ember.ember.helper.BitmapHelper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDetails implements Serializable {
-    private boolean success;
     private String username;
     private String name;
     private String password;
@@ -22,7 +23,12 @@ public class UserDetails implements Serializable {
     private Bitmap profilePic;
     private boolean interestedInMen;
     private boolean interestedInWomen;
-    private String hobbyBooleanStringForBackend;
+    private String hobbiesString;
+
+    public static final String[] possibleHobbies = {
+            "Hobbies", "Fitness", "Music", "Dancing", "Reading",
+            "Walking", "Traveling", "Eating", "Crafts", "Fishing"};
+//            "Hiking", "Animals"};
 
     public UserDetails(String username, String name, String password, String email, String dob, String hobbies, String gender, String location, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {
         this.username = username;
@@ -38,10 +44,6 @@ public class UserDetails implements Serializable {
         this.interestedInMen = interestedInMen;
         this.interestedInWomen = interestedInWomen;
         this.profilePic = null;
-    }
-
-    public boolean isSuccess() {
-        return success;
     }
 
     public String getUsername() {
@@ -96,8 +98,26 @@ public class UserDetails implements Serializable {
         return profilePic;
     }
 
+    public String getHobbiesString() {
+        return hobbiesString;
+    }
+
     public void setProfilePic() {
         if (profilePicBytes == null) return;
         profilePic = BitmapHelper.convertStringToBmp(profilePicBytes);
+    }
+
+    public void setHobbiesString() {
+        StringBuilder hobbiesSb = new StringBuilder();
+        String[] hobbiesArr = hobbies.split(" ");
+        for (int i = 0; i < hobbiesArr.length; i++) {
+            if (Boolean.parseBoolean(hobbiesArr[i])) {
+                hobbiesSb.append(possibleHobbies[i] + ", ");
+            }
+        }
+        if (hobbiesSb.length() > 0) {
+            hobbiesSb.setLength(hobbiesSb.length() - 2);
+        }
+        hobbiesString = hobbiesSb.toString();
     }
 }

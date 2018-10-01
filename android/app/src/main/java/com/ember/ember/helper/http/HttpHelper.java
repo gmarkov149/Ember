@@ -36,6 +36,10 @@ public class HttpHelper {
         return httpInterface.register(userDetails);
     }
 
+    public static Call<Void> editProfile(UserDetails userDetails) {
+        return httpInterface.editProfile(userDetails);
+    }
+
     public static Call<UserDetailsList> getMatches(String username, String password) {
         return httpInterface.getMatches(new Login(username, password));
     }

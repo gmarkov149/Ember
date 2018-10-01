@@ -79,16 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setupHobbiesList() {
-        final String[] selectHobbies = {
-                "Hobbies", "Fitness", "Music", "Dancing", "Reading",
-                "Walking", "Traveling", "Eating", "Crafts", "Fishing",
-                "Hiking", "Animals"};
-
         hobbiesList = new ArrayList<>();
 
-        for (int i = 0; i < selectHobbies.length; i++) {
+        for (int i = 0; i < UserDetails.possibleHobbies.length; i++) {
             Hobbies hobbies = new Hobbies();
-            hobbies.setHobby(selectHobbies[i]);
+            hobbies.setHobby(UserDetails.possibleHobbies[i]);
             hobbies.setSelected(false);
             hobbiesList.add(hobbies);
         }
@@ -192,13 +187,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
         StringBuilder hobbiesString = new StringBuilder();
         for (Hobbies hobby : hobbiesList) {
-//            TODO: change hobby true/false logic depending on backend
-//            hobbiesString.append(String.valueOf(hobby.isSelected()));
-            if (hobby.isSelected()) {
-                hobbiesString.append(hobby.getHobby() + ", ");
-            }
+            hobbiesString.append(String.valueOf(hobby.isSelected()) + " ");
         }
-        if (hobbiesString.length() > 0) hobbiesString.setLength(hobbiesString.length() - 2);
+        if (hobbiesString.length() > 0) {
+            hobbiesString.setLength(hobbiesString.length() - 1);
+        }
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
         userDetails = new UserDetails(
@@ -220,7 +213,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void executeCall(UserDetails userDetails) {
-        Call<Void> call = HttpHelper.register(userDetails);
+        Call<Void> call = userDetails == null ? HttpHelper.register(userDetails)
+                : HttpHelper.editProfile(userDetails);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -241,11 +235,6 @@ public class RegisterActivity extends AppCompatActivity {
                     ErrorHelper.raiseToast(RegisterActivity.this, ErrorHelper.Problem.CALL_FAILED);
             }
         });
-//        Intent intent = new Intent(this, MainActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("user", userDetails);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
     }
 
     private boolean validateEditText() {

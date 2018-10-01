@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         userDetails = (UserDetails) getIntent().getSerializableExtra("user");
         userDetails.setProfilePic();
+        userDetails.setHobbiesString();
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener((@NonNull MenuItem item) -> {
             Fragment selectedFragment = null;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putSerializable("user", userDetails);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 
     public void collapseCard() {

@@ -33,7 +33,7 @@ public class FieldFillHelper {
             }
         } catch (ParseException e) {}
         setTextIfFilled(langField, userDetails.getLanguages(), "Speaks: ");
-        setTextIfFilled(hobbiesField, userDetails.getHobbies(), "Enjoys: ");
+        setTextIfFilled(hobbiesField, userDetails.getHobbiesString(), "Enjoys: ");
         setTextIfFilled(addressField, userDetails.getLocation(), "Lives at: ");
     }
 

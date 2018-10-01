@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.fragment.app.Fragment;
 
@@ -90,6 +91,11 @@ public class RegisterFragment extends Fragment {
         fillExistingUserField(R.id.address, userDetails.getLocation(), v);
         ((CheckBox) v.findViewById(R.id.men)).setChecked(userDetails.isInterestedInMen());
         ((CheckBox) v.findViewById(R.id.women)).setChecked(userDetails.isInterestedInWomen());
+        List<Hobbies> hobbiesList = ((RegisterActivity) getActivity()).getHobbiesList();
+        String[] hobbiesArr = userDetails.getHobbies().split(" ");
+        for (int i = 0; i < hobbiesArr.length; i++) {
+            hobbiesList.get(i).setSelected(Boolean.parseBoolean(hobbiesArr[i]));
+        }
     }
 
     private void fillExistingUserField(int field, String text, View v) {

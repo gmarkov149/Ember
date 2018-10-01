@@ -18,6 +18,9 @@ public interface HttpInterface {
     @POST("users")
     Call<Void> register(@Body UserDetails userDetails);
 
+    @POST("users/edit")
+    Call<Void> editProfile(@Body UserDetails userDetails);
+
     @POST("users/matched")
     Call<UserDetailsList> getMatches(@Body Login login);
 

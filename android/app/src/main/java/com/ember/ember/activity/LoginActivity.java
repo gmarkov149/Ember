@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     bundle.putSerializable("user", response.body().getData());
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 } else {
                     ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
                 }
