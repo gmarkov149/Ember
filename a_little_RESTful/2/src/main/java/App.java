@@ -38,10 +38,10 @@ public class App
         get("/users/matched/:username", (request, response) -> {
       	   response.type("application/json");
       	   User currentUser = system.findUser(request.params(":username"));
-      	   if(currentUser.getMatched().size() == 0)
+      	   /*if(currentUser.getMatched().size() == 0)
       	   {
       		 system.initCurrentMatched(currentUser);
-      	   }
+      	   }*/
       	   
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
@@ -51,10 +51,10 @@ public class App
 			response.type("application/json");
 		    User toReturnMatches = new Gson().fromJson(request.body(), User.class);
 		    User currentUser = system.findUser(toReturnMatches.getUsername());
-		    if(currentUser.getMatched().size() == 0)
+		    /*if(currentUser.getMatched().size() == 0)
 		    {
 		    	system.initCurrentMatched(currentUser);
-		    }
+		    }*/
 		    
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
@@ -122,5 +122,16 @@ public class App
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(returnList)));
           });
+        //add a match for the specified user
+        post("/users/match/:username", (request, response) -> {
+			response.type("application/json");
+		    
+		    User userToMatch = new Gson().fromJson(request.body(), User.class);
+		    User currentUser = system.findUser(request.params(":username"));
+		    currentUser.getMatched().add(system.findUser(userToMatch.getUsername()));
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+      	        .toJsonTree(currentUser)));
+        });
     }
 }

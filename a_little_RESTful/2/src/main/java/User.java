@@ -199,7 +199,7 @@ public class User
 	public void parseHobbies()
 	{
 		Scanner tempHobbies = new Scanner(hobbies);
-		parsedHobbies = new boolean[10];
+		parsedHobbies = new boolean[12];
 		String temp;
 		int count = 0;
 		while(tempHobbies.hasNext())

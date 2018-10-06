@@ -85,7 +85,7 @@ public class UserController
 		}
 		for(int j=0;j<system.size();j++)
 		{
-			for(int i=0;i<10;i++)
+			for(int i=0;i<12;i++)
 			{
 				if((user.getParsedHobbies())[i] == (system.get(j).getParsedHobbies())[i])
 				{
