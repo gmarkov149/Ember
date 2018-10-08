@@ -47,4 +47,8 @@ public class HttpHelper {
     public static Call<UserDetailsList> getPotentialMatches(String username) {
         return httpInterface.getPotentialMatches(username);
     }
+
+    public static Call<Void> match(String username, UserDetails matchedUser) {
+        return httpInterface.match(username, matchedUser);
+    }
 }

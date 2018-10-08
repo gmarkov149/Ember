@@ -26,4 +26,7 @@ public interface HttpInterface {
 
     @GET("users/potentialMatches/{username}")
     Call<UserDetailsList> getPotentialMatches(@Path("username") String username);
+
+    @POST("users/match/{username}")
+    Call<Void> match(@Path("username") String username, @Body UserDetails userDetails);
 }

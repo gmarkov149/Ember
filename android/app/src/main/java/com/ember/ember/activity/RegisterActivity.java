@@ -52,8 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_PICK_PHOTO = 2;
     private ArrayList<Hobbies> hobbiesList;
-
     /**
+
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
@@ -200,11 +200,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
+        boolean isRegister = userDetails == null;
         userDetails = new UserDetails(
-            userDetails == null ? getTextField(R.id.username) : userDetails.getUsername(),
+            isRegister ? getTextField(R.id.username) : userDetails.getUsername(),
             getTextField(R.id.name),
-            userDetails == null ? new String(Hex.encodeHex(DigestUtils.sha(getTextField(R.id.password))))
-                    : userDetails.getPassword(),
+            isRegister ? new String(Hex.encodeHex(DigestUtils.sha(getTextField(R.id.password))))
+                : userDetails.getPassword(),
             getTextField(R.id.email),
             getTextField(R.id.dob),
             hobbiesString.toString(),
@@ -215,11 +216,11 @@ public class RegisterActivity extends AppCompatActivity {
             ((CheckBox) findViewById(R.id.men)).isChecked(),
             ((CheckBox) findViewById(R.id.women)).isChecked()
         );
-        executeCall(userDetails);
+        executeCall(userDetails, isRegister);
     }
 
-    private void executeCall(UserDetails userDetails) {
-        Call<Void> call = userDetails == null ? HttpHelper.register(userDetails)
+    private void executeCall(UserDetails userDetails, boolean isRegister) {
+        Call<Void> call = isRegister ? HttpHelper.register(userDetails)
                 : HttpHelper.editProfile(userDetails);
         call.enqueue(new Callback<Void>() {
             @Override

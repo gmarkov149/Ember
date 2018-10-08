@@ -98,7 +98,7 @@ public class UserListFragment extends Fragment {
                         recyclerView.setVisibility(View.GONE);
                         view.findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
                     }
-                    recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener));
+                    recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener, isMatched));
                 } else {
                     ErrorHelper.raiseToast(context, ErrorHelper.Problem.CALL_FAILED);
                 }
@@ -145,9 +145,7 @@ public class UserListFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(UserDetails item);
+        void onListButtonFragmentInteraction(UserDetails match);
+        void onListChatFragmentInteraction(UserDetails item);
     }
-
-    public void match(View v) {}
-
-    public void viewDetails(View v) {}
 }

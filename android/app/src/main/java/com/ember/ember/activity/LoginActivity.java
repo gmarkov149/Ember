@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body().getData() != null) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", response.body().getData());
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    ErrorHelper.setError(password, ErrorHelper.Problem.CALL_FAILED);
+                    ErrorHelper.setError(password, ErrorHelper.Problem.LOGIN_FAILED);
                 }
             }
 

@@ -27,8 +27,8 @@ public class UserDetails implements Serializable {
 
     public static final String[] possibleHobbies = {
             "Hobbies", "Fitness", "Music", "Dancing", "Reading",
-            "Walking", "Traveling", "Eating", "Crafts", "Fishing"};
-//            "Hiking", "Animals"};
+            "Walking", "Traveling", "Eating", "Crafts", "Fishing",
+            "Hiking", "Animals"};
 
     public UserDetails(String username, String name, String password, String email, String dob, String hobbies, String gender, String location, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {
         this.username = username;

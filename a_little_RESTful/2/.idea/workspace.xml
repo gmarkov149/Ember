@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad64c088-6332-4712-82cf-32a5e023e610" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example.log" beforeDir="false" afterPath="$PROJECT_DIR$/example.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/activity/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/activity/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/activity/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/activity/RegisterActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/adapter/UserRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/adapter/UserRecyclerViewAdapter.java" afterDir="false" />
@@ -13,6 +16,7 @@
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/helper/http/HttpHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/helper/http/HttpHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/helper/http/httpInterface/HttpInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/helper/http/httpInterface/HttpInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/model/UserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/model/UserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/app/src/main/res/layout/card_expanded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/res/layout/card_expanded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/app/src/main/res/layout/fragment_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/res/layout/fragment_user.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -67,7 +71,7 @@
     <session id="-611146032">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.33" value="1" />
@@ -77,24 +81,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="java" value="1" />
-          <entry key="properties" value="1" />
+          <entry key="properties" value="2" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JAVA" value="1" />
-          <entry key="Properties" value="1" />
+          <entry key="Properties" value="2" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="properties" value="13" />
           <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key="Properties" value="13" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
@@ -102,7 +108,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/App.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="194">
@@ -111,6 +117,15 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#3946#3952#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/log4j.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="57" lean-forward="true" selection-start-line="16" selection-start-column="57" selection-end-line="16" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -199,7 +214,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538982471514" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538985689558" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -258,7 +273,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3469751" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3469751" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39679715" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -334,13 +349,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="57" selection-start-line="16" selection-start-column="57" selection-end-line="16" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -349,6 +357,13 @@
             <element signature="imports" expanded="true" />
             <element signature="e#3946#3952#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log4j.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="57" lean-forward="true" selection-start-line="16" selection-start-column="57" selection-end-line="16" selection-end-column="57" />
         </state>
       </provider>
     </entry>

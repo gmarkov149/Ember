@@ -36,12 +36,12 @@
                 android:layout_weight="1"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/match"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ember"
             android:tint="@android:color/white"
-            android:layout_margin="10dp"
-            android:onClick="match"/>
+            android:layout_margin="10dp"/>
 
         </LinearLayout>
 

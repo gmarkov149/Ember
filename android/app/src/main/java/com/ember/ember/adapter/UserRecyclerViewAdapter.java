@@ -1,6 +1,8 @@
 package com.ember.ember.adapter;
 
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ember.ember.R;
+import com.ember.ember.activity.MainActivity;
 import com.ember.ember.fragment.UserListFragment.OnListFragmentInteractionListener;
 import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.model.UserDetails;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -25,10 +29,13 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
     private final List<UserDetails> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final boolean isMatched;
 
-    public UserRecyclerViewAdapter(List<UserDetails> items, OnListFragmentInteractionListener listener) {
+    public UserRecyclerViewAdapter(List<UserDetails> items,
+                                   OnListFragmentInteractionListener listener, boolean isMatched) {
         mValues = items;
         mListener = listener;
+        this.isMatched = isMatched;
     }
 
     @Override
@@ -50,6 +57,21 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             holder.thumbnail.setImageBitmap(BitmapHelper.convertStringToBmp(profilePicBytes));
         }
         holder.name.setText(currentUser.getName());
+        if (isMatched) {
+            holder.match.setImageResource(R.drawable.ic_baseline_message_24px);
+        }
+        holder.match.setOnClickListener((View v) -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                if (isMatched) {
+                    mListener.onListChatFragmentInteraction(holder.mItem);
+                }
+                else {
+                    mListener.onListButtonFragmentInteraction(holder.mItem);
+                }
+            }
+        });
 
         holder.mView.setOnClickListener((View v) ->  {
             if (null != mListener) {
@@ -69,6 +91,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
         public final View mView;
         public final ImageView thumbnail;
         public final TextView name;
+        public final FloatingActionButton match;
         public UserDetails mItem;
 
         public ViewHolder(View view) {
@@ -76,6 +99,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             mView = view;
             thumbnail = view.findViewById(R.id.thumbnail);
             name = view.findViewById(R.id.name);
+            match = view.findViewById(R.id.match);
         }
 
         @Override
