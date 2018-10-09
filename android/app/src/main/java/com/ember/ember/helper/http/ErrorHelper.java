@@ -10,7 +10,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class ErrorHelper {
 
     public enum Problem {
-        CALL_FAILED, LOGIN_FAILED, USERNAME_EMPTY, PASSWORD_EMPTY, NAME_EMPTY, EMAIL_EMPTY, DOB_EMPTY, PASSWORDS_NO_MATCH
+        USERNAME_EXISTS, CALL_FAILED, LOGIN_FAILED, USERNAME_EMPTY, PASSWORD_EMPTY, NAME_EMPTY, EMAIL_EMPTY, DOB_EMPTY, PASSWORDS_NO_MATCH
     }
 
     public static void setError(TextInputEditText text, Problem problem) {
@@ -26,6 +26,9 @@ public class ErrorHelper {
     private static String getStatement(Problem problem) {
         String problemAlert = "";
         switch(problem) {
+            case USERNAME_EXISTS:
+                problemAlert = "Username already exists!";
+                break;
             case CALL_FAILED:
                 problemAlert = "Login failed, are you connected to the Internet?";
                 break;
