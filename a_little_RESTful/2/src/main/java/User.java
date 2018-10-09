@@ -218,6 +218,17 @@ public class User
 		}
 
 	}
+	public void removePotential(String username)
+	{
+		for(int count = 0;count<potential.size(); count++)
+		{
+			if(potential.get(count).getKey().equals(username))
+			{
+				potential.remove(count);
+				return;
+			}
+		}
+	}
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name

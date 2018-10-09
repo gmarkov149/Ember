@@ -17,12 +17,20 @@ public class App
         post("/users", (request, response) -> {
 			response.type("application/json");
 		    User user = new Gson().fromJson(request.body(), User.class);
-		    user.parseHobbies();
-		    system.getPotentialMatches(user);
-		    system.addUser(user);
+		    if(system.checkIfAvailable(user.getUsername()))
+		    {
+		    	user.parseHobbies();
+		    	system.getPotentialMatches(user);
+		    	system.addUser(user);
 		 
-		    return new Gson()
-		      .toJson(new StandardResponse(StatusResponse.SUCCESS));
+		    	return new Gson()
+		    			.toJson(new StandardResponse(StatusResponse.SUCCESS));
+		    }
+		    else
+		    {
+		    	return new Gson()
+		    			.toJson(new StandardResponse(StatusResponse.ERROR));
+		    }
         });
         get("/users", (request, response) -> {
      	   response.type("application/json");
@@ -88,6 +96,8 @@ public class App
 		    User currentUser = new Gson().fromJson(request.body(), User.class);
 		 
 		    system.editUser(currentUser);
+		    currentUser.parseHobbies();
+		    system.updatePotential(currentUser);
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(currentUser)));
@@ -129,6 +139,7 @@ public class App
 		    User userToMatch = new Gson().fromJson(request.body(), User.class);
 		    User currentUser = system.findUser(request.params(":username"));
 		    currentUser.getMatched().add(system.findUser(userToMatch.getUsername()));
+		    currentUser.removePotential(userToMatch.getUsername());
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(currentUser)));

@@ -23,6 +23,17 @@ public class UserController
 		system.add(user);
 		
 	}
+	public boolean checkIfAvailable(String username)
+	{
+		for(User user:system)
+		{
+			if(user.getUsername().equals(username))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 	public User userExists(String username, String password)
 	{
 		for(User user: system)
@@ -97,5 +108,32 @@ public class UserController
 			matchScore = 0;
 		}
 		user.setPotential(temp);
+	}
+	public void updatePotential(User current)
+	{
+		int newMatchScore = 0;
+		ArrayList<Key_Value_Pair> temp = new ArrayList<Key_Value_Pair>();
+		for(User updatee:system)
+		{
+			if(updatee != current)
+			{
+				for(int i=0;i<12;i++)
+				{
+					if((current.getParsedHobbies())[i] == (updatee.getParsedHobbies())[i])
+					{
+						newMatchScore++;
+					}
+				}
+				temp = updatee.getPotential();
+				for(int count = 0; count<temp.size(); count++)
+				{
+					if(temp.get(count).getKey().equals(current.getUsername()))
+					{
+						temp.get(count).setValue(newMatchScore);
+					}
+				}
+				newMatchScore = 0;
+			}
+		}
 	}
 }
