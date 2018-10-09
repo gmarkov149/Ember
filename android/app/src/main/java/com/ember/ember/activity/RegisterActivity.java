@@ -239,7 +239,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                    ErrorHelper.raiseToast(RegisterActivity.this, ErrorHelper.Problem.CALL_FAILED);
+                    ErrorHelper.raiseToast(RegisterActivity.this, ErrorHelper.Problem.USERNAME_EXISTS);
             }
         });
     }
