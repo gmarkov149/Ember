@@ -21,7 +21,7 @@ public class HttpHelper {
             .build();
 
     private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.0.101:4567")
+            .baseUrl("http://192.168.0.101:4567")//10.27.45.207
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build();
