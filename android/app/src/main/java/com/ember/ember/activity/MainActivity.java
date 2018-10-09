@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity
         bundle.putSerializable("user", userDetails);
         intent.putExtras(bundle);
         startActivity(intent);
-        finish();
     }
 
     public void collapseCard() {
