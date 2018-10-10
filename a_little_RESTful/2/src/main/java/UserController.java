@@ -3,25 +3,73 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-
+// For DB
+import java.sql.*;
+import java.util.Scanner;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class UserController 
 {
 	private ArrayList<User> system;
+	private int id = 1; 
+	private ResultSet rs;
+	private Statement statement;
+
+	// Define Data Source
+	private MysqlDataSource dataSource;
+	provateConnection conn;
+
 	public UserController()
 	{
 		system = new ArrayList<User>();
-		//Daniel, here you need to add every User that exists in the database to system
-		//somehow you also need to save every user whenever the app is exited
-		//be careful of the users that already exist in the database
+
+		// Define Data Source
+        dataSource = new MysqlDataSource();
+        // DB user
+        dataSource.setUser("root");
+        // DB password
+        dataSource.setPassword("0596");
+        dataSource.setServerName("localhost");
+        // DB name
+        dataSource.setDatabaseName("cz3002");
+        conn = null;
+
+        // Establish a connection
+        try {
+            conn = dataSource.getConnection();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
 	}
+	// Return all users from database
 	public ArrayList<User> getSystem() {
 		return system;
 	}
 	public void addUser(User user)
 	{
 		system.add(user);
-		
+
+		rs = null;
+		statement = null;
+
+		try {
+		    statement = conn.createStatement();
+		    statement.executeUpdate(
+		        "INSERT INTO Users " + 
+		        "VALUES " +
+		        String.format("(%d,'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"), 
+		        id, user.getUsername(), user.getPassword(), user.getName(), user.getEmail(), user.getDob(), user.getGender(), user.getLocation(), user.getLanguages(), user.getProfilePicBytes(), user.isInterestedInMen(), user.isInterestedInWomen());
+		    
+		    boolean[] hobbies = user.getParsedHobbies();
+		    statement.executeUpdate(
+		        "INSERT INTO Hobbies " + 
+		        "VALUES " +
+		        String.format("(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"), 
+		        hobbies[0], hobbies[1], hobbies[2], hobbies[3], hobbies[4], hobbies[5], hobbies[6], hobbies[7], hobbies[8], hobbies[9], hobbies[10], hobbies[11]);
+		    continue;
+		} catch(SQLException e){ e.printStackTrace(); } break;
+		id += 1
 	}
 	public boolean checkIfAvailable(String username)
 	{

@@ -5,59 +5,60 @@ DROP TABLE IF EXISTS `SuggestedPartners`;
 DROP TABLE IF EXISTS `LikedUsers`;
 DROP TABLE IF EXISTS `Chat`;
 DROP TABLE IF EXISTS `Hobbies`;
-DROP TABLE IF EXISTS `Languages`;
-DROP TABLE IF EXISTS `Login`;
+-- DROP TABLE IF EXISTS `Languages`;
+-- DROP TABLE IF EXISTS `Login`;
 DROP TABLE IF EXISTS `Users`;
 
 -- Tables that do not reference other tables: 
 CREATE TABLE `Users` (
 	`ID` 		int NOT NULL,
 	`Username` 	varchar(50) NOT NULL,
+	`Password` 	varchar(50) NOT NULL,
 	`Name` 		varchar(50) NOT NULL,
 	`Email` 	varchar(50) NOT NULL,
 	`DOB` 		char(10) NOT NULL,
 	`Gender` 	varchar(10) NOT NULL,
 	`Location` 	varchar(50) NOT NULL,
-	`ProfilePicBytes` 	int NOT NULL,
-	`ProfilePicPath` 	varchar(255) NOT NULL,
+	`Languages` 		varchar(50) NOT NULL,
+	`ProfilePicBytes` 	blob NOT NULL,
 	`InterestedInMen` 	char(1) NOT NULL DEFAULT '0',
 	`InterestedInWomen` char(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`ID`)
 ); 
 
 -- Tables that do reference other tables: 
-CREATE TABLE `Login` (
-	`Username` 	varchar(50) NOT NULL,
-	`Password` 	varchar(50) NOT NULL,
-	`UserID` 	int NOT NULL,
-	PRIMARY KEY (`Username`, `Password`),
-	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
-);
+-- CREATE TABLE `Login` (
+-- 	`Username` 	varchar(50) NOT NULL,
+-- 	`Password` 	varchar(50) NOT NULL,
+-- 	`UserID` 	int NOT NULL,
+-- 	PRIMARY KEY (`Username`, `Password`),
+-- 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
+-- );
 
-CREATE TABLE `Languages` (
-	`UserID` 	int NOT NULL,
-	`English` 	char(1) NOT NULL DEFAULT '0',
-	`Malay` 	char(1) NOT NULL DEFAULT '0',
-	`Mandarin` 	char(1) NOT NULL DEFAULT '0',
-	`Tamil` 	char(1) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`UserID`),
-	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
-);
+-- CREATE TABLE `Languages` (
+-- 	`UserID` 	int NOT NULL,
+-- 	`English` 	char(1) NOT NULL DEFAULT '0',
+-- 	`Malay` 	char(1) NOT NULL DEFAULT '0',
+-- 	`Mandarin` 	char(1) NOT NULL DEFAULT '0',
+-- 	`Tamil` 	char(1) NOT NULL DEFAULT '0',
+-- 	PRIMARY KEY (`UserID`),
+-- 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
+-- );
 
 -- Alter when new hobbies added (Add tanking to hobbies)
 CREATE TABLE `Hobbies` (
 	`UserID` 	int NOT NULL,
-	`Fitness` 	char(1) NOT NULL DEFAULT '0',
-	`Music` 	char(1) NOT NULL DEFAULT '0',
-	`Dancing` 	char(1) NOT NULL DEFAULT '0',
-	`Reading` 	char(1) NOT NULL DEFAULT '0',
-	`Walking` 	char(1) NOT NULL DEFAULT '0',
-	`Traveling` char(1) NOT NULL DEFAULT '0',
-	`Eating` 	char(1) NOT NULL DEFAULT '0',
-	`Crafts` 	char(1) NOT NULL DEFAULT '0',
-	`Fishing` 	char(1) NOT NULL DEFAULT '0',
-	`Hiking` 	char(1) NOT NULL DEFAULT '0',
-	`Animals` 	char(1) NOT NULL DEFAULT '0',
+	`Fitness` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Music` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Dancing` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Reading` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Walking` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Traveling` varchar(5) NOT NULL DEFAULT 'false',
+	`Eating` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Crafts` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Fishing` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Hiking` 	varchar(5) NOT NULL DEFAULT 'false',
+	`Animals` 	varchar(5) NOT NULL DEFAULT 'false',
 	PRIMARY KEY (`UserID`),
 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 );

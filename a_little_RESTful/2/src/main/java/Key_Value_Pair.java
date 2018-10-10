@@ -2,7 +2,7 @@
 public class Key_Value_Pair
 {
 	private String key;
-	private int value;
+	private int value; // User score
 	public Key_Value_Pair(String key, int value) {
 		super();
 		this.key = key;
