@@ -61,14 +61,35 @@ public class UserController
 		    rs.next();
 
 		    // Convert hobbies to correctly formatted hobby string 
-		    String hobbies = String.format("%s %s %s %s %s %s %s %s %s %s %s", rs.getString("Fitness"), rs.getString("Music"), rs.getString("Dancing"), 
-		     	rs.getString("Reading"), rs.getString("Walking"), rs.getString("Traveling"), rs.getString("Eating"), rs.getString("Crafts"), 
-		     	rs.getString("Fishing"), rs.getString("Hiking"), rs.getString("Animals"));
+		    String hobbies = String.format("%s %s %s %s %s %s %s %s %s %s %s", 
+		    	rs.getString("Fitness"), 
+		    	rs.getString("Music"), 
+		    	rs.getString("Dancing"), 
+		     	rs.getString("Reading"), 
+		     	rs.getString("Walking"), 
+		     	rs.getString("Traveling"), 
+		     	rs.getString("Eating"), 
+		     	rs.getString("Crafts"), 
+		     	rs.getString("Fishing"), 
+		     	rs.getString("Hiking"), 
+		     	rs.getString("Animals")
+		     );
 
 		    // Create user object from database
-		    User userObject = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("Email"), rs.getString("Name"), 
-		    	rs.getString("DOB"), hobbies, rs.getString("Gender"), rs.getString("Location"), rs.getString("Languages"), rs.getString("ProfilePicBytes"),
-		    	Boolean.parseBoolean(rs.getString("InterestedInMen")), Boolean.parseBoolean(rs.getString("InterestedInWomen")));
+		    User userObject = new User(
+		    	rs.getString("Username"), 
+		    	rs.getString("Password"), 
+		    	rs.getString("Email"), 
+		    	rs.getString("Name"), 
+		    	rs.getString("DOB"), 
+		    	hobbies, 
+		    	rs.getString("Gender"), 
+		    	rs.getString("Location"), 
+		    	rs.getString("Languages"), 
+		    	rs.getString("ProfilePicBytes"),
+		    	Boolean.parseBoolean(rs.getString("InterestedInMen")), 
+		    	Boolean.parseBoolean(rs.getString("InterestedInWomen"))
+		    );
 		
 		    return userObject;
 
@@ -86,14 +107,38 @@ public class UserController
 		        "INSERT INTO Users " + 
 		        "VALUES " +
 		        String.format("(%d,'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
-		        	id, user.getUsername(), user.getPassword(), user.getName(), user.getEmail(), user.getDob(), user.getGender(), user.getLocation(), user.getLanguages(), user.getProfilePicBytes(), user.isInterestedInMen(), user.isInterestedInWomen()));
+		        	id, 
+		        	user.getUsername(), 
+		        	user.getPassword(), 
+		        	user.getName(), 
+		        	user.getEmail(), 
+		        	user.getDob(), 
+		        	user.getGender(), 
+		        	user.getLocation(), 
+		        	user.getLanguages(), 
+		        	user.getProfilePicBytes(), 
+		        	user.isInterestedInMen(), 
+		        	user.isInterestedInWomen())
+		        );
 		    
 		    boolean[] hobbies = user.getParsedHobbies();
 		    statement.executeUpdate(
 		        "INSERT INTO Hobbies " + 
 		        "VALUES " +
 		        String.format("(%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
-		        	id, hobbies[0], hobbies[1], hobbies[2], hobbies[3], hobbies[4], hobbies[5], hobbies[6], hobbies[7], hobbies[8], hobbies[9], hobbies[10]));
+		        	id, 
+		        	hobbies[0], 
+		        	hobbies[1], 
+		        	hobbies[2], 
+		        	hobbies[3], 
+		        	hobbies[4], 
+		        	hobbies[5], 
+		        	hobbies[6], 
+		        	hobbies[7], 
+		        	hobbies[8], 
+		        	hobbies[9], 
+		        	hobbies[10])
+		        );
 		} catch(SQLException e){ e.printStackTrace(); }
 		// Increment ID for next user added. What if the backend is restarted? Will have to get last id.
 		id += 1
@@ -177,7 +222,17 @@ public class UserController
 		        "UPDATE Users " + 
 		        "SET " + 
 		        String.format("Username='%s', Password='%s', Name='%s', Email='%s', DOB='%s', Gender='%s', Location='%s', Languages='%s', ProfilePicBytes='%s', InterestedInMen='%s', InterestedInWomen='%s' ", 
-		        	toEdit.getUsername(), toEdit.getPassword(), toEdit.getName(), toEdit.getEmail(), toEdit.getDob(), toEdit.getGender(), toEdit.getLocation(), toEdit.getLanguages(), toEdit.getProfilePicBytes(), toEdit.isInterestedInMen(), toEdit.isInterestedInWomen()) + 
+		        	toEdit.getUsername(), 
+		        	toEdit.getPassword(), 
+		        	toEdit.getName(), 
+		        	toEdit.getEmail(), 
+		        	toEdit.getDob(), 
+		        	toEdit.getGender(), 
+		        	toEdit.getLocation(), 
+		        	toEdit.getLanguages(), 
+		        	toEdit.getProfilePicBytes(), 
+		        	toEdit.isInterestedInMen(), 
+		        	toEdit.isInterestedInWomen()) + 
 		        "WHERE Users.Username='" + toEdit.getUsername() + "'");
 
 		    // Get UserID
@@ -193,7 +248,17 @@ public class UserController
 		        "UPDATE Hobbies " + 
 		        "SET " +
 		        String.format("Fitness='%s', Music='%s', Dancing='%s', Reading='%s', Walking='%s', Traveling='%s', Eating='%s', Crafts='%s', Fishing='%s', Hiking='%s', Animals='%s' ", 
-		        	hobbies[0], hobbies[1], hobbies[2], hobbies[3], hobbies[4], hobbies[5], hobbies[6], hobbies[7], hobbies[8], hobbies[9], hobbies[10]) + 
+		        	hobbies[0], 
+		        	hobbies[1], 
+		        	hobbies[2], 
+		        	hobbies[3], 
+		        	hobbies[4], 
+		        	hobbies[5], 
+		        	hobbies[6], 
+		        	hobbies[7], 
+		        	hobbies[8], 
+		        	hobbies[9], 
+		        	hobbies[10]) + 
 		    	"WHERE Hobbies.UserID=" + rs.getString("ID"));
 
 		} catch(SQLException e){ e.printStackTrace(); }
