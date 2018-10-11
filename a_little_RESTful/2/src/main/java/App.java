@@ -95,8 +95,8 @@ public class App
 		    
 		    User currentUser = new Gson().fromJson(request.body(), User.class);
 		 
-		    system.editUser(currentUser);
 		    currentUser.parseHobbies();
+		    system.editUser(currentUser);
 		    system.updatePotential(currentUser);
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()

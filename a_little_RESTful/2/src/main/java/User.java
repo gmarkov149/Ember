@@ -59,19 +59,24 @@ public class User
 	}
 
 
-	public User(String username, String password, String email, String name, String dob, ArrayList<Boolean> hobbies,
-			String gender, String location, String languages, String profilePicBytes) {
+	public User(String username, String password, String email, String name, String dob, String hobbies,
+			String gender, String location, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.name = name;
 		this.dob = dob;
-		//this.hobbies = hobbies;
+		this.hobbies = hobbies;
+		this.parsedHobbies = this.parseHobbies();
 		this.gender = gender;
 		this.location = location;
 		this.languages = languages;
 		this.profilePicBytes = profilePicBytes;
+		this.interestedInMen = interestedInMen;
+		this.interestedInWomen = interestedInWomen;
+		matched = new ArrayList<>();
+		potential = new ArrayList<>();
 	}
 
 	public String getUsername() {
