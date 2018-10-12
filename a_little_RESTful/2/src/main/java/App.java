@@ -20,7 +20,7 @@ public class App
 		    if(system.checkIfAvailable(user.getUsername()))
 		    {
 		    	user.parseHobbies();
-		    	system.getPotentialMatches(user);
+		    	//system.getPotentialMatches(user);
 		    	system.addUser(user);
 		 
 		    	return new Gson()
@@ -32,6 +32,7 @@ public class App
 		    			.toJson(new StandardResponse(StatusResponse.ERROR));
 		    }
         });
+        //method is useless if we're having trouble storing all users in the same place
         get("/users", (request, response) -> {
      	   response.type("application/json");
      	   /*for(User user: system.getSystem())
@@ -144,5 +145,13 @@ public class App
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(currentUser)));
         });
+        get("/users/reset", (request, response) -> {
+			response.type("application/json");
+		    
+		    system.reset();
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS));
+        });
+        
     }
 }

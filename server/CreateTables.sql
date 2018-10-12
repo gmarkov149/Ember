@@ -3,7 +3,7 @@
 -- Tables dropped in the reverse order that they were created to prevent reference errors
 DROP TABLE IF EXISTS `SuggestedPartners`;
 DROP TABLE IF EXISTS `LikedUsers`;
-DROP TABLE IF EXISTS `Chat`;
+--DROP TABLE IF EXISTS `Chat`;
 DROP TABLE IF EXISTS `Hobbies`;
 -- DROP TABLE IF EXISTS `Languages`;
 -- DROP TABLE IF EXISTS `Login`;
@@ -21,8 +21,8 @@ CREATE TABLE `Users` (
 	`Location` 	varchar(50) NOT NULL,
 	`Languages` 		varchar(50) NOT NULL,
 	`ProfilePicBytes` 	blob NOT NULL,
-	`InterestedInMen` 	char(1) NOT NULL DEFAULT '0',
-	`InterestedInWomen` char(1) NOT NULL DEFAULT '0',
+	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT "0",
+	`InterestedInWomen` varchar(10) NOT NULL DEFAULT "0",
 	PRIMARY KEY (`ID`)
 ); 
 
@@ -79,13 +79,13 @@ CREATE TABLE `LikedUsers` (
 	FOREIGN KEY (`LikesID`) REFERENCES Users(`ID`)
 );
 
-CREATE TABLE `Chat` (
-	`SenderID`		int NOT NULL,
-	`ReceiverID` 	int NOT NULL,
-	`Datestamp`		date NOT NULL DEFAULT '0000-00-00',
-	`Timestamp`		time DEFAULT NULL,
-	`Message`		varchar(255) NOT NULL,
-	PRIMARY KEY (`SenderID`, `ReceiverID`, `Datestamp`, `Timestamp`, `Message`),
-	FOREIGN KEY (`SenderID`) REFERENCES Users(`ID`),
-	FOREIGN KEY (`ReceiverID`) REFERENCES Users(`ID`)
-);
+--CREATE TABLE `Chat` (
+--	`SenderID`		int NOT NULL,
+--	`ReceiverID` 	int NOT NULL,
+--	`Datestamp`		date NOT NULL DEFAULT '0000-00-00',
+--	`Timestamp`		time DEFAULT NULL,
+--	`Message`		varchar(255) NOT NULL,
+--	PRIMARY KEY (`SenderID`, `ReceiverID`, `Datestamp`, `Timestamp`, `Message`),
+--	FOREIGN KEY (`SenderID`) REFERENCES Users(`ID`),
+--	FOREIGN KEY (`ReceiverID`) REFERENCES Users(`ID`)
+--);
