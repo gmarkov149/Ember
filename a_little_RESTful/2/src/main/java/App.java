@@ -43,6 +43,14 @@ public class App
      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
      	        .toJsonTree(system.getSystem())));
          });
+        //get a user with the specified username
+        get("/users/a/:username", (request, response) -> {
+       	   response.type("application/json");
+       	   User toReturn = system.toUserObject(request.params(":username"));
+       	    return new Gson().toJson(
+       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+       	        .toJsonTree(toReturn)));
+           });
         //get  matched for username
         get("/users/matched/:username", (request, response) -> {
       	   response.type("application/json");

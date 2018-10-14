@@ -43,7 +43,6 @@ public class UserController
             rs.next();
             id = rs.getInt(1);
             id++;
-            System.out.println(id);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -113,7 +112,6 @@ public class UserController
 		statement = null;
 
 		try {
-			System.out.println("Here!");
 		    statement = conn.createStatement();
 		    statement.executeUpdate(
 		        "INSERT INTO users " + 
