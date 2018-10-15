@@ -101,9 +101,9 @@ public class UserController
 			return userObject;
 
 		} catch(SQLException e){ e.printStackTrace();
-								//added return null; to make it force return something if needed
-								return null;
-								} 
+			//added return null; to make it force return something if needed
+			return null;	
+		} 
 	}
 
 	// Add a user to the database
@@ -174,9 +174,7 @@ public class UserController
 		}
 		return false;
 		//moved the following try catch line to encapsulate the exception
-		} catch(SQLException e){ e.printStackTrace();
-								return false;
-								}
+		} catch(SQLException e){ e.printStackTrace(); return false; }
 	}
 
 	// Check and return an existing user
@@ -287,11 +285,56 @@ public class UserController
 	// Get a users potential matches, this is where matching algoritm will be
 	// The user.potential will be updated
 	public void updatePotentialMatches(User user) {
-
 		// Remember to ignore matched users
+		// 1. Apply filter to an SQL query, interested in Men or Women, Language.
+		// 2. Get list filtered usernames and compare to current user for score. Ignore current user.
+		// 3. Add remaining users into the SuggestedPartners table with their score for the current user.
+		rs = null;
+		statement = null;
 
+		// Remember to remove from users potenial list
+		try {
+		    statement = conn.createStatement();
+		    rs = statement.executeQuery(
+		        "SELECT Users.Username Users.Gender" + 
+		        "FROM Users " +
+		        String.format("WHERE Users.Username!=%s AND Users.Languages==%s", 
+		        	user.getUsername(), user.getLanguages()));
+
+		    // Get filtered users
+		    ArrayList<String> filteredUsers = new ArrayList<String>();
+		    while(rs.next()) {
+		    	if(user.isInterestedInMen()) {
+		    		if(rs.getString("Gender") == "Male")
+						filteredUsers.add(rs.getString("Username"));		    		
+		    	}
+
+		    	else if(user.isInterestedInWomen()) {
+		    		if(rs.getString("Gender") == "Female")
+						filteredUsers.add(rs.getString("Username"));		    		
+		    	}  
+
+		    }
+		    // For every filtered user, compare and apply matching
+	    	for(String compareTo:filteredUsers) {
+				User comparedUser = toUserObject(compareTo);
+
+				int score = 0;
+
+				for(int i = 0; i < 11; i++) {
+					if( user.getParsedHobbies()[i].equals(comparedUser.getParsedHobbies()[i]) )
+						score++;
+				}
+
+				statement = conn.createStatement();
+				statement.executeUpdate(
+				    "INSERT INTO SuggestedPartners " + 
+				    "VALUES " + 
+				    String.format("(%s, %s, %d)", user.getUsername(), comparedUser.getUsername(), score ));
+	    	}	
+
+		} catch(SQLException e){ e.printStackTrace(); } 
 	}
-
 
 	// Add a new match to the current user (BOTH USERS)
 	// The user.matched will be updated
@@ -306,9 +349,18 @@ public class UserController
 		        "INSERT INTO LikedUsers " + 
 		        "VALUES " + 
 		        String.format("(%d, %d)", userID, likeID ));
-		    continue;
 		} catch(SQLException e){ e.printStackTrace(); } 
+	
+
 	}
+
+	// Add a new match to the current user (BOTH USERS)
+	// The user.matched will be updated
+	// public void getChat(User current, User match) {
+	// 	rs = null;
+	// 	statement = null;
+	// }
+
 	//manual reset back to empty tables PURELY FOR TESTING
 	public void reset()
 	{
@@ -331,8 +383,8 @@ public class UserController
 		    		"	`Location` 	varchar(50) NOT NULL,\r\n" + 
 		    		"	`Languages` 		varchar(50) NOT NULL,\r\n" + 
 		    		"	`ProfilePicBytes` 	blob NOT NULL,\r\n" + 
-		    		"	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT \"0\",\r\n" + 
-		    		"	`InterestedInWomen` varchar(10) NOT NULL DEFAULT \"0\",\r\n" + 
+		    		"	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
+		    		"	`InterestedInWomen` varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	PRIMARY KEY (`ID`)\r\n" + 
 		    		") ");
 		    statement.executeUpdate("CREATE TABLE `Hobbies` (\r\n" + 
@@ -352,11 +404,12 @@ public class UserController
 		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)\r\n" + 
 		    		")");        
 		    statement.executeUpdate("CREATE TABLE `SuggestedPartners` (\r\n" + 
-		    		"	`UserID` 	int NOT NULL,\r\n" + 
-		    		"	`PartnerID` int NOT NULL,\r\n" + 
-		    		"	PRIMARY KEY (`UserID`, `PartnerID`),\r\n" + 
-		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),\r\n" + 
-		    		"	FOREIGN KEY (`PartnerID`) REFERENCES Users(`ID`)\r\n" + 
+		    		"	`Username` 	int NOT NULL,\r\n" + 
+		    		"	`PartnerUsername` int NOT NULL,\r\n" + 
+		    		"	`Score` int NOT NULL DEFAULT 0,\r\n" + 
+		    		"	PRIMARY KEY (`Username`, `PartnerUsername`),\r\n" + 
+		    		"	FOREIGN KEY (`Username`) REFERENCES Users(`Username`),\r\n" + 
+		    		"	FOREIGN KEY (`PartnerUsername`) REFERENCES Users(`Username`)\r\n" + 
 		    		")");
 		    statement.executeUpdate("CREATE TABLE `LikedUsers` (\r\n" + 
 		    		"	`UserID` 	int NOT NULL,\r\n" + 
