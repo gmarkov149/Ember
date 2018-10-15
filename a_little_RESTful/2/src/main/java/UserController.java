@@ -24,23 +24,30 @@ public class UserController
 		system = new ArrayList<User>();
 
 		// Define Data Source
-		dataSource = new MysqlDataSource();
-		// DB user
-		dataSource.setUser("root");
-		// DB password
-		dataSource.setPassword("0596");
-		dataSource.setServerName("localhost");
-		// DB name
-		dataSource.setDatabaseName("cz3002");
-		conn = null;
+        dataSource = new MysqlDataSource();
+        // DB user
+        dataSource.setUser("root");
+        // DB password
+        dataSource.setPassword("CZ3002");
+        dataSource.setServerName("localhost");
+        // DB name
+        dataSource.setDatabaseName("cz3002");
+        conn = null;
 
-		// Establish a connection
-		try {
-			conn = dataSource.getConnection();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+        // Establish a connection
+        try {
+            conn = dataSource.getConnection();
+            // save the current id even if the program is restrated
+            statement = conn.createStatement();
+            rs = statement.executeQuery("SELECT ID FROM users ORDER BY ID DESC LIMIT 1");
+            rs.next();
+            id = rs.getInt(1);
+            id++;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            id = 1;
+        }
 	}
 
 	// Return all users from database
@@ -93,7 +100,10 @@ public class UserController
 		
 			return userObject;
 
-		} catch(SQLException e){ e.printStackTrace(); } 
+		} catch(SQLException e){ e.printStackTrace();
+								//added return null; to make it force return something if needed
+								return null;
+								} 
 	}
 
 	// Add a user to the database
@@ -102,46 +112,46 @@ public class UserController
 		statement = null;
 
 		try {
-			statement = conn.createStatement();
-			statement.executeUpdate(
-				"INSERT INTO Users " + 
-				"VALUES " +
-				String.format("(%d,'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
-					id, 
-					user.getUsername(), 
-					user.getPassword(), 
-					user.getName(), 
-					user.getEmail(), 
-					user.getDob(), 
-					user.getGender(), 
-					user.getLocation(), 
-					user.getLanguages(), 
-					user.getProfilePicBytes(), 
-					user.isInterestedInMen(), 
-					user.isInterestedInWomen())
-				);
-
-			boolean[] hobbies = user.getParsedHobbies();
-			statement.executeUpdate(
-				"INSERT INTO Hobbies " + 
-				"VALUES " +
-				String.format("(%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
-					id, 
-					hobbies[0], 
-					hobbies[1], 
-					hobbies[2], 
-					hobbies[3], 
-					hobbies[4], 
-					hobbies[5], 
-					hobbies[6], 
-					hobbies[7], 
-					hobbies[8], 
-					hobbies[9], 
-					hobbies[10])
-				);
+		    statement = conn.createStatement();
+		    statement.executeUpdate(
+		        "INSERT INTO users " + 
+		        "VALUES " +
+		        String.format("(%d,'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+		        	id, 
+		        	user.getUsername(), 
+		        	user.getPassword(), 
+		        	user.getName(), 
+		        	user.getEmail(), 
+		        	user.getDob(), 
+		        	user.getGender(), 
+		        	user.getLocation(), 
+		        	user.getLanguages(), 
+		        	user.getProfilePicBytes(), 
+		        	user.isInterestedInMen(), 
+		        	user.isInterestedInWomen())
+		        );
+		    
+		    boolean[] hobbies = user.getParsedHobbies();
+		    statement.executeUpdate(
+		        "INSERT INTO Hobbies " + 
+		        "VALUES " +
+		        String.format("(%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+		        	id, 
+		        	hobbies[0], 
+		        	hobbies[1], 
+		        	hobbies[2], 
+		        	hobbies[3], 
+		        	hobbies[4], 
+		        	hobbies[5], 
+		        	hobbies[6], 
+		        	hobbies[7], 
+		        	hobbies[8], 
+		        	hobbies[9], 
+		        	hobbies[10])
+		        );
 		} catch(SQLException e){ e.printStackTrace(); }
 		// Increment ID for next user added. What if the backend is restarted? Will have to get last id.
-		id += 1
+		id += 1;
 	}
 
 	// Check if a username is available 
@@ -156,13 +166,17 @@ public class UserController
 				"SELECT Users.Username " + 
 				"FROM Users " + 
 				"WHERE Users.Username='" + username + "'");
-		} catch(SQLException e){ e.printStackTrace(); }
+		
 
 		// ResultSet is empty, Username is available
 		if (!rs.first()) {
 			return true;
 		}
 		return false;
+		//moved the following try catch line to encapsulate the exception
+		} catch(SQLException e){ e.printStackTrace();
+								return false;
+								}
 	}
 
 	// Check and return an existing user
@@ -177,7 +191,7 @@ public class UserController
 				"SELECT Users.Username, Users.Password " + 
 				"FROM Users " +
 				"WHERE Users.Username='" + username + "' AND Users.Password='" + password + "'");
-		} catch(SQLException e){ e.printStackTrace(); } 
+		
 
 		// ResultSet is empty, user DNE
 		if (!rs.first()) {
@@ -185,6 +199,9 @@ public class UserController
 		}
 		// Return user object, convert from DB result
 		return toUserObject(username);
+		//moved the following try catch line to encapsulate the exception
+		} catch(SQLException e){ e.printStackTrace();
+		return null;} 
 	}
 
 	// Find and return a user object from the database
@@ -199,7 +216,7 @@ public class UserController
 				"SELECT Users.Username " + 
 				"FROM Users " + 
 				"WHERE Users.Username='" + username + "'");
-		} catch(SQLException e){ e.printStackTrace(); }
+		
 
 		// ResultSet is empty, user DNE
 		if (!rs.first()) {
@@ -207,6 +224,9 @@ public class UserController
 		}
 		// Return user object, convert from DB result
 		return toUserObject(username);
+		//moved the following try catch line to encapsulate the exception
+		} catch(SQLException e){ e.printStackTrace();
+		return null;}
 	}
 
 	// Update user by replacing its details with the new details. NO MORE SWAPPING INDECIES
@@ -288,5 +308,65 @@ public class UserController
 		        String.format("(%d, %d)", userID, likeID ));
 		    continue;
 		} catch(SQLException e){ e.printStackTrace(); } 
+	}
+	//manual reset back to empty tables PURELY FOR TESTING
+	public void reset()
+	{
+		statement = null;
+		id = 1;
+		try {
+		    statement = conn.createStatement();
+		    statement.executeUpdate("DROP TABLE IF EXISTS SuggestedPartners");
+		    statement.executeUpdate("DROP TABLE IF EXISTS LikedUsers");
+		    statement.executeUpdate("DROP TABLE IF EXISTS Hobbies");
+		    statement.executeUpdate("DROP TABLE IF EXISTS Users");
+		    statement.executeUpdate("CREATE TABLE `Users` (\r\n" + 
+		    		"	`ID` 		int NOT NULL,\r\n" + 
+		    		"	`Username` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`Password` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`Name` 		varchar(50) NOT NULL,\r\n" + 
+		    		"	`Email` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`DOB` 		char(10) NOT NULL,\r\n" + 
+		    		"	`Gender` 	varchar(10) NOT NULL,\r\n" + 
+		    		"	`Location` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`Languages` 		varchar(50) NOT NULL,\r\n" + 
+		    		"	`ProfilePicBytes` 	blob NOT NULL,\r\n" + 
+		    		"	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT \"0\",\r\n" + 
+		    		"	`InterestedInWomen` varchar(10) NOT NULL DEFAULT \"0\",\r\n" + 
+		    		"	PRIMARY KEY (`ID`)\r\n" + 
+		    		") ");
+		    statement.executeUpdate("CREATE TABLE `Hobbies` (\r\n" + 
+		    		"	`UserID` 	int NOT NULL,\r\n" + 
+		    		"	`Fitness` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Music` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Dancing` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Reading` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Walking` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Traveling` varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Eating` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Crafts` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Fishing` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Hiking` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	`Animals` 	varchar(5) NOT NULL DEFAULT 'false',\r\n" + 
+		    		"	PRIMARY KEY (`UserID`),\r\n" + 
+		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)\r\n" + 
+		    		")");        
+		    statement.executeUpdate("CREATE TABLE `SuggestedPartners` (\r\n" + 
+		    		"	`UserID` 	int NOT NULL,\r\n" + 
+		    		"	`PartnerID` int NOT NULL,\r\n" + 
+		    		"	PRIMARY KEY (`UserID`, `PartnerID`),\r\n" + 
+		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),\r\n" + 
+		    		"	FOREIGN KEY (`PartnerID`) REFERENCES Users(`ID`)\r\n" + 
+		    		")");
+		    statement.executeUpdate("CREATE TABLE `LikedUsers` (\r\n" + 
+		    		"	`UserID` 	int NOT NULL,\r\n" + 
+		    		"	`LikesID` 	int NOT NULL,\r\n" + 
+		    		"	PRIMARY KEY (`UserID`, `LikesID`),\r\n" + 
+		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),\r\n" + 
+		    		"	FOREIGN KEY (`LikesID`) REFERENCES Users(`ID`)\r\n" + 
+		    		")");
+		    
+			
+		} catch(SQLException e){ e.printStackTrace(); }
 	}
 }

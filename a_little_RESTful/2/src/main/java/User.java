@@ -50,7 +50,7 @@ public class User
 		this.name = name;
 		this.dob = dob;
 		this.hobbies = hobbies;
-		this.parsedHobbies = this.parseHobbies();
+		//this.parsedHobbies = this.parseHobbies();
 		this.gender = gender;
 		this.location = location;
 		this.languages = languages;

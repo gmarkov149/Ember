@@ -1,0 +1,249 @@
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @507ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+ERROR Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - ignite failed
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketAdaptor.bind(Unknown Source)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:326)
+	at org.eclipse.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.eclipse.jetty.server.ServerConnector.doStart(ServerConnector.java:244)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:384)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at spark.embeddedserver.jetty.EmbeddedJettyServer.ignite(EmbeddedJettyServer.java:129)
+	at spark.Service.lambda$init$1(Service.java:452)
+	at java.lang.Thread.run(Unknown Source)
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @472ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+ERROR Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - ignite failed
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketAdaptor.bind(Unknown Source)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:326)
+	at org.eclipse.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.eclipse.jetty.server.ServerConnector.doStart(ServerConnector.java:244)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:384)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at spark.embeddedserver.jetty.EmbeddedJettyServer.ignite(EmbeddedJettyServer.java:129)
+	at spark.Service.lambda$init$1(Service.java:452)
+	at java.lang.Thread.run(Unknown Source)
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @435ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+ERROR Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - ignite failed
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketAdaptor.bind(Unknown Source)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:326)
+	at org.eclipse.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.eclipse.jetty.server.ServerConnector.doStart(ServerConnector.java:244)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:384)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at spark.embeddedserver.jetty.EmbeddedJettyServer.ignite(EmbeddedJettyServer.java:129)
+	at spark.Service.lambda$init$1(Service.java:452)
+	at java.lang.Thread.run(Unknown Source)
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @476ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@26fc27ff{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @849ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1748ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@c66d81a{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1920ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1655ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@c66d81a{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1773ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1668ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@367847e7{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1784ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1636ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2a07cdbe{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1820ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1675ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@46d50f24{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1780ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1618ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2a2ff0bf{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1822ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1705ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@19b1ce91{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1827ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1701ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@10b58857{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1815ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1802ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@7e11d623{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1921ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1643ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@19b1ce91{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1759ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1675ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@19b1ce91{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1791ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1582ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@10b58857{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1695ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1544ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@10b58857{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1670ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1772ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@10b58857{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1880ms
+INFO qtp1108560449-17 spark.http.matching.MatcherFilter - The requested route [/users/reset] has not been mapped in Spark for Accept: [*/*]
+INFO qtp1108560449-14 spark.http.matching.MatcherFilter - The requested route [/users/reset] has not been mapped in Spark for Accept: [*/*]
+INFO qtp1108560449-20 spark.http.matching.MatcherFilter - The requested route [/users/reset] has not been mapped in Spark for Accept: [*/*]
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1571ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@10b58857{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1696ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1571ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@682b1575{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1676ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1535ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@7e11d623{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1646ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1556ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@19b1ce91{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1670ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1564ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@6d12e3c9{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1670ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1555ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@6848e41f{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1667ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1566ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@6d12e3c9{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1678ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1544ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2ae55d18{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1653ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1663ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@704740f7{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1770ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1588ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@704740f7{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1695ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1645ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@1e9caff2{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1753ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1555ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2ae55d18{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1660ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @2058ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@38fa5602{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @2213ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1737ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2ae55d18{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1864ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1729ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@2bdeb790{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1871ms
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1594ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@1e9caff2{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1703ms
