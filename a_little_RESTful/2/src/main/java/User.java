@@ -20,31 +20,13 @@ public class User
 	private boolean interestedInMen;
 	private boolean interestedInWomen;
 	private ArrayList<User> matched;
-	private ArrayList<Key_Value_Pair> potential;
+	private ArrayList<User> potential;
+
 	public User()
 	{
 		matched = new ArrayList<>();
 		potential = new ArrayList<>();
 	}
-	
-
-	
-
-
-	public ArrayList<Key_Value_Pair> getPotential() {
-		return potential;
-	}
-
-
-
-
-
-	public void setPotential(ArrayList<Key_Value_Pair> potential) {
-		this.potential = potential;
-	}
-
-
-
 
 
 	public User(String username, String password, String email, String name, String dob, String gender) {
@@ -79,6 +61,14 @@ public class User
 		potential = new ArrayList<>();
 	}
 
+	public ArrayList<User> getPotential() {
+		return potential;
+	}
+
+	public void setPotential(ArrayList<User> potential) {
+		this.potential = potential;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -111,27 +101,6 @@ public class User
 	public void setDob(String dob) {
 		this.dob = dob;
 	}
-
-
-	//public ArrayList<Boolean> getHobbies() {
-	//	return hobbies;
-	//}
-
-
-	/*public void setHobbies(String hobbies) {
-		Scanner in = new Scanner(hobbies);
-		switch(in.nextByte())
-		{
-		case 't': this.hobbies.add(true);
-				  break;
-				  
-		case 'f': this.hobbies.add(false);
-				  break;
-		
-		}
-		
-	}
-*/
 
 	public String getLocation() {
 		return location;
@@ -223,17 +192,6 @@ public class User
 		}
 
 	}
-	public void removePotential(String username)
-	{
-		for(int count = 0;count<potential.size(); count++)
-		{
-			if(potential.get(count).getKey().equals(username))
-			{
-				potential.remove(count);
-				return;
-			}
-		}
-	}
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", email=" + email + ", name=" + name
@@ -241,11 +199,4 @@ public class User
 				+ ", languages=" + languages + ", profilePicBytes=" + profilePicBytes + ", interestedInMen="
 				+ interestedInMen + ", interestedInWomen=" + interestedInWomen + "]";
 	}
-
-	
-
-	
-	
-	
-
 }

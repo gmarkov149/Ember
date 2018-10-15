@@ -24,23 +24,23 @@ public class UserController
 		system = new ArrayList<User>();
 
 		// Define Data Source
-        dataSource = new MysqlDataSource();
-        // DB user
-        dataSource.setUser("root");
-        // DB password
-        dataSource.setPassword("0596");
-        dataSource.setServerName("localhost");
-        // DB name
-        dataSource.setDatabaseName("cz3002");
-        conn = null;
+		dataSource = new MysqlDataSource();
+		// DB user
+		dataSource.setUser("root");
+		// DB password
+		dataSource.setPassword("0596");
+		dataSource.setServerName("localhost");
+		// DB name
+		dataSource.setDatabaseName("cz3002");
+		conn = null;
 
-        // Establish a connection
-        try {
-            conn = dataSource.getConnection();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+		// Establish a connection
+		try {
+			conn = dataSource.getConnection();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// Return all users from database
@@ -51,47 +51,47 @@ public class UserController
 	// Converts a user from the database to a User object to be passed to front-end
 	public User toUserObject(String username) {
 		try {
-		    statement = conn.createStatement();
-		    rs = statement.executeQuery(
-		        "SELECT Users.*, Hobbies.* " + 
-		        "FROM Users, Hobbies " + 
-		        "WHERE Users.Username='" + username + "' AND Users.ID=Hobbies.UserID");
+			statement = conn.createStatement();
+			rs = statement.executeQuery(
+				"SELECT Users.*, Hobbies.* " + 
+				"FROM Users, Hobbies " + 
+				"WHERE Users.Username='" + username + "' AND Users.ID=Hobbies.UserID");
 
-		    // Get user details
-		    rs.next();
+			// Get user details
+			rs.next();
 
-		    // Convert hobbies to correctly formatted hobby string 
-		    String hobbies = String.format("%s %s %s %s %s %s %s %s %s %s %s", 
-		    	rs.getString("Fitness"), 
-		    	rs.getString("Music"), 
-		    	rs.getString("Dancing"), 
-		     	rs.getString("Reading"), 
-		     	rs.getString("Walking"), 
-		     	rs.getString("Traveling"), 
-		     	rs.getString("Eating"), 
-		     	rs.getString("Crafts"), 
-		     	rs.getString("Fishing"), 
-		     	rs.getString("Hiking"), 
-		     	rs.getString("Animals")
-		     );
+			// Convert hobbies to correctly formatted hobby string 
+			String hobbies = String.format("%s %s %s %s %s %s %s %s %s %s %s", 
+				rs.getString("Fitness"), 
+				rs.getString("Music"), 
+				rs.getString("Dancing"), 
+			 	rs.getString("Reading"), 
+			 	rs.getString("Walking"), 
+			 	rs.getString("Traveling"), 
+			 	rs.getString("Eating"), 
+				rs.getString("Crafts"), 
+			 	rs.getString("Fishing"), 
+			 	rs.getString("Hiking"), 
+			 	rs.getString("Animals")
+			 );
 
-		    // Create user object from database
-		    User userObject = new User(
-		    	rs.getString("Username"), 
-		    	rs.getString("Password"), 
-		    	rs.getString("Email"), 
-		    	rs.getString("Name"), 
-		    	rs.getString("DOB"), 
-		    	hobbies, 
-		    	rs.getString("Gender"), 
-		    	rs.getString("Location"), 
-		    	rs.getString("Languages"), 
-		    	rs.getString("ProfilePicBytes"),
-		    	Boolean.parseBoolean(rs.getString("InterestedInMen")), 
-		    	Boolean.parseBoolean(rs.getString("InterestedInWomen"))
-		    );
+			// Create user object from database
+			User userObject = new User(
+				rs.getString("Username"), 
+				rs.getString("Password"), 
+				rs.getString("Email"), 
+				rs.getString("Name"), 
+				rs.getString("DOB"), 
+				hobbies, 
+				rs.getString("Gender"), 
+				rs.getString("Location"), 
+				rs.getString("Languages"), 
+				rs.getString("ProfilePicBytes"),
+				Boolean.parseBoolean(rs.getString("InterestedInMen")), 
+				Boolean.parseBoolean(rs.getString("InterestedInWomen"))
+			);
 		
-		    return userObject;
+			return userObject;
 
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
@@ -102,43 +102,43 @@ public class UserController
 		statement = null;
 
 		try {
-		    statement = conn.createStatement();
-		    statement.executeUpdate(
-		        "INSERT INTO Users " + 
-		        "VALUES " +
-		        String.format("(%d,'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
-		        	id, 
-		        	user.getUsername(), 
-		        	user.getPassword(), 
-		        	user.getName(), 
-		        	user.getEmail(), 
-		        	user.getDob(), 
-		        	user.getGender(), 
-		        	user.getLocation(), 
-		        	user.getLanguages(), 
-		        	user.getProfilePicBytes(), 
-		        	user.isInterestedInMen(), 
-		        	user.isInterestedInWomen())
-		        );
-		    
-		    boolean[] hobbies = user.getParsedHobbies();
-		    statement.executeUpdate(
-		        "INSERT INTO Hobbies " + 
-		        "VALUES " +
-		        String.format("(%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
-		        	id, 
-		        	hobbies[0], 
-		        	hobbies[1], 
-		        	hobbies[2], 
-		        	hobbies[3], 
-		        	hobbies[4], 
-		        	hobbies[5], 
-		        	hobbies[6], 
-		        	hobbies[7], 
-		        	hobbies[8], 
-		        	hobbies[9], 
-		        	hobbies[10])
-		        );
+			statement = conn.createStatement();
+			statement.executeUpdate(
+				"INSERT INTO Users " + 
+				"VALUES " +
+				String.format("(%d,'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+					id, 
+					user.getUsername(), 
+					user.getPassword(), 
+					user.getName(), 
+					user.getEmail(), 
+					user.getDob(), 
+					user.getGender(), 
+					user.getLocation(), 
+					user.getLanguages(), 
+					user.getProfilePicBytes(), 
+					user.isInterestedInMen(), 
+					user.isInterestedInWomen())
+				);
+
+			boolean[] hobbies = user.getParsedHobbies();
+			statement.executeUpdate(
+				"INSERT INTO Hobbies " + 
+				"VALUES " +
+				String.format("(%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+					id, 
+					hobbies[0], 
+					hobbies[1], 
+					hobbies[2], 
+					hobbies[3], 
+					hobbies[4], 
+					hobbies[5], 
+					hobbies[6], 
+					hobbies[7], 
+					hobbies[8], 
+					hobbies[9], 
+					hobbies[10])
+				);
 		} catch(SQLException e){ e.printStackTrace(); }
 		// Increment ID for next user added. What if the backend is restarted? Will have to get last id.
 		id += 1
@@ -151,16 +151,16 @@ public class UserController
 
 		try {
 			// Get table of usernames in DB
-		    statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		    rs = statement.executeQuery(
-		        "SELECT Users.Username " + 
+			statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs = statement.executeQuery(
+				"SELECT Users.Username " + 
 				"FROM Users " + 
 				"WHERE Users.Username='" + username + "'");
 		} catch(SQLException e){ e.printStackTrace(); }
 
 		// ResultSet is empty, Username is available
 		if (!rs.first()) {
-		    return true;
+			return true;
 		}
 		return false;
 	}
@@ -172,16 +172,16 @@ public class UserController
 
 		try {
 			// Get table of usernames and passwords in DB
-		    statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		    rs = statement.executeQuery(
-		        "SELECT Users.Username, Users.Password " + 
+			statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs = statement.executeQuery(
+				"SELECT Users.Username, Users.Password " + 
 				"FROM Users " +
 				"WHERE Users.Username='" + username + "' AND Users.Password='" + password + "'");
 		} catch(SQLException e){ e.printStackTrace(); } 
 
 		// ResultSet is empty, user DNE
 		if (!rs.first()) {
-		    return null;
+			return null;
 		}
 		// Return user object, convert from DB result
 		return toUserObject(username);
@@ -194,16 +194,16 @@ public class UserController
 
 		try {
 			// Get table of usernames in DB
-		    statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		    rs = statement.executeQuery(
-		        "SELECT Users.Username " + 
+			statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs = statement.executeQuery(
+				"SELECT Users.Username " + 
 				"FROM Users " + 
 				"WHERE Users.Username='" + username + "'");
 		} catch(SQLException e){ e.printStackTrace(); }
 
 		// ResultSet is empty, user DNE
 		if (!rs.first()) {
-		    return null;
+			return null;
 		}
 		// Return user object, convert from DB result
 		return toUserObject(username);
@@ -215,105 +215,78 @@ public class UserController
 		statement = null;
 
 		try {
-		    statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-		    // First update User table
-		    statement.executeUpdate(
-		        "UPDATE Users " + 
-		        "SET " + 
-		        String.format("Username='%s', Password='%s', Name='%s', Email='%s', DOB='%s', Gender='%s', Location='%s', Languages='%s', ProfilePicBytes='%s', InterestedInMen='%s', InterestedInWomen='%s' ", 
-		        	toEdit.getUsername(), 
-		        	toEdit.getPassword(), 
-		        	toEdit.getName(), 
-		        	toEdit.getEmail(), 
-		        	toEdit.getDob(), 
-		        	toEdit.getGender(), 
-		        	toEdit.getLocation(), 
-		        	toEdit.getLanguages(), 
-		        	toEdit.getProfilePicBytes(), 
-		        	toEdit.isInterestedInMen(), 
-		        	toEdit.isInterestedInWomen()) + 
-		        "WHERE Users.Username='" + toEdit.getUsername() + "'");
+			// First update User table
+			statement.executeUpdate(
+				"UPDATE Users " + 
+				"SET " + 
+				String.format("Username='%s', Password='%s', Name='%s', Email='%s', DOB='%s', Gender='%s', Location='%s', Languages='%s', ProfilePicBytes='%s', InterestedInMen='%s', InterestedInWomen='%s' ", 
+					toEdit.getUsername(), 
+					toEdit.getPassword(), 
+					toEdit.getName(), 
+					toEdit.getEmail(), 
+					toEdit.getDob(), 
+					toEdit.getGender(), 
+					toEdit.getLocation(), 
+					toEdit.getLanguages(), 
+					toEdit.getProfilePicBytes(), 
+					toEdit.isInterestedInMen(), 
+					toEdit.isInterestedInWomen()) + 
+				"WHERE Users.Username='" + toEdit.getUsername() + "'");
 
-		    // Get UserID
-		    rs = statement.executeQuery(
-		        "SELECT Users.ID " + 
+			// Get UserID
+			rs = statement.executeQuery(
+				"SELECT Users.ID " + 
 				"FROM Users " + 
 				"WHERE Users.Username='" + toEdit.getUsername() + "'");
-		    rs.next();
+			rs.next();
 
-		    // Update Hobbies table
-		    boolean[] hobbies = toEdit.getParsedHobbies();
-		    statement.executeUpdate(
-		        "UPDATE Hobbies " + 
-		        "SET " +
-		        String.format("Fitness='%s', Music='%s', Dancing='%s', Reading='%s', Walking='%s', Traveling='%s', Eating='%s', Crafts='%s', Fishing='%s', Hiking='%s', Animals='%s' ", 
-		        	hobbies[0], 
-		        	hobbies[1], 
-		        	hobbies[2], 
-		        	hobbies[3], 
-		        	hobbies[4], 
-		        	hobbies[5], 
-		        	hobbies[6], 
-		        	hobbies[7], 
-		        	hobbies[8], 
-		        	hobbies[9], 
-		        	hobbies[10]) + 
-		    	"WHERE Hobbies.UserID=" + rs.getString("ID"));
+			// Update Hobbies table
+			boolean[] hobbies = toEdit.getParsedHobbies();
+			statement.executeUpdate(
+				"UPDATE Hobbies " + 
+				"SET " +
+				String.format("Fitness='%s', Music='%s', Dancing='%s', Reading='%s', Walking='%s', Traveling='%s', Eating='%s', Crafts='%s', Fishing='%s', Hiking='%s', Animals='%s' ", 
+					hobbies[0], 
+					hobbies[1], 
+					hobbies[2], 
+					hobbies[3], 
+					hobbies[4], 
+					hobbies[5], 
+					hobbies[6], 
+					hobbies[7], 
+					hobbies[8], 
+					hobbies[9], 
+					hobbies[10]) + 
+				"WHERE Hobbies.UserID=" + rs.getString("ID"));
 
 		} catch(SQLException e){ e.printStackTrace(); }
 	}
 
-	public void getPotentialMatches(User user)
-	{
-		int matchScore = 0;
-		ArrayList<Key_Value_Pair> temp = new ArrayList<Key_Value_Pair>();
-		for(int i=0;i<system.size();i++)
-		{
-			temp.add(i, new Key_Value_Pair());
-			temp.get(i).setKey(system.get(i).getUsername());
-			
-		}
-		for(int j=0;j<system.size();j++)
-		{
-			for(int i=0;i<12;i++)
-			{
-				if((user.getParsedHobbies())[i] == (system.get(j).getParsedHobbies())[i])
-				{
-					matchScore++;
-				}
-			}
-			temp.get(j).setValue(matchScore);
-			system.get(j).getPotential().add(new Key_Value_Pair(user.getUsername(), matchScore));
-			matchScore = 0;
-		}
-		user.setPotential(temp);
+	// Get a users potential matches, this is where matching algoritm will be
+	// The user.potential will be updated
+	public void updatePotentialMatches(User user) {
+
+		// Remember to ignore matched users
+
 	}
-	public void updatePotential(User current)
-	{
-		int newMatchScore = 0;
-		ArrayList<Key_Value_Pair> temp = new ArrayList<Key_Value_Pair>();
-		for(User updatee:system)
-		{
-			if(updatee != current)
-			{
-				for(int i=0;i<12;i++)
-				{
-					if((current.getParsedHobbies())[i] == (updatee.getParsedHobbies())[i])
-					{
-						newMatchScore++;
-					}
-				}
-				temp = updatee.getPotential();
-				for(int count = 0; count<temp.size(); count++)
-				{
-					if(temp.get(count).getKey().equals(current.getUsername()))
-					{
-						temp.get(count).setValue(newMatchScore);
-					}
-				}
-				newMatchScore = 0;
-			}
-		}
+
+
+	// Add a new match to the current user (BOTH USERS)
+	// The user.matched will be updated
+	public void updateMatches(User current, User match) {
+		rs = null;
+		statement = null;
+
+		// Remember to remove from users potenial list
+		try {
+		    statement = conn.createStatement();
+		    statement.executeUpdate(
+		        "INSERT INTO LikedUsers " + 
+		        "VALUES " + 
+		        String.format("(%d, %d)", userID, likeID ));
+		    continue;
+		} catch(SQLException e){ e.printStackTrace(); } 
 	}
 }

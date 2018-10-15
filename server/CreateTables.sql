@@ -21,8 +21,8 @@ CREATE TABLE `Users` (
 	`Location` 	varchar(50) NOT NULL,
 	`Languages` 		varchar(50) NOT NULL,
 	`ProfilePicBytes` 	blob NOT NULL,
-	`InterestedInMen` 	char(1) NOT NULL DEFAULT '0',
-	`InterestedInWomen` char(1) NOT NULL DEFAULT '0',
+	`InterestedInMen` 	varchar(5) NOT NULL DEFAULT 'false',
+	`InterestedInWomen` varchar(5) NOT NULL DEFAULT 'false',
 	PRIMARY KEY (`ID`)
 ); 
 
@@ -66,6 +66,7 @@ CREATE TABLE `Hobbies` (
 CREATE TABLE `SuggestedPartners` (
 	`UserID` 	int NOT NULL,
 	`PartnerID` int NOT NULL,
+	`Potential` int NOT NULL,
 	PRIMARY KEY (`UserID`, `PartnerID`),
 	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),
 	FOREIGN KEY (`PartnerID`) REFERENCES Users(`ID`)
