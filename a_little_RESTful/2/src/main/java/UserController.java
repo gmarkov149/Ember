@@ -296,21 +296,21 @@ public class UserController
 		try {
 		    statement = conn.createStatement();
 		    rs = statement.executeQuery(
-		        "SELECT Users.Username Users.Gender" + 
+		        "SELECT Users.Username, Users.Gender " + 
 		        "FROM Users " +
-		        String.format("WHERE Users.Username!=%s AND Users.Languages==%s", 
+		        String.format("WHERE Users.Username!='%s' AND Users.Languages='%s'", 
 		        	user.getUsername(), user.getLanguages()));
 
 		    // Get filtered users
 		    ArrayList<String> filteredUsers = new ArrayList<String>();
 		    while(rs.next()) {
 		    	if(user.isInterestedInMen()) {
-		    		if(rs.getString("Gender") == "Male")
+		    		if(rs.getString("Gender").equals("Male"))
 						filteredUsers.add(rs.getString("Username"));		    		
 		    	}
 
 		    	else if(user.isInterestedInWomen()) {
-		    		if(rs.getString("Gender") == "Female")
+		    		if(rs.getString("Gender").equals("Female"))
 						filteredUsers.add(rs.getString("Username"));		    		
 		    	}  
 
@@ -330,7 +330,7 @@ public class UserController
 				statement.executeUpdate(
 				    "INSERT INTO SuggestedPartners " + 
 				    "VALUES " + 
-				    String.format("(%s, %s, %d)", user.getUsername(), comparedUser.getUsername(), score ));
+				    String.format("('%s', '%s', %d)", user.getUsername(), comparedUser.getUsername(), score ));
 	    	}	
 
 		} catch(SQLException e){ e.printStackTrace(); } 
@@ -348,10 +348,9 @@ public class UserController
 		    statement.executeUpdate(
 		        "INSERT INTO LikedUsers " + 
 		        "VALUES " + 
-		        String.format("(%d, %d)", userID, likeID ));
+		        String.format("('%s', '%s'), ('%s', '%s')", 
+		        	current.getUsername(), match.getUsername(), match.getUsername(), current.getUsername() ));
 		} catch(SQLException e){ e.printStackTrace(); } 
-	
-
 	}
 
 	// Add a new match to the current user (BOTH USERS)
@@ -374,7 +373,7 @@ public class UserController
 		    statement.executeUpdate("DROP TABLE IF EXISTS Users");
 		    statement.executeUpdate("CREATE TABLE `Users` (\r\n" + 
 		    		"	`ID` 		int NOT NULL,\r\n" + 
-		    		"	`Username` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`Username` 	varchar(50) UNIQUE NOT NULL,\r\n" + 
 		    		"	`Password` 	varchar(50) NOT NULL,\r\n" + 
 		    		"	`Name` 		varchar(50) NOT NULL,\r\n" + 
 		    		"	`Email` 	varchar(50) NOT NULL,\r\n" + 
@@ -404,19 +403,19 @@ public class UserController
 		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)\r\n" + 
 		    		")");        
 		    statement.executeUpdate("CREATE TABLE `SuggestedPartners` (\r\n" + 
-		    		"	`Username` 	int NOT NULL,\r\n" + 
-		    		"	`PartnerUsername` int NOT NULL,\r\n" + 
+		    		"	`Username` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`PartnerUsername` varchar(50) NOT NULL,\r\n" + 
 		    		"	`Score` int NOT NULL DEFAULT 0,\r\n" + 
 		    		"	PRIMARY KEY (`Username`, `PartnerUsername`),\r\n" + 
 		    		"	FOREIGN KEY (`Username`) REFERENCES Users(`Username`),\r\n" + 
 		    		"	FOREIGN KEY (`PartnerUsername`) REFERENCES Users(`Username`)\r\n" + 
 		    		")");
 		    statement.executeUpdate("CREATE TABLE `LikedUsers` (\r\n" + 
-		    		"	`UserID` 	int NOT NULL,\r\n" + 
-		    		"	`LikesID` 	int NOT NULL,\r\n" + 
-		    		"	PRIMARY KEY (`UserID`, `LikesID`),\r\n" + 
-		    		"	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`),\r\n" + 
-		    		"	FOREIGN KEY (`LikesID`) REFERENCES Users(`ID`)\r\n" + 
+		    		"	`Username` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`LikesUsername` varchar(50) NOT NULL,\r\n" + 
+		    		"	PRIMARY KEY (`Username`, `LikesUsername`),\r\n" + 
+		    		"	FOREIGN KEY (`Username`) REFERENCES Users(`Username`),\r\n" + 
+		    		"	FOREIGN KEY (`LikesUsername`) REFERENCES Users(`Username`)\r\n" + 
 		    		")");
 		    
 			

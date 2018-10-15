@@ -20,9 +20,8 @@ public class App
 		    if(system.checkIfAvailable(user.getUsername()))
 		    {
 		    	user.parseHobbies();
+          system.addUser(user);
 		    	system.updatePotentialMatches(user);
-		    	//system.getPotentialMatches(user);
-		    	system.addUser(user);
 		 
 		    	return new Gson()
 		    			.toJson(new StandardResponse(StatusResponse.SUCCESS));
