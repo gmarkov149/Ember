@@ -400,3 +400,16 @@ INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
 INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@1e9caff2{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
 INFO Thread-0 org.eclipse.jetty.server.Server - Started @1712ms
 INFO qtp1988332485-19 spark.http.matching.MatcherFilter - The requested route [/users/reset] has not been mapped in Spark for Accept: [*/*]
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1614ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@6580b56{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1723ms
+INFO qtp72003964-18 spark.http.matching.MatcherFilter - The requested route [/users/c/0/1] has not been mapped in Spark for Accept: [*/*]
+INFO Thread-0 org.eclipse.jetty.util.log - Logging initialized @1604ms
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+INFO Thread-0 spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:4567
+INFO Thread-0 org.eclipse.jetty.server.Server - jetty-9.3.6.v20151106
+INFO Thread-0 org.eclipse.jetty.server.ServerConnector - Started ServerConnector@1b310764{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}
+INFO Thread-0 org.eclipse.jetty.server.Server - Started @1728ms

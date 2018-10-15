@@ -20,16 +20,12 @@ public class App
 		    if(system.checkIfAvailable(user.getUsername()))
 		    {
 		    	user.parseHobbies();
-<<<<<<< HEAD
-          system.addUser(user);
-		    	system.updatePotentialMatches(user);
-		 
-=======
+
 		    	
 		    	//system.getPotentialMatches(user);
 		    	system.addUser(user);
 		    	system.updatePotentialMatches(user);
->>>>>>> c24501870405a6a084ddaa80feb8154e39d83a00
+
 		    	return new Gson()
 		    			.toJson(new StandardResponse(StatusResponse.SUCCESS));
 		    }
@@ -120,14 +116,15 @@ public class App
       	        .toJsonTree(currentUser)));
         });
         //get potential
-        get("/users/potentialMatches/:username", (request, response) -> {
+        get("/users/potentialMatches/:username/:start/:end", (request, response) -> {
       	   response.type("application/json");
-      	   User currentUser = system.findUser(request.params(":username"));
+      	   User currentUser = system.toUserObject(request.params(":username"));
 
       	   // Update potential matches for user
       	   system.updatePotentialMatches(currentUser); 
 
-      	   ArrayList<User> potentialMatches = currentUser.getPotential();
+      	   ArrayList<User> potentialMatches = system.get10Potential(system.toUserObject(request.params(":username")), Integer.parseInt(request.params(":start")), Integer.parseInt(request.params(":end")));
+      	   
 
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
