@@ -20,9 +20,16 @@ public class App
 		    if(system.checkIfAvailable(user.getUsername()))
 		    {
 		    	user.parseHobbies();
+<<<<<<< HEAD
           system.addUser(user);
 		    	system.updatePotentialMatches(user);
 		 
+=======
+		    	
+		    	//system.getPotentialMatches(user);
+		    	system.addUser(user);
+		    	system.updatePotentialMatches(user);
+>>>>>>> c24501870405a6a084ddaa80feb8154e39d83a00
 		    	return new Gson()
 		    			.toJson(new StandardResponse(StatusResponse.SUCCESS));
 		    }
@@ -134,7 +141,7 @@ public class App
 		    User currentUser = system.findUser(request.params(":username"));
 
 		    // Add new match to BOTH users
-		    system.updateMatches(currentUser, userToMatch);
+		   // system.updateMatches(currentUser, userToMatch);
 
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()

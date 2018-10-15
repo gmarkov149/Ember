@@ -296,7 +296,7 @@ public class UserController
 		try {
 		    statement = conn.createStatement();
 		    rs = statement.executeQuery(
-		        "SELECT Users.Username, Users.Gender " + 
+		        "SELECT Users.Username,Users.Gender " + 
 		        "FROM Users " +
 		        String.format("WHERE Users.Username!='%s' AND Users.Languages='%s'", 
 		        	user.getUsername(), user.getLanguages()));
@@ -305,13 +305,16 @@ public class UserController
 		    ArrayList<String> filteredUsers = new ArrayList<String>();
 		    while(rs.next()) {
 		    	if(user.isInterestedInMen()) {
-		    		if(rs.getString("Gender").equals("Male"))
+		    		
+		    		if((rs.getString("Gender")).equals("Male"))
 						filteredUsers.add(rs.getString("Username"));		    		
 		    	}
 
 		    	else if(user.isInterestedInWomen()) {
-		    		if(rs.getString("Gender").equals("Female"))
-						filteredUsers.add(rs.getString("Username"));		    		
+
+		    		if((rs.getString("Gender")).equals("Female")) {
+		    			filteredUsers.add(rs.getString("Username"));
+		    		}
 		    	}  
 
 		    }
@@ -320,17 +323,22 @@ public class UserController
 				User comparedUser = toUserObject(compareTo);
 
 				int score = 0;
-
+				//System.out.println("Here");
+				user.parseHobbies();
+				comparedUser.parseHobbies();
 				for(int i = 0; i < 11; i++) {
-					if( user.getParsedHobbies()[i].equals(comparedUser.getParsedHobbies()[i]) )
+					
+					if( user.getParsedHobbies()[i] == comparedUser.getParsedHobbies()[i] )
 						score++;
+					
 				}
-
-				statement = conn.createStatement();
+				
+				
 				statement.executeUpdate(
 				    "INSERT INTO SuggestedPartners " + 
 				    "VALUES " + 
 				    String.format("('%s', '%s', %d)", user.getUsername(), comparedUser.getUsername(), score ));
+
 	    	}	
 
 		} catch(SQLException e){ e.printStackTrace(); } 
