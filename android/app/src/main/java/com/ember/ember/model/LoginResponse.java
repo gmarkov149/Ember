@@ -7,4 +7,8 @@ public class LoginResponse {
     public UserDetails getData() {
         return data;
     }
+
+    public String getStatus() {
+        return status;
+    }
 }
