@@ -356,8 +356,8 @@ public class UserController
 		    statement.executeUpdate(
 		        "INSERT INTO LikedUsers " + 
 		        "VALUES " + 
-		        String.format("('%s', '%s'), ('%s', '%s')", 
-		        	current.getUsername(), match.getUsername(), match.getUsername(), current.getUsername() ));
+		        String.format("('%s', '%s')", 
+		        	current.getUsername(), match.getUsername() ));
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
 
@@ -447,7 +447,6 @@ public class UserController
 		        "SELECT LikesUsername " + 
 		        "FROM LikedUsers " +
 		        "WHERE LikedUsers.Username ='" + current.getUsername() + "' " +
-		    	"ORDER BY Score DESC " +
 		    	"LIMIT " + end + " ");
 		    for(int i=0;i<start;i++)
 		    {
@@ -456,7 +455,7 @@ public class UserController
 		    for(int i=0;i<end-start;i++)
 		    {
 		    	rs.next();
-		    	temp.add(this.toUserObject(rs.getString("LikedUsername")));
+		    	temp.add(this.toUserObject(rs.getString("LikesUsername")));
 		    }
 		    return temp;
 		} catch(SQLException e){ e.printStackTrace(); return null; } 
