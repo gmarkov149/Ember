@@ -393,7 +393,7 @@ public class UserController
 
 		    return messages;
 
-		} catch(SQLException e){ e.printStackTrace(); } break;	
+		} catch(SQLException e){ e.printStackTrace(); return null;} 
 	}
 
 	// Enter new message into DB
@@ -406,7 +406,7 @@ public class UserController
 		        "VALUES " + 
 		        String.format("('%s', '%s', '%s', '%s', '%s' )", 
 		        	sender.getUsername(), receiver.getUsername(), date, time, message ));
-		} catch(SQLException e){ e.printStackTrace(); } break;	
+		} catch(SQLException e){ e.printStackTrace(); } 
 	}
 
 	public ArrayList<User> get10Potential(User current, int start, int end)
@@ -431,6 +431,32 @@ public class UserController
 		    {
 		    	rs.next();
 		    	temp.add(this.toUserObject(rs.getString("PartnerUsername")));
+		    }
+		    return temp;
+		} catch(SQLException e){ e.printStackTrace(); return null; } 
+	}
+	public ArrayList<User> getMatches(User current, int start, int end)
+	{
+		rs = null;
+		statement = null;
+		ArrayList<User> temp = new ArrayList<User>();
+		// Remember to remove from users potenial list
+		try {
+		    statement = conn.createStatement();
+		    rs = statement.executeQuery(
+		        "SELECT LikesUsername " + 
+		        "FROM LikedUsers " +
+		        "WHERE LikedUsers.Username ='" + current.getUsername() + "' " +
+		    	"ORDER BY Score DESC " +
+		    	"LIMIT " + end + " ");
+		    for(int i=0;i<start;i++)
+		    {
+		    	rs.next();
+		    }
+		    for(int i=0;i<end-start;i++)
+		    {
+		    	rs.next();
+		    	temp.add(this.toUserObject(rs.getString("LikedUsername")));
 		    }
 		    return temp;
 		} catch(SQLException e){ e.printStackTrace(); return null; } 

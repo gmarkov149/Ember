@@ -55,9 +55,9 @@ public class App
        	        .toJsonTree(toReturn)));
            });
         //get  matched for username
-        get("/users/matched/:username", (request, response) -> {
+        get("/users/matched/:username/:start/:end", (request, response) -> {
       	   response.type("application/json");
-      	   User currentUser = system.findUser(request.params(":username"));
+      	   User currentUser = system.toUserObject(request.params(":username"));
       	   /*if(currentUser.getMatched().size() == 0)
       	   {
       		 system.initCurrentMatched(currentUser);
@@ -65,7 +65,8 @@ public class App
       	   
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
-      	        .toJsonTree(currentUser.getMatched())));
+      	        .toJsonTree(system.getMatches(currentUser, Integer.parseInt(request.params(":start")),
+      	        		Integer.parseInt(request.params(":end"))))));
           });
         // View a users matches
         post("/users/matched", (request, response) -> {
@@ -138,7 +139,7 @@ public class App
 		    User currentUser = system.findUser(request.params(":username"));
 
 		    // Add new match to BOTH users
-		   // system.updateMatches(currentUser, userToMatch);
+		    system.updateMatches(currentUser, userToMatch);
 
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
