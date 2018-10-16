@@ -1,12 +1,8 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 // For DB
 import java.sql.*;
-import java.util.Scanner;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class UserController 
 {
@@ -28,7 +24,7 @@ public class UserController
         // DB user
         dataSource.setUser("root");
         // DB password
-        dataSource.setPassword("CZ3002");
+        dataSource.setPassword("112358");
         dataSource.setServerName("localhost");
         // DB name
         dataSource.setDatabaseName("cz3002");
@@ -392,9 +388,9 @@ public class UserController
 		    rs = statement.executeQuery(
 		        "SELECT * " + 
 		        "FROM Chat " + 
-		        "WHERE Chat.Sender=" + current + " AND Chat.Receiver=" + match + 
-		        " OR Chat.Sender=" + match + " AND Chat.Receiver=" + current + 
-		        " ORDER BY Datestamp ASC, Timestamp ASC");
+		        "WHERE Chat.Sender='" + current + "' AND Chat.Receiver='" + match +
+		        "' OR Chat.Sender='" + match + "' AND Chat.Receiver='" + current +
+		        "' ORDER BY Datestamp ASC, Timestamp ASC");
 
 		    // Add every message to array list
 		    while(rs.next()) {
@@ -409,7 +405,7 @@ public class UserController
 
 		    return messages;
 
-		} catch(SQLException e){ e.printStackTrace(); return null;} 
+		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<>();}
 	}
 
 	// Enter new message into DB
@@ -487,10 +483,12 @@ public class UserController
 		id = 1;
 		try {
 		    statement = conn.createStatement();
+			statement.executeUpdate("SET FOREIGN_KEY_CHECKS=0;");
 		    statement.executeUpdate("DROP TABLE IF EXISTS SuggestedPartners");
 		    statement.executeUpdate("DROP TABLE IF EXISTS LikedUsers");
 		    statement.executeUpdate("DROP TABLE IF EXISTS Hobbies");
 		    statement.executeUpdate("DROP TABLE IF EXISTS Users");
+            statement.executeUpdate("DROP TABLE IF EXISTS Chat");
 		    statement.executeUpdate("CREATE TABLE `Users` (\r\n" + 
 		    		"	`ID` 		int NOT NULL,\r\n" + 
 		    		"	`Username` 	varchar(50) UNIQUE NOT NULL,\r\n" + 
@@ -542,7 +540,7 @@ public class UserController
 		    		"	`Sender` 	varchar(50) NOT NULL,\r\n" + 
 		    		"	`Receiver` varchar(50) NOT NULL,\r\n" +
 		    		"	`Datestamp` date NOT NULL DEFAULT '0000-00-00',\r\n" +
-		    		"	`Timestamp` time DEFAULT NULL,\r\n" +   
+		    		"	`Timestamp` time NOT NULL,\r\n" +
 		    		"	`Message` varchar(255) NOT NULL,\r\n" +   
 		    		"	PRIMARY KEY (`Sender`, `Receiver`, `Datestamp`, `Timestamp`, `Message`),\r\n" + 
 		    		"	FOREIGN KEY (`Sender`) REFERENCES Users(`Username`),\r\n" + 

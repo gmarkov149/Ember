@@ -26,10 +26,12 @@ public class ChatRecycler extends RecyclerView.Adapter<ChatRecycler.ChatViewHold
         }
     }
 
-    public void addToChat(Chat chat) {
-        mDataset.add(chat);
+    public void addToChat(List<Chat> chats) {
+        mDataset.addAll(chats);
         notifyDataSetChanged();
     }
+
+
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ChatRecycler(List<Chat> myDataset) {

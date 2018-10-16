@@ -91,7 +91,6 @@ public class RegisterFragment extends Fragment {
     private void existingUserSetupMore(View v, UserDetails userDetails) {
         if (userDetails.getProfilePic()!= null)
             ((ImageView) v.findViewById(R.id.pic)).setImageBitmap(userDetails.getProfilePic());
-        fillExistingUserField(R.id.languages, userDetails.getLanguages(), v);
         fillExistingUserField(R.id.address, userDetails.getLocation(), v);
         ((CheckBox) v.findViewById(R.id.men)).setChecked(userDetails.isInterestedInMen());
         ((CheckBox) v.findViewById(R.id.women)).setChecked(userDetails.isInterestedInWomen());

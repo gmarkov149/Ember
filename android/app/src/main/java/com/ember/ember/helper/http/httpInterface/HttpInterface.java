@@ -1,5 +1,6 @@
 package com.ember.ember.helper.http.httpInterface;
 
+import com.ember.ember.model.ChatList;
 import com.ember.ember.model.Login;
 import com.ember.ember.model.LoginResponse;
 import com.ember.ember.model.UserDetails;
@@ -33,7 +34,7 @@ public interface HttpInterface {
     Call<Void> match(@Path("username") String username, @Body UserDetails userDetails);
 
     @GET("users/chat/{user}/{match}")
-    Call<List<String>> getChat(@Path("user") String username, @Path("match") String match);
+    Call<ChatList> getChat(@Path("user") String username, @Path("match") String match);
 
     @GET("users/chat/message/{sender}/{receiver}/{date}/{time}/{message}")
     Call<Void> sendChat(@Path("sender") String sender, @Path("receiver") String receiver,

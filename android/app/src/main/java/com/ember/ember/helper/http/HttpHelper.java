@@ -2,6 +2,7 @@ package com.ember.ember.helper.http;
 
 import com.ember.ember.helper.http.httpInterface.HttpInterface;
 import com.ember.ember.model.Chat;
+import com.ember.ember.model.ChatList;
 import com.ember.ember.model.Login;
 import com.ember.ember.model.LoginResponse;
 import com.ember.ember.model.UserDetails;
@@ -57,12 +58,12 @@ public class HttpHelper {
         return httpInterface.match(username, matchedUser);
     }
 
-    public static Call<List<String>> getChat(String username, String match) {
+    public static Call<ChatList> getChat(String username, String match) {
         return httpInterface.getChat(username, match);
     }
 
     public static Call<Void> sendChat(Chat chat, String sender, String receiver) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = df.format(chat.getDate());
         return httpInterface.sendChat(sender, receiver, dateString.split(" ")[0], dateString.split(" ")[1], chat.getMessage());
     }
