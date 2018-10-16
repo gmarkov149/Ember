@@ -6,19 +6,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ember.ember.R;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.model.LoginResponse;
-import com.ember.ember.model.UserDetails;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
-
-import java.io.IOException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;

@@ -1,8 +1,6 @@
 package com.ember.ember.helper.http;
 
-import android.app.Activity;
 import android.content.Context;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;

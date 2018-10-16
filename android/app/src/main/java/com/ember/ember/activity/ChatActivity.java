@@ -7,26 +7,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.ChatRecycler;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.Chat;
-import com.ember.ember.model.LoginResponse;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

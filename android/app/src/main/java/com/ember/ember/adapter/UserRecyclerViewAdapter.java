@@ -1,9 +1,6 @@
 package com.ember.ember.adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ember.ember.R;
-import com.ember.ember.activity.MainActivity;
 import com.ember.ember.fragment.UserListFragment.OnListFragmentInteractionListener;
-import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

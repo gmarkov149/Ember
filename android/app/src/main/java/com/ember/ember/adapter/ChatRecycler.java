@@ -1,10 +1,7 @@
 package com.ember.ember.adapter;
 
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ember.ember.R;

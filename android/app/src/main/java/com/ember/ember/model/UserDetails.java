@@ -1,13 +1,10 @@
 package com.ember.ember.model;
 
 import android.graphics.Bitmap;
-import android.text.TextUtils;
 
 import com.ember.ember.helper.BitmapHelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDetails implements Serializable {
     private String username;
