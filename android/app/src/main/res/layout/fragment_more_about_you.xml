@@ -56,7 +56,11 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-
+    <Spinner
+        android:id="@+id/hobbies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,12 +93,6 @@
             android:onClick="showMapDialog" />
 
     </LinearLayout>
-
-    <Spinner
-        android:id="@+id/hobbies"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
