@@ -379,16 +379,29 @@ public class UserController
 		        "WHERE Chat.Sender=" + current.getUsername() + " AND Chat.Receiver=" + match.getUsername() + 
 		        " OR Chat.Sender=" + match.getUsername() + " AND Chat.Receiver=" + current.getUsername() + 
 		        " ORDER BY Datestamp ASC, Timestamp ASC");
+
+		    // Add every message to array list
+		    while(rs.next()) {
+		    	messages.add(String.format("%s %s %s %s %s", 
+		        	rs.getString("Datestamp"), 
+		        	rs.getString("Timestamp"),
+		        	rs.getString("Sender"),
+		        	rs.getString("Receiver"),
+		        	rs.getString("Message"))
+		    	);
+		    }
+
+		    return messages;
+
 		} catch(SQLException e){ e.printStackTrace(); } break;	
 	}
 
 	// Enter new message into DB
 	public void sendMessage(User sender, User receiver, String message, String date, String time ) {
-		rs = null;
 		statement = null;
 		try {
 		    statement = conn.createStatement();
-		    rs = statement.executeQuery(
+		    statement.executeUpdate(
 		        "INSERT INTO Chat " + 
 		        "VALUES " + 
 		        String.format("('%s', '%s', '%s', '%s', '%s' )", 
