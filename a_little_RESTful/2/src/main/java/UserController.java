@@ -361,12 +361,41 @@ public class UserController
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
 
-	// Add a new match to the current user (BOTH USERS)
-	// The user.matched will be updated
-	// public void getChat(User current, User match) {
-	// 	rs = null;
-	// 	statement = null;
-	// }
+	// Get chat history of current user and match
+	public ArrayList<String> getChat(User current, User match) {
+		rs = null;
+		statement = null;
+
+		// Format is:
+		// "date time sender receiver message"
+		// '2015-10-06 13:30:00 Daniel Sean Hello my dude'
+		ArrayList<String> messages = new ArrayList<String>();
+		
+		try {
+		    statement = conn.createStatement();
+		    rs = statement.executeQuery(
+		        "SELECT * " + 
+		        "FROM Chat " + 
+		        "WHERE Chat.Sender=" + current.getUsername() + " AND Chat.Receiver=" + match.getUsername() + 
+		        " OR Chat.Sender=" + match.getUsername() + " AND Chat.Receiver=" + current.getUsername() + 
+		        " ORDER BY Datestamp ASC, Timestamp ASC");
+		} catch(SQLException e){ e.printStackTrace(); } break;	
+	}
+
+	// Enter new message into DB
+	public void sendMessage(User sender, User receiver, String message, String date, String time ) {
+		rs = null;
+		statement = null;
+		try {
+		    statement = conn.createStatement();
+		    rs = statement.executeQuery(
+		        "INSERT INTO Chat " + 
+		        "VALUES " + 
+		        String.format("('%s', '%s', '%s', '%s', '%s' )", 
+		        	sender.getUsername(), receiver.getUsername(), date, time, message ));
+		} catch(SQLException e){ e.printStackTrace(); } break;	
+	}
+
 	public ArrayList<User> get10Potential(User current, int start, int end)
 	{
 		rs = null;
@@ -450,8 +479,17 @@ public class UserController
 		    		"	FOREIGN KEY (`Username`) REFERENCES Users(`Username`),\r\n" + 
 		    		"	FOREIGN KEY (`LikesUsername`) REFERENCES Users(`Username`)\r\n" + 
 		    		")");
-		    
-			
+		    statement.executeUpdate("CREATE TABLE `Chat` (\r\n" + 
+		    		"	`Sender` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`Receiver` varchar(50) NOT NULL,\r\n" +
+		    		"	`Datestamp` date NOT NULL DEFAULT '0000-00-00',\r\n" +
+		    		"	`Timestamp` time DEFAULT NULL,\r\n" +   
+		    		"	`Message` varchar(255) NOT NULL,\r\n" +   
+		    		"	PRIMARY KEY (`Sender`, `Receiver`, `Datestamp`, `Timestamp`, `Message`),\r\n" + 
+		    		"	FOREIGN KEY (`Sender`) REFERENCES Users(`Username`),\r\n" + 
+		    		"	FOREIGN KEY (`Receiver`) REFERENCES Users(`Username`)\r\n" + 
+		    		")");		   
+
 		} catch(SQLException e){ e.printStackTrace(); }
 	}
 }
