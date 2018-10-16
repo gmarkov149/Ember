@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.ember.ember.R;
 import com.ember.ember.adapter.SectionsPagerAdapter;
@@ -211,7 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
             hobbiesString.toString(),
             gender,
             getTextField(R.id.address),
-            getTextField(R.id.languages),
+            ((Spinner) findViewById(R.id.languages)).getSelectedItem().toString(),
             photoChanged ? BitmapHelper.convertBmpToString(bitmap) : null,
             ((CheckBox) findViewById(R.id.men)).isChecked(),
             ((CheckBox) findViewById(R.id.women)).isChecked()

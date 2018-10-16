@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.ember.ember.R;
 import com.ember.ember.activity.RegisterActivity;
@@ -33,6 +35,7 @@ public class RegisterFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private final String[] languageList = new String[]{"English", "French", "Mandarin", "Tamil", "Hindi", "Malay"};
 
     public RegisterFragment() {
     }
@@ -64,10 +67,13 @@ public class RegisterFragment extends Fragment {
             if (userDetails != null) existingUserSetupDetails(rootView, userDetails);
         }
         else {
-            Spinner spinner = rootView.findViewById(R.id.hobbies);
+            Spinner hobbiesSpinner = rootView.findViewById(R.id.hobbies);
             HobbiesAdapter hobbiesAdapter = new HobbiesAdapter(getActivity(), 0, ((RegisterActivity) getActivity()).getHobbiesList());
-            spinner.setAdapter(hobbiesAdapter);
+            hobbiesSpinner.setAdapter(hobbiesAdapter);
             if (userDetails != null) existingUserSetupMore(rootView, userDetails);
+            Spinner languageSpinner = rootView.findViewById(R.id.languages);
+            ArrayAdapter<String> languageAdapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, languageList);
+            languageSpinner.setAdapter(languageAdapter);
         }
         return rootView;
     }
@@ -95,6 +101,14 @@ public class RegisterFragment extends Fragment {
         String[] hobbiesArr = userDetails.getHobbies().split(" ");
         for (int i = 0; i < hobbiesArr.length; i++) {
             hobbiesList.get(i).setSelected(Boolean.parseBoolean(hobbiesArr[i]));
+        }
+        Spinner languageSpinner = v.findViewById(R.id.languages);
+        if (userDetails.getLanguages() != null) {
+            for (int i = 0; i < languageList.length; i++) {
+                if (languageList[i].equalsIgnoreCase(userDetails.getLanguages())) {
+                    languageSpinner.setSelection(i);
+                }
+            }
         }
     }
 
