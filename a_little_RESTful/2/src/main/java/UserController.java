@@ -382,7 +382,7 @@ public class UserController
 
 		    // Add every message to array list
 		    while(rs.next()) {
-		    	messages.add(String.format("%s %s %s %s %s", 
+		    	messages.add(String.format("%s|%s|%s|%s|%s", 
 		        	rs.getString("Datestamp"), 
 		        	rs.getString("Timestamp"),
 		        	rs.getString("Sender"),
