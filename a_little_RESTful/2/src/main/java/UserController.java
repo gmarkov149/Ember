@@ -321,7 +321,10 @@ public class UserController
 		    // For every filtered user, compare and apply matching
 	    	for(String compareTo:filteredUsers) {
 				User comparedUser = toUserObject(compareTo);
-
+				if(comparedUser == user)
+				{
+					continue;
+				}
 				int score = 0;
 				//System.out.println("Here");
 				user.parseHobbies();
@@ -337,7 +340,7 @@ public class UserController
 				statement.executeUpdate(
 				    "INSERT INTO SuggestedPartners " + 
 				    "VALUES " + 
-				    String.format("('%s', '%s', %d)", user.getUsername(), comparedUser.getUsername(), score ));
+				    String.format("('%s', '%s', %d , 'false')", user.getUsername(), comparedUser.getUsername(), score ));
 
 	    	}	
 
@@ -358,11 +361,24 @@ public class UserController
 		        "VALUES " + 
 		        String.format("('%s', '%s')", 
 		        	current.getUsername(), match.getUsername() ));
+		    System.out.println(current.getUsername());
+		    System.out.println(match.getUsername());
+		    Statement statement1 = conn.createStatement();
+		    System.out.println( statement1.executeUpdate(
+			        "UPDATE SuggestedPartners " + 
+			        "SET Show = 'true' " + 
+			        "WHERE Username = '" + current.getUsername() + "' AND PartnerUsername ='" + match.getUsername() + "'"));
+//		    PreparedStatement stmt = conn.prepareStatement("DELETE " + 
+//			        "FROM SuggestedPartners " + 
+//			        "WHERE Username = ? AND PartnerUsername =?");
+//		    stmt.setString(1, current.getUsername());
+//		    stmt.setString(2, match.getUsername());
+//		    System.out.println(stmt.execute());
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
 
 	// Get chat history of current user and match
-	public ArrayList<String> getChat(User current, User match) {
+	public ArrayList<String> getChat(String current, String match) {
 		rs = null;
 		statement = null;
 
@@ -376,8 +392,8 @@ public class UserController
 		    rs = statement.executeQuery(
 		        "SELECT * " + 
 		        "FROM Chat " + 
-		        "WHERE Chat.Sender=" + current.getUsername() + " AND Chat.Receiver=" + match.getUsername() + 
-		        " OR Chat.Sender=" + match.getUsername() + " AND Chat.Receiver=" + current.getUsername() + 
+		        "WHERE Chat.Sender=" + current + " AND Chat.Receiver=" + match + 
+		        " OR Chat.Sender=" + match + " AND Chat.Receiver=" + current + 
 		        " ORDER BY Datestamp ASC, Timestamp ASC");
 
 		    // Add every message to array list
@@ -397,7 +413,7 @@ public class UserController
 	}
 
 	// Enter new message into DB
-	public void sendMessage(User sender, User receiver, String message, String date, String time ) {
+	public void sendMessage(String sender, String receiver, String message, String date, String time ) {
 		statement = null;
 		try {
 		    statement = conn.createStatement();
@@ -405,7 +421,7 @@ public class UserController
 		        "INSERT INTO Chat " + 
 		        "VALUES " + 
 		        String.format("('%s', '%s', '%s', '%s', '%s' )", 
-		        	sender.getUsername(), receiver.getUsername(), date, time, message ));
+		        	sender, receiver, date, time, message ));
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
 
@@ -420,20 +436,22 @@ public class UserController
 		    rs = statement.executeQuery(
 		        "SELECT PartnerUsername " + 
 		        "FROM SuggestedPartners " +
-		        "WHERE SuggestedPartners.Username ='" + current.getUsername() + "' " +
+		        "WHERE SuggestedPartners.Username ='" + current.getUsername() + "' AND SuggestedPartners.Show = 'false' " +
 		    	"ORDER BY Score DESC " +
 		    	"LIMIT " + end + " ");
+		    rs.next();
 		    for(int i=0;i<start;i++)
 		    {
 		    	rs.next();
 		    }
-		    for(int i=0;i<end-start;i++)
+		    do 
 		    {
-		    	rs.next();
+		    	
 		    	temp.add(this.toUserObject(rs.getString("PartnerUsername")));
 		    }
+		    while(rs.next() && temp.size() < end);
 		    return temp;
-		} catch(SQLException e){ e.printStackTrace(); return null; } 
+		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
 	}
 	public ArrayList<User> getMatches(User current, int start, int end)
 	{
@@ -448,17 +466,19 @@ public class UserController
 		        "FROM LikedUsers " +
 		        "WHERE LikedUsers.Username ='" + current.getUsername() + "' " +
 		    	"LIMIT " + end + " ");
+		    rs.next();
 		    for(int i=0;i<start;i++)
 		    {
 		    	rs.next();
 		    }
-		    for(int i=0;i<end-start;i++)
+		    do
 		    {
-		    	rs.next();
+		    	
 		    	temp.add(this.toUserObject(rs.getString("LikesUsername")));
 		    }
+		    while(rs.next() && temp.size()<end);
 		    return temp;
-		} catch(SQLException e){ e.printStackTrace(); return null; } 
+		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
 	}
 	//manual reset back to empty tables PURELY FOR TESTING
 	public void reset()
@@ -479,9 +499,9 @@ public class UserController
 		    		"	`Email` 	varchar(50) NOT NULL,\r\n" + 
 		    		"	`DOB` 		char(10) NOT NULL,\r\n" + 
 		    		"	`Gender` 	varchar(10) NOT NULL,\r\n" + 
-		    		"	`Location` 	varchar(50) NOT NULL,\r\n" + 
+		    		"	`Location` 	varchar(50),\r\n" + 
 		    		"	`Languages` 		varchar(50) NOT NULL,\r\n" + 
-		    		"	`ProfilePicBytes` 	blob NOT NULL,\r\n" + 
+		    		"	`ProfilePicBytes` 	blob,\r\n" + 
 		    		"	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	`InterestedInWomen` varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	PRIMARY KEY (`ID`)\r\n" + 
@@ -505,7 +525,8 @@ public class UserController
 		    statement.executeUpdate("CREATE TABLE `SuggestedPartners` (\r\n" + 
 		    		"	`Username` 	varchar(50) NOT NULL,\r\n" + 
 		    		"	`PartnerUsername` varchar(50) NOT NULL,\r\n" + 
-		    		"	`Score` int NOT NULL DEFAULT 0,\r\n" + 
+		    		"	`Score` int NOT NULL DEFAULT 0,\r\n" +
+		    		"	`Show` varchar(50) DEFAULT false,\r\n" +
 		    		"	PRIMARY KEY (`Username`, `PartnerUsername`),\r\n" + 
 		    		"	FOREIGN KEY (`Username`) REFERENCES Users(`Username`),\r\n" + 
 		    		"	FOREIGN KEY (`PartnerUsername`) REFERENCES Users(`Username`)\r\n" + 

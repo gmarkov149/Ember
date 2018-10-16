@@ -82,7 +82,26 @@ public class App
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(currentUser.getMatched())));
         });
-        
+        get("/users/chat/:user/:match", (request, response) -> {
+			response.type("application/json");
+			ArrayList<String> messages = system.getChat(request.params(":user"), request.params(":match"));
+		    
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
+      	        .toJsonTree(messages)));
+        });
+        get("/users/chat/message/:sender/:receiver/:date/:time/:message", (request, response) -> {
+			response.type("application/json");
+			system.sendMessage(
+        		request.params(":sender"),
+        		request.params(":receiver"),
+        		request.params(":message"),
+        		request.params(":date"),
+        		request.params(":time")
+        	);
+      	    return new Gson().toJson(
+      	      new StandardResponse(StatusResponse.SUCCESS));
+        });
         post("/users/exists", (request, response) -> {
 			response.type("application/json");
 		    User temp = new Gson().fromJson(request.body(), User.class);
@@ -136,7 +155,7 @@ public class App
 			response.type("application/json");
 		    
 		    User userToMatch = new Gson().fromJson(request.body(), User.class);
-		    User currentUser = system.findUser(request.params(":username"));
+		    User currentUser = system.toUserObject(request.params(":username"));
 
 		    // Add new match to BOTH users
 		    system.updateMatches(currentUser, userToMatch);
