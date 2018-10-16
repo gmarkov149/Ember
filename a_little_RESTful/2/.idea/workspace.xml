@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ad64c088-6332-4712-82cf-32a5e023e610" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.log" beforeDir="false" afterPath="$PROJECT_DIR$/example.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/helper/http/HttpHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/app/src/main/java/com/ember/ember/helper/http/HttpHelper.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,20 +58,21 @@
     <session id="-611146032">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="8" />
+          <entry key="project.closed" value="9" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.18" value="2" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.33" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="1" />
-          <entry key="java" value="4" />
+          <entry key="java" value="6" />
           <entry key="properties" value="2" />
           <entry key="xml" value="1" />
         </counts>
@@ -80,7 +80,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="4" />
+          <entry key="JAVA" value="6" />
           <entry key="Properties" value="2" />
           <entry key="XML" value="1" />
         </counts>
@@ -102,7 +102,32 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/App.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-153">
+              <caret line="99" column="39" lean-forward="true" selection-start-line="99" selection-start-column="39" selection-end-line="99" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -150,8 +175,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -181,7 +207,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -235,7 +260,7 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3020243" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3068826" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -281,11 +306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2142">
           <caret line="173" column="27" selection-start-line="173" selection-start-column="27" selection-end-line="173" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3075#3076#0" expanded="true" />
-            <element signature="e#3096#3097#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -320,16 +340,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="358" column="56" lean-forward="true" selection-start-line="358" selection-start-column="56" selection-end-line="358" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/log4j.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -337,9 +347,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
+        <state relative-caret-position="-153">
           <caret line="99" column="39" lean-forward="true" selection-start-line="99" selection-start-column="39" selection-end-line="99" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />

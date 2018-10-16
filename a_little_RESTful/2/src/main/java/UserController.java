@@ -24,7 +24,7 @@ public class UserController
         // DB user
         dataSource.setUser("root");
         // DB password
-        dataSource.setPassword("112358");
+        dataSource.setPassword("CZ3002");
         dataSource.setServerName("localhost");
         // DB name
         dataSource.setDatabaseName("cz3002");

@@ -10,7 +10,6 @@ import com.ember.ember.model.UserDetailsList;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
