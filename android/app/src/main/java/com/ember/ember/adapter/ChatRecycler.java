@@ -26,6 +26,10 @@ public class ChatRecycler extends RecyclerView.Adapter<ChatRecycler.ChatViewHold
         }
     }
 
+    /**
+     * add all chat objects in chat to the mDataset, and update the ui
+     * @param chats chats to add to the ui
+     */
     public void addToChat(List<Chat> chats) {
         mDataset.addAll(chats);
         notifyDataSetChanged();

@@ -10,9 +10,10 @@ import retrofit2.Response;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ember.ember.AsyncTasks.PollChatAsyncTask;
+import com.ember.ember.async.PollChatAsyncTask;
 import com.ember.ember.R;
 import com.ember.ember.adapter.ChatRecycler;
+import com.ember.ember.handlers.ExceptionHandler;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.Chat;
@@ -30,9 +31,14 @@ public class ChatActivity extends AppCompatActivity {
     private List<Chat> chats;
     private PollChatAsyncTask pollChatAsyncTask;
 
+    /**
+     * gets user details, set title to the other party's name, configure recyclerview and start polling
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_chat);
         me = (UserDetails) getIntent().getSerializableExtra("user");
         other = (UserDetails) getIntent().getSerializableExtra("other");
@@ -42,6 +48,19 @@ public class ChatActivity extends AppCompatActivity {
         pollChatAsyncTask = (PollChatAsyncTask) new PollChatAsyncTask().execute(recyclerView, me.getUsername(), other.getUsername(), this);
     }
 
+    /**
+     * stop the polling when activity ends
+     */
+    @Override
+    protected void onDestroy() {
+        pollChatAsyncTask.cancel(true);
+        super.onDestroy();
+    }
+
+    /**
+     * send contents of message box to server if it is not empty
+     * @param v send button
+     */
     public void send(View v) {
         TextInputEditText toSend = findViewById(R.id.message);
         if (toSend.getText().toString().trim().length() == 0) {
@@ -64,6 +83,11 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * set recycler settings and adapter
+     * stack from end populates the view from the bottom of the recycler
+     * @return the recyclerview
+     */
     private RecyclerView setRecycler() {
         RecyclerView mRecyclerView = findViewById(R.id.chat_recycler);
         mRecyclerView.setHasFixedSize(true);

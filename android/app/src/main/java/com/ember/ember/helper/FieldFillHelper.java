@@ -14,6 +14,15 @@ import java.util.concurrent.TimeUnit;
 
 public class FieldFillHelper {
 
+    /**
+     * fill fields of user detail cards
+     * @param userDetails details of user
+     * @param thumbnail profile picture
+     * @param nameField name field
+     * @param langField language field
+     * @param hobbiesField hobbies field
+     * @param addressField lat/lon field
+     */
     public static void fillFields(UserDetails userDetails, ImageView thumbnail, TextView nameField, TextView langField, TextView hobbiesField, TextView addressField) {
         if (userDetails.getProfilePic() == null) {
             thumbnail.setImageResource(R.drawable.ic_baseline_account_circle_24px);
@@ -37,6 +46,12 @@ public class FieldFillHelper {
         setTextIfFilled(addressField, userDetails.getLocation(), "Lives at: ");
     }
 
+    /**
+     * helper to set text view text
+     * @param v text view to fill
+     * @param field desired contents
+     * @param prefix prefix of desired content (eg 'name: ' for name)
+     */
     private static void setTextIfFilled(TextView v, String field, String prefix) {
         if (field != null && !field.isEmpty()) {
             v.setVisibility(View.VISIBLE);

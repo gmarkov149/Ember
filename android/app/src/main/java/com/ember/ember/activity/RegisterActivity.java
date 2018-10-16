@@ -18,6 +18,7 @@ import com.ember.ember.R;
 import com.ember.ember.adapter.SectionsPagerAdapter;
 import com.ember.ember.fragment.AddressFragment;
 import com.ember.ember.fragment.DatePickerFragment;
+import com.ember.ember.handlers.ExceptionHandler;
 import com.ember.ember.helper.BitmapHelper;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
@@ -62,9 +63,15 @@ public class RegisterActivity extends AppCompatActivity {
     private Map<Integer, ErrorHelper.Problem> toValidate;
     private Bitmap bitmap;
 
+    /**
+     * initialize hobbies list and variables to validate, and decide if the user is editing or creating
+     * a new user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         photoChanged = false;
         setContentView(R.layout.activity_register);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -80,6 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
                 (UserDetails) getIntent().getSerializableExtra("user") : null;
     }
 
+    /**
+     * create a hobbies list from the possible hobbies
+     */
     private void setupHobbiesList() {
         hobbiesList = new ArrayList<>();
 
@@ -99,6 +109,9 @@ public class RegisterActivity extends AppCompatActivity {
         return hobbiesList;
     }
 
+    /**
+     * sets up a validation map that will be iterated through during submission to look for empty fields
+     */
     private void setupValidationMap() {
         toValidate = new HashMap<>();
         if (userDetails != null) {
@@ -110,6 +123,10 @@ public class RegisterActivity extends AppCompatActivity {
         toValidate.put(R.id.dob, ErrorHelper.Problem.DOB_EMPTY);
     }
 
+    /**
+     * start built in camera intent
+     * @param v take picture button
+     */
     public void dispatchTakePictureIntent(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -127,12 +144,22 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * start built in gallery intent
+     * @param v select from gallery button
+     */
     public void pickImage(View v) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_PICK_PHOTO);
     }
 
+    /**
+     * check for return result from pick image or take picture buttons
+     * @param requestCode identify which button was clicked
+     * @param resultCode check if there are any errors
+     * @param data data of the gallery pic
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
@@ -143,6 +170,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * create file data and image
+     * @return
+     * @throws IOException file not found
+     */
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -156,16 +188,27 @@ public class RegisterActivity extends AppCompatActivity {
         return image;
     }
 
+    /**
+     * starts date picker fragment to select dob with calendar
+     * @param v select date button
+     */
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment(this, R.id.dob);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    /**
+     * starts map fragment to select location
+     * @param v select location button
+     */
     public void showMapDialog(View v) {
         DialogFragment newFragment = new AddressFragment(this, R.id.address);
         newFragment.show(getSupportFragmentManager(), "map");
     }
 
+    /**
+     * set thumbnail to camera picture
+     */
     private void setCameraPic() {
         ImageView mImageView = findViewById(R.id.pic);
         int targetW = mImageView.getWidth();
@@ -175,6 +218,10 @@ public class RegisterActivity extends AppCompatActivity {
         photoChanged = true;
     }
 
+    /**
+     * set thumbnail to gallery picture
+     * @param data file path of picture selected
+     */
     private void setGalleryPic(Uri data) {
         try {
             ImageView mImageView = findViewById(R.id.pic);
@@ -186,6 +233,10 @@ public class RegisterActivity extends AppCompatActivity {
         } catch (IOException e) {}
     }
 
+    /**
+     * validate inputs, create UserDetails object and submit to server
+     * @param v submit button
+     */
     public void submit(View v) {
         if (validateEditText() || userDetails == null && checkPasswordsMatch()) return;
         if (mViewPager.getCurrentItem() == 0) {
@@ -220,6 +271,11 @@ public class RegisterActivity extends AppCompatActivity {
         executeCall(userDetails, isRegister);
     }
 
+    /**
+     * submits user details to server and go to main activity if successful
+     * @param userDetails details of user to submit
+     * @param isRegister boolean representing create or edit mode
+     */
     private void executeCall(UserDetails userDetails, boolean isRegister) {
         Call<Void> call = isRegister ? HttpHelper.register(userDetails)
                 : HttpHelper.editProfile(userDetails);
@@ -245,6 +301,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * iterate through validation map and check if field is filled
+     * @return
+     */
     private boolean validateEditText() {
         boolean hasError = false;
         for (Map.Entry<Integer, ErrorHelper.Problem> entry : toValidate.entrySet()) {
@@ -258,6 +318,10 @@ public class RegisterActivity extends AppCompatActivity {
         return hasError;
     }
 
+    /**
+     * check if the passwords entered twice match
+     * @return true if match
+     */
     private boolean checkPasswordsMatch() {
         String password = getTextField(R.id.password);
         TextInputEditText repeatedPassword = findViewById(R.id.repeat_password);
@@ -269,6 +333,11 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * get text in an edit text
+     * @param id resource id of the field
+     * @return the contents of the edit text
+     */
     private String getTextField(int id) {
         Editable text = ((TextInputEditText) findViewById(id)).getText();
         return text == null ? "" : text.toString();

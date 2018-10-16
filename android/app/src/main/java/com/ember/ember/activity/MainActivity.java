@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.ember.ember.R;
 import com.ember.ember.fragment.UserListFragment;
 import com.ember.ember.fragment.ViewProfileFragment;
+import com.ember.ember.handlers.ExceptionHandler;
 import com.ember.ember.helper.FieldFillHelper;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
@@ -40,9 +41,14 @@ public class MainActivity extends AppCompatActivity
         return userDetails;
     }
 
+    /**
+     * get logged in user's details, set up navigation drawer and set initial tab to potential matches
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_main);
         userDetails = (UserDetails) getIntent().getSerializableExtra("user");
         userDetails.setProfilePic();
@@ -73,12 +79,20 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    /**
+     * when user taps another user, expand it
+     * @param item details of clicked user
+     */
     @Override
     public void onListFragmentInteraction(UserDetails item) {
         getUserDetailsCardTransition(item, R.layout.card_expanded);
         expanded = true;
     }
 
+    /**
+     * when match button is clicked on a user
+     * @param match details of matched user
+     */
     @Override
     public void onListButtonFragmentInteraction(UserDetails match) {
         Call<Void> call = HttpHelper.match(userDetails.getUsername(), match);
@@ -100,6 +114,10 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * when the chat button of a user on the matched page is clicked
+     * @param item details of user to chat with
+     */
     @Override
     public void onListChatFragmentInteraction(UserDetails item) {
         Intent intent = new Intent(this, ChatActivity.class);
@@ -115,6 +133,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * start register activity in edit user mode
+     * @param v edit button
+     */
     public void editProfile(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
         Bundle bundle = new Bundle();
@@ -123,11 +145,18 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    /**
+     * collapse expanded user card
+     */
     public void collapseCard() {
         cardTransition(R.layout.fragment_user_list);
         expanded = false;
     }
 
+    /**
+     * transition to target layout
+     * @param targetLayout layout to transition to
+     */
     private void cardTransition(int targetLayout) {
         ViewGroup mSceneRoot = findViewById(R.id.scene_root);
         Scene targetScene = Scene.getSceneForLayout(mSceneRoot, targetLayout, this);
@@ -135,6 +164,11 @@ public class MainActivity extends AppCompatActivity
         TransitionManager.go(targetScene, transition);
     }
 
+    /**
+     * populate fields of an expanded card
+     * @param userDetails details of the expanded user
+     * @param targetLayout card layout
+     */
     private void getUserDetailsCardTransition(UserDetails userDetails, int targetLayout) {
         ViewGroup mSceneRoot = findViewById(R.id.scene_root);
         ViewGroup targetView = (ViewGroup) getLayoutInflater().inflate(targetLayout, null);
@@ -153,11 +187,18 @@ public class MainActivity extends AppCompatActivity
         TransitionManager.go(targetScene, transition);
     }
 
+    /**
+     * get current navigation tab
+     * @return integer value of nav tab
+     */
     private int getCurrentNavTab() {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         return navigation.getSelectedItemId();
     }
 
+    /**
+     * if card is expanded, back button functionality becomes collapse of the card
+     */
     @Override
     public void onBackPressed() {
         int selected = getCurrentNavTab();

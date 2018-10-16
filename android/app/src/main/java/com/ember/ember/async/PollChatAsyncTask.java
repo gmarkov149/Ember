@@ -1,10 +1,8 @@
-package com.ember.ember.AsyncTasks;
+package com.ember.ember.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.ember.ember.activity.ChatActivity;
 import com.ember.ember.adapter.ChatRecycler;
 import com.ember.ember.helper.http.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
@@ -28,6 +26,11 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
     private int lastUpdate = 0;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    /**
+     * poll server every 500 ms for new chat information
+     * @param objects parameters for updating the chat
+     * @return null
+     */
     @Override
     protected Void doInBackground(Object... objects) {
         RecyclerView recyclerView = (RecyclerView) objects[0];
@@ -67,6 +70,14 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
         }
     }
 
+    /**
+     * parse list of chats from server and add new chats to adapter. scroll to bottom if view is already at bottom
+     * @param allChats api response from server
+     * @param recyclerView chat view
+     * @param chatRecycler adapter of recycler view
+     * @param me current logged in user's username
+     * @throws ParseException exception when parsing date time
+     */
     private void addToChat(List<String> allChats, RecyclerView recyclerView, ChatRecycler chatRecycler, String me) throws ParseException {
         List<String> newChats;
         newChats = allChats.subList(lastUpdate, allChats.size());

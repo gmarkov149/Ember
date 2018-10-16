@@ -23,6 +23,10 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * set submit listener
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +34,19 @@ public class LoginActivity extends AppCompatActivity {
         setSubmitWhenDoneListener();
     }
 
+    /**
+     * start register activity
+     * @param v register button
+     */
     public void register(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * check for empty boxes and call server to login
+     * @param v login button
+     */
     public void login(View v) {
         TextInputEditText username = findViewById(R.id.username);
         String usernameStr = username.getText().toString();
@@ -54,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         loginCall(usernameStr, hashedPassword, password);
     }
 
+    /**
+     * api call to server to check if user exists and password is valid
+     * @param usernameStr username entered
+     * @param hashedPassword hash of the password entered
+     * @param password password entry box
+     */
     private void loginCall(String usernameStr, String hashedPassword, TextInputEditText password) {
         Call<LoginResponse> call = HttpHelper.login(usernameStr, hashedPassword);
         call.enqueue(new Callback<LoginResponse>() {
@@ -78,6 +96,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * allows enter button on keyboard to login
+     */
     private void setSubmitWhenDoneListener() {
         TextInputEditText passwordField = findViewById(R.id.password);
 

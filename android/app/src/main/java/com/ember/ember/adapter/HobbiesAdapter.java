@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.ember.ember.R;
@@ -55,8 +54,6 @@ public class HobbiesAdapter extends ArrayAdapter<Hobbies> {
         }
 
         holder.mTextView.setText(listState.get(position).getHobby());
-
-        // To check weather checked event fire from getview() or user input
         isFromView = true;
         holder.mCheckBox.setChecked(listState.get(position).isSelected());
         isFromView = false;
@@ -67,15 +64,11 @@ public class HobbiesAdapter extends ArrayAdapter<Hobbies> {
             holder.mCheckBox.setVisibility(View.VISIBLE);
         }
         holder.mCheckBox.setTag(position);
-        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.mCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int getPosition = (Integer) buttonView.getTag();
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int getPosition = (Integer) buttonView.getTag();
-
-                if (!isFromView) {
-                    listState.get(position).setSelected(isChecked);
-                }
+            if (!isFromView) {
+                listState.get(position).setSelected(isChecked);
             }
         });
         return convertView;
