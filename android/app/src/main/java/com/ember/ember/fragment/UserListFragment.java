@@ -87,7 +87,7 @@ public class UserListFragment extends Fragment {
         UserDetails userDetails = ((MainActivity) getActivity()).getUserDetails();
 
         Call<UserDetailsList> call = isMatched ?
-                HttpHelper.getMatches(userDetails.getUsername(), userDetails.getPassword())
+                HttpHelper.getMatches(userDetails.getUsername())
                 : HttpHelper.getPotentialMatches(userDetails.getUsername());
         call.enqueue(new Callback<UserDetailsList>() {
             @Override

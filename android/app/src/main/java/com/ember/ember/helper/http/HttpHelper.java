@@ -1,10 +1,15 @@
 package com.ember.ember.helper.http;
 
 import com.ember.ember.helper.http.httpInterface.HttpInterface;
+import com.ember.ember.model.Chat;
 import com.ember.ember.model.Login;
 import com.ember.ember.model.LoginResponse;
 import com.ember.ember.model.UserDetails;
 import com.ember.ember.model.UserDetailsList;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -21,7 +26,7 @@ public class HttpHelper {
             .build();
 
     private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.0.101:4567")//10.27.45.207
+            .baseUrl("http://192.168.0.101:4567")//10.27.39.217//192.168.0.101//10.27.45.207
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build();
@@ -40,8 +45,8 @@ public class HttpHelper {
         return httpInterface.editProfile(userDetails);
     }
 
-    public static Call<UserDetailsList> getMatches(String username, String password) {
-        return httpInterface.getMatches(new Login(username, password));
+    public static Call<UserDetailsList> getMatches(String username) {
+        return httpInterface.getMatches(username);
     }
 
     public static Call<UserDetailsList> getPotentialMatches(String username) {
@@ -50,5 +55,15 @@ public class HttpHelper {
 
     public static Call<Void> match(String username, UserDetails matchedUser) {
         return httpInterface.match(username, matchedUser);
+    }
+
+    public static Call<List<String>> getChat(String username, String match) {
+        return httpInterface.getChat(username, match);
+    }
+
+    public static Call<Void> sendChat(Chat chat, String sender, String receiver) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateString = df.format(chat.getDate());
+        return httpInterface.sendChat(sender, receiver, dateString.split(" ")[0], dateString.split(" ")[1], chat.getMessage());
     }
 }

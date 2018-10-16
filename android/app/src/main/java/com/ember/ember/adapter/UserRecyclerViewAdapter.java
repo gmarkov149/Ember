@@ -2,6 +2,7 @@ package com.ember.ember.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,12 +50,12 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         UserDetails currentUser = mValues.get(position);
-        String profilePicBytes = mValues.get(position).getProfilePicBytes();
-        if (profilePicBytes == null || profilePicBytes.isEmpty()) {
+        Bitmap profilePic = mValues.get(position).getProfilePic();
+        if (profilePic == null) {
             holder.thumbnail.setImageResource(R.drawable.round_account_circle_black_48);
         }
         else {
-            holder.thumbnail.setImageBitmap(BitmapHelper.convertStringToBmp(profilePicBytes));
+            holder.thumbnail.setImageBitmap(profilePic);
         }
         holder.name.setText(currentUser.getName());
         if (isMatched) {

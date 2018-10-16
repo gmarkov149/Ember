@@ -103,7 +103,7 @@ public class UserDetails implements Serializable {
     }
 
     public void setProfilePic() {
-        if (profilePicBytes == null) return;
+        if (profilePicBytes == null || profilePicBytes.equals("null")) return;
         profilePic = BitmapHelper.convertStringToBmp(profilePicBytes);
     }
 
