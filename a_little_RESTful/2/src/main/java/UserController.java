@@ -374,7 +374,7 @@ public class UserController
 	}
 
 	// Get chat history of current user and match
-	public ArrayList<String> getChat(String current, String match) {
+	public ArrayList<String> getChat(String current, String match, int startIndex) {
 		rs = null;
 		statement = null;
 
@@ -390,7 +390,8 @@ public class UserController
 		        "FROM Chat " + 
 		        "WHERE Chat.Sender='" + current + "' AND Chat.Receiver='" + match +
 		        "' OR Chat.Sender='" + match + "' AND Chat.Receiver='" + current +
-		        "' ORDER BY Datestamp ASC, Timestamp ASC");
+		        "' ORDER BY Datestamp ASC, Timestamp ASC" +
+				" LIMIT " + startIndex + ", 18446744073709551615");
 
 		    // Add every message to array list
 		    while(rs.next()) {

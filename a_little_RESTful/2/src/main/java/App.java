@@ -84,11 +84,11 @@ public class App
         });
         get("/users/chat/:user/:match/:startIndex", (request, response) -> {
 			response.type("application/json");
-			ArrayList<String> messages = system.getChat(request.params(":user"), request.params(":match"));
+			ArrayList<String> messages = system.getChat(request.params(":user"), request.params(":match"), Integer.parseInt(request.params(":startIndex")));
 		    
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
-      	        .toJsonTree(messages.subList(Integer.parseInt(request.params(":startIndex")), messages.size()))));
+      	        .toJsonTree(messages)));
         });
         get("/users/chat/message/:sender/:receiver/:date/:time/:message", (request, response) -> {
 			response.type("application/json");
