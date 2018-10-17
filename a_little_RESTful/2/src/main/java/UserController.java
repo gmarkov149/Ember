@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 // For DB
 import java.sql.*;
+import java.util.stream.Stream;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
@@ -292,14 +293,31 @@ public class UserController
 		try {
 		    statement = conn.createStatement();
 		    rs = statement.executeQuery(
-		        "SELECT Users.Username,Users.Gender " + 
+		        "SELECT Users.Username,Users.Gender,Users.Location " +
 		        "FROM Users " +
 		        String.format("WHERE Users.Username!='%s' AND Users.Languages='%s'", 
 		        	user.getUsername(), user.getLanguages()));
 
 		    // Get filtered users
 		    ArrayList<String> filteredUsers = new ArrayList<String>();
+		    Double userLat = null, userLon = null;
+		    if (user.getLocation() != null && !user.getLocation().isEmpty()) {
+                String[] userLatLon = user.getLocation().split(",");
+                userLat = Double.parseDouble(userLatLon[0]);
+                userLon = Double.parseDouble(userLatLon[1]);
+            }
 		    while(rs.next()) {
+                Double otherUserLat = null, otherUserLon = null;
+                String otherLocationStr = rs.getString("Location");
+                if (otherLocationStr != null && !otherLocationStr.isEmpty()) {
+                    String[] otherUserLatLon = otherLocationStr.split(",");
+                    otherUserLat = Double.parseDouble(otherUserLatLon[0]);
+                    otherUserLon = Double.parseDouble(otherUserLatLon[1]);
+                }
+                if (user.getLocation() != null && otherUserLat != null && otherUserLon != null &&
+                        euclideanDistance(userLat, userLon, otherUserLat, otherUserLon) > 0.03) {
+                    continue;
+                }
 		    	if(user.isInterestedInMen()) {
 		    		
 		    		if((rs.getString("Gender")).equals("Male"))
@@ -342,6 +360,10 @@ public class UserController
 
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
+
+	private double euclideanDistance(Double x1, Double y1, Double x2, Double y2) {
+	    return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2);
+    }
 
 	// Add a new match to the current user (BOTH USERS)
 	// The user.matched will be updated
