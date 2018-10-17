@@ -25,6 +25,7 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
 
     private int lastUpdate = 0;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final long POLL_INTERVAL = 500;
 
     /**
      * poll server every 500 ms for new chat information
@@ -38,7 +39,7 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
         String me = objects[1].toString();
         String other = objects[2].toString();
         Context context = (Context) objects[3];
-        while (true) {
+        while (!isCancelled()) {
             Call<ChatList> call = HttpHelper.getChat(me, other);
             call.enqueue(new Callback<ChatList>() {
                 @Override
@@ -63,11 +64,12 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
                 }
             });
             try {
-                Thread.sleep(500);
+                Thread.sleep(POLL_INTERVAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
     /**
