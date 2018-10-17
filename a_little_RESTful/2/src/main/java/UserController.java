@@ -11,6 +11,7 @@ public class UserController
 	private int id = 1; 
 	private ResultSet rs;
 	private Statement statement;
+	private final double DISTANCE_THRESHOLD = 0.03;
 
 	// Define Data Source
 	private MysqlDataSource dataSource;
@@ -315,7 +316,7 @@ public class UserController
                     otherUserLon = Double.parseDouble(otherUserLatLon[1]);
                 }
                 if (user.getLocation() != null && otherUserLat != null && otherUserLon != null &&
-                        euclideanDistance(userLat, userLon, otherUserLat, otherUserLon) > 0.03) {
+                        euclideanDistance(userLat, userLon, otherUserLat, otherUserLon) > DISTANCE_THRESHOLD) {
                     continue;
                 }
 		    	if(user.isInterestedInMen()) {
