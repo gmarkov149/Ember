@@ -20,7 +20,7 @@ import com.ember.ember.fragment.AddressFragment;
 import com.ember.ember.fragment.DatePickerFragment;
 import com.ember.ember.handlers.ExceptionHandler;
 import com.ember.ember.helper.BitmapHelper;
-import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.Hobbies;
 import com.ember.ember.model.UserDetails;

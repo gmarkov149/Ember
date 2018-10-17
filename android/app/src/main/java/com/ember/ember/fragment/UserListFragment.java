@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.ember.ember.R;
 import com.ember.ember.activity.MainActivity;
 import com.ember.ember.adapter.UserRecyclerViewAdapter;
-import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.UserDetails;
 import com.ember.ember.model.UserDetailsList;
@@ -99,8 +99,6 @@ public class UserListFragment extends Fragment {
                         view.findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
                     }
                     recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener, isMatched));
-                } else {
-                    ErrorHelper.raiseToast(context, ErrorHelper.Problem.CALL_FAILED);
                 }
             }
 

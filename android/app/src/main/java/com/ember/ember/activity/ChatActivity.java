@@ -14,7 +14,7 @@ import com.ember.ember.async.PollChatAsyncTask;
 import com.ember.ember.R;
 import com.ember.ember.adapter.ChatRecycler;
 import com.ember.ember.handlers.ExceptionHandler;
-import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.Chat;
 import com.ember.ember.model.UserDetails;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.ember.ember.adapter.ChatRecycler;
-import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.Chat;
 import com.ember.ember.model.ChatList;
@@ -25,7 +25,7 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
 
     private int lastUpdate = 0;
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private final long POLL_INTERVAL = 500;
+    private final long POLL_INTERVAL = 1000;
 
     /**
      * poll server every 500 ms for new chat information
@@ -40,7 +40,7 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
         String other = objects[2].toString();
         Context context = (Context) objects[3];
         while (!isCancelled()) {
-            Call<ChatList> call = HttpHelper.getChat(me, other);
+            Call<ChatList> call = HttpHelper.getChat(me, other, lastUpdate);
             call.enqueue(new Callback<ChatList>() {
                 @Override
                 public void onResponse(Call<ChatList> call, Response<ChatList> response) {
@@ -48,7 +48,6 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
                         try {
                             List<String> allChats = response.body().getData();
                             addToChat(allChats, recyclerView, chatRecycler, me);
-                            lastUpdate = allChats.size();
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -81,11 +80,9 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
      * @throws ParseException exception when parsing date time
      */
     private void addToChat(List<String> allChats, RecyclerView recyclerView, ChatRecycler chatRecycler, String me) throws ParseException {
-        List<String> newChats;
-        newChats = allChats.subList(lastUpdate, allChats.size());
-        lastUpdate = allChats.size();
+        lastUpdate += allChats.size();
         List<Chat> toAdd = new ArrayList<>();
-        for (String chatStr : newChats) {
+        for (String chatStr : allChats) {
             String[] chatArr = chatStr.split("\\|");
             Date timestamp = df.parse(chatArr[0] + " " + chatArr[1]);
             String sender = chatArr[2];

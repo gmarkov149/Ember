@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.ember.ember.R;
 import com.ember.ember.helper.http.HttpHelper;
-import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.ErrorHelper;
 import com.ember.ember.model.LoginResponse;
 import com.google.android.material.textfield.TextInputEditText;
 

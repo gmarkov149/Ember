@@ -13,7 +13,7 @@ import com.ember.ember.fragment.UserListFragment;
 import com.ember.ember.fragment.ViewProfileFragment;
 import com.ember.ember.handlers.ExceptionHandler;
 import com.ember.ember.helper.FieldFillHelper;
-import com.ember.ember.helper.http.ErrorHelper;
+import com.ember.ember.helper.ErrorHelper;
 import com.ember.ember.helper.http.HttpHelper;
 import com.ember.ember.model.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

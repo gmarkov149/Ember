@@ -1,4 +1,4 @@
-package com.ember.ember.helper.http;
+package com.ember.ember.helper;
 
 import android.content.Context;
 import android.widget.Toast;

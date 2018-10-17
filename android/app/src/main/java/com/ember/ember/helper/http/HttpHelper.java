@@ -57,8 +57,8 @@ public class HttpHelper {
         return httpInterface.match(username, matchedUser);
     }
 
-    public static Call<ChatList> getChat(String username, String match) {
-        return httpInterface.getChat(username, match);
+    public static Call<ChatList> getChat(String username, String match, int startIndex) {
+        return httpInterface.getChat(username, match, startIndex);
     }
 
     public static Call<Void> sendChat(Chat chat, String sender, String receiver) {

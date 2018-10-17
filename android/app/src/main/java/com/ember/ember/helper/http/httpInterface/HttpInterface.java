@@ -33,8 +33,8 @@ public interface HttpInterface {
     @POST("users/match/{username}")
     Call<Void> match(@Path("username") String username, @Body UserDetails userDetails);
 
-    @GET("users/chat/{user}/{match}")
-    Call<ChatList> getChat(@Path("user") String username, @Path("match") String match);
+    @GET("users/chat/{user}/{match}/{startIndex}")
+    Call<ChatList> getChat(@Path("user") String username, @Path("match") String match, @Path("startIndex") int startIndex);
 
     @GET("users/chat/message/{sender}/{receiver}/{date}/{time}/{message}")
     Call<Void> sendChat(@Path("sender") String sender, @Path("receiver") String receiver,
