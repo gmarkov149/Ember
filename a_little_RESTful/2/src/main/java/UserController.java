@@ -30,10 +30,12 @@ public class UserController
         dataSource.setServerName("localhost");
         // DB name
         dataSource.setDatabaseName("cz3002");
+        
         conn = null;
 
         // Establish a connection
         try {
+        	dataSource.setServerTimezone("UTC");
             conn = dataSource.getConnection();
             // save the current id even if the program is restrated
             statement = conn.createStatement();
@@ -380,13 +382,7 @@ public class UserController
 		        "VALUES " + 
 		        String.format("('%s', '%s')", 
 		        	current.getUsername(), match.getUsername() ));
-		    System.out.println(current.getUsername());
-		    System.out.println(match.getUsername());
-		    Statement statement1 = conn.createStatement();
-		    System.out.println( statement1.executeUpdate(
-			        "UPDATE SuggestedPartners " + 
-			        "SET Show = 'true' " + 
-			        "WHERE Username = '" + current.getUsername() + "' AND PartnerUsername ='" + match.getUsername() + "'"));
+		    executeOneStatement(current.getUsername(), match.getUsername());
 //		    PreparedStatement stmt = conn.prepareStatement("DELETE " + 
 //			        "FROM SuggestedPartners " + 
 //			        "WHERE Username = ? AND PartnerUsername =?");
@@ -395,7 +391,21 @@ public class UserController
 //		    System.out.println(stmt.execute());
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
+	private void executeOneStatement(String current, String match)
+	{
+		rs = null;
+		statement = null;
 
+		// Remember to remove from users potenial list
+		try {
+		    statement = conn.createStatement();
+		    
+		    System.out.println( statement.executeUpdate(
+			        "DELETE FROM SuggestedPartners " +
+			        "WHERE Username = '" + current + "' AND PartnerUsername ='" + match + "'"));
+
+		} catch(SQLException e){ e.printStackTrace(); } 
+	}
 	// Get chat history of current user and match
 	public ArrayList<String> getChat(String current, String match, int startIndex) {
 		rs = null;
@@ -493,12 +503,35 @@ public class UserController
 		    }
 		    do
 		    {
-		    	
+		    	if(oneMoreQuery(rs.getString("LikesUsername"), current.getUsername()))
 		    	temp.add(this.toUserObject(rs.getString("LikesUsername")));
 		    }
 		    while(rs.next() && temp.size()<end);
 		    return temp;
 		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
+	}
+	private boolean oneMoreQuery(String match, String current)
+	{
+		rs = null;
+		statement = null;
+		
+		
+		try {
+		    statement = conn.createStatement();
+		    rs = statement.executeQuery(
+		        "SELECT LikesUsername " + 
+		        "FROM LikedUsers " +
+		        "WHERE LikedUsers.Username ='" + match + "' ");
+		    rs.next();
+		    if(rs.getString("LikesUsername").equals(current))
+		    {
+		    	return true;
+		    }
+		    else
+		    {
+		    	return false;
+		    }
+		} catch(SQLException e){ e.printStackTrace(); return false; }
 	}
 	//manual reset back to empty tables PURELY FOR TESTING
 	public void reset()
