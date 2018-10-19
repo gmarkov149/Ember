@@ -262,6 +262,7 @@ public class RegisterActivity extends AppCompatActivity {
             getTextField(R.id.dob),
             hobbiesString.toString(),
             gender,
+            findViewById(R.id.address).getTag().toString(),
             getTextField(R.id.address),
             ((Spinner) findViewById(R.id.languages)).getSelectedItem().toString(),
             photoChanged ? BitmapHelper.convertBmpToString(bitmap) : null,

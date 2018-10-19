@@ -15,6 +15,7 @@ public class UserDetails implements Serializable {
     private String hobbies;
     private String gender;
     private String location;
+    private String locationStr;
     private String languages;
     private String profilePicBytes;
     private Bitmap profilePic;
@@ -27,7 +28,7 @@ public class UserDetails implements Serializable {
             "Walking", "Traveling", "Eating", "Crafts", "Fishing",
             "Hiking", "Animals"};
 
-    public UserDetails(String username, String name, String password, String email, String dob, String hobbies, String gender, String location, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {
+    public UserDetails(String username, String name, String password, String email, String dob, String hobbies, String gender, String location, String locationStr, String languages, String profilePicBytes, boolean interestedInMen, boolean interestedInWomen) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -36,6 +37,7 @@ public class UserDetails implements Serializable {
         this.hobbies = hobbies;
         this.gender = gender;
         this.location = location;
+        this.locationStr = locationStr;
         this.languages = languages;
         this.profilePicBytes = profilePicBytes;
         this.interestedInMen = interestedInMen;
@@ -73,6 +75,10 @@ public class UserDetails implements Serializable {
 
     public String getLocation() {
         return location;
+    }
+
+    public String getLocationStr() {
+        return locationStr;
     }
 
     public String getLanguages() {
@@ -117,4 +123,5 @@ public class UserDetails implements Serializable {
         }
         hobbiesString = hobbiesSb.toString();
     }
+
 }

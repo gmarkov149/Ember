@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,9 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+import java.io.IOException;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -55,11 +60,31 @@ public class AddressFragment extends DialogFragment implements OnMapReadyCallbac
                 .setPositiveButton("Confirm", (DialogInterface dialog, int id) -> {
                     TextInputEditText text = activity.findViewById(resource);
                     LatLng position = marker.getPosition();
-                    text.setText(position.getLatitude() + "," +  position.getLongitude());
+                    text.setTag(position.getLatitude() + "," +  position.getLongitude());
+                    try {
+                        List<Address> addresses = new Geocoder(getContext()).getFromLocation(position.getLatitude(), position.getLongitude(), 1);
+                        if (addresses.isEmpty()) {
+                            text.setText("Unable to detect address.");
+                            return;
+                        }
+                        Address address = addresses.get(0);
+                        text.setText(extractAddress(address));
+                    } catch (IOException e) {
+                        text.setText("");
+                        e.printStackTrace();
+                    }
                 })
                 .setNegativeButton("Cancel", (DialogInterface dialog, int id) -> {
                 });
         return builder.create();
+    }
+
+    private String extractAddress(Address address) {
+        StringBuilder addressLines = new StringBuilder();
+        for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+            addressLines.append(address.getAddressLine(i));
+        }
+        return  addressLines.toString();
     }
 
     @Override
@@ -95,7 +120,7 @@ public class AddressFragment extends DialogFragment implements OnMapReadyCallbac
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mapView.onStop();
+//        mapView.onDestroy();
     }
 
     @Override
