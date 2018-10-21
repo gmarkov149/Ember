@@ -26,8 +26,8 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private UserDetails me;
-    private UserDetails other;
+    private String me;
+    private String other;
     private List<Chat> chats;
     private PollChatAsyncTask pollChatAsyncTask;
 
@@ -40,12 +40,12 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_chat);
-        me = (UserDetails) getIntent().getSerializableExtra("user");
-        other = (UserDetails) getIntent().getSerializableExtra("other");
-        setTitle(other.getName());
+        me = getIntent().getStringExtra("user");
+        other = getIntent().getStringExtra("other");
+        setTitle(getIntent().getStringExtra("otherName"));
         chats = new ArrayList<>();
         RecyclerView recyclerView = setRecycler();
-        pollChatAsyncTask = (PollChatAsyncTask) new PollChatAsyncTask().execute(recyclerView, me.getUsername(), other.getUsername(), this);
+        pollChatAsyncTask = (PollChatAsyncTask) new PollChatAsyncTask().execute(recyclerView, me, other, this);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ChatActivity extends AppCompatActivity {
         if (toSend.getText().toString().trim().length() == 0) {
             return;
         }
-        Call<Void> call = HttpHelper.sendChat(new Chat(true, toSend.getText().toString(), new Date()), me.getUsername(), other.getUsername());
+        Call<Void> call = HttpHelper.sendChat(new Chat(true, toSend.getText().toString(), new Date()), me, other);
         toSend.setText("");
         call.enqueue(new Callback<Void>() {
             @Override

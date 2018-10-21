@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean expanded;
     private UserDetails userDetails;
+    private static final int UPDATE_DETAILS = 1;
 
     public UserDetails getUserDetails() {
         return userDetails;
@@ -50,9 +52,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_main);
-        userDetails = (UserDetails) getIntent().getSerializableExtra("user");
-        userDetails.setProfilePic();
-        userDetails.setHobbiesString();
+        getUserDetailsFromIntent(getIntent());
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener((@NonNull MenuItem item) -> {
             Fragment selectedFragment = null;
@@ -77,6 +77,21 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, UserListFragment.newInstance(1, false));
         transaction.commit();
+    }
+
+    private void getUserDetailsFromIntent(Intent intent) {
+        userDetails = (UserDetails) intent.getSerializableExtra("user");
+        userDetails.setProfilePic();
+        userDetails.setHobbiesString();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == UPDATE_DETAILS && resultCode == RESULT_OK) {
+            getUserDetailsFromIntent(data);
+            FieldFillHelper.fillFields(userDetails, findViewById(R.id.profile_pic), findViewById(R.id.name_and_age), findViewById(R.id.languages),
+                    findViewById(R.id.hobbies), findViewById(R.id.address));
+        }
     }
 
     /**
@@ -122,8 +137,9 @@ public class MainActivity extends AppCompatActivity
     public void onListChatFragmentInteraction(UserDetails item) {
         Intent intent = new Intent(this, ChatActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("user", userDetails);
-        bundle.putSerializable("other", item);
+        bundle.putString("user", userDetails.getUsername());
+        bundle.putString("other", item.getUsername());
+        bundle.putString("otherName", item.getName());
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -140,9 +156,10 @@ public class MainActivity extends AppCompatActivity
     public void editProfile(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
         Bundle bundle = new Bundle();
+        userDetails.nullProfilePic();
         bundle.putSerializable("user", userDetails);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, UPDATE_DETAILS);
     }
 
     /**

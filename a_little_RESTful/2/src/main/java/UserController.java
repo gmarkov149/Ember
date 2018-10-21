@@ -49,9 +49,13 @@ public class UserController
             // save the current id even if the program is restrated
             statement = conn.createStatement();
             rs = statement.executeQuery("SELECT ID FROM users ORDER BY ID DESC LIMIT 1");
-            rs.next();
-            id = rs.getInt(1);
-            id++;
+            if (!rs.next()) {
+                id = 1;
+            }
+            else {
+                id = rs.getInt(1);
+                id++;
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -74,8 +78,9 @@ public class UserController
 				"WHERE Users.Username='" + username + "' AND Users.ID=Hobbies.UserID");
 
 			// Get user details
-			rs.next();
+//			if (!rs.next()) return null;
 
+            rs.next();
 			// Convert hobbies to correctly formatted hobby string 
 			String hobbies = String.format("%s %s %s %s %s %s %s %s %s %s %s", 
 				rs.getString("Fitness"), 
@@ -326,7 +331,7 @@ public class UserController
                     otherUserLat = Double.parseDouble(otherUserLatLon[0]);
                     otherUserLon = Double.parseDouble(otherUserLatLon[1]);
                 }
-                if (user.getLocation() != null && otherUserLat != null && otherUserLon != null &&
+                if (user.getLocation() != null && !user.getLocation().isEmpty() && otherUserLat != null && otherUserLon != null &&
                         euclideanDistance(userLat, userLon, otherUserLat, otherUserLon) > DISTANCE_THRESHOLD) {
                     continue;
                 }
@@ -498,7 +503,9 @@ public class UserController
 		        "WHERE SuggestedPartners.Username ='" + current.getUsername() + "' AND SuggestedPartners.Show = 'false' " +
 		    	"ORDER BY Score DESC " +
 		    	"LIMIT " + end+1 + " ");
-		    secondRS.next();
+		    if (!secondRS.next()) {
+		        return temp;
+            };
 		    for(int i=0;i<start;i++)
 		    {
 		    	secondRS.next();
@@ -527,10 +534,11 @@ public class UserController
 		        "FROM LikedUsers " +
 		        "WHERE LikedUsers.Username ='" + current.getUsername() + "' " +
 		    	"LIMIT " + end+1 + " ");
-			secondRS.next();
-		    for(int i=0;i<start;i++)
+		    for(int i = 0; i <= start; i++)
 		    {
-		    	secondRS.next();
+		        if (!secondRS.next()) {
+		            return temp;
+                }
 		    }
 		    do
 		    {
@@ -539,7 +547,7 @@ public class UserController
 		    }
 		    while(secondRS.next() && temp.size()<=end);
 		    return temp;
-		} catch(SQLException e){ return new ArrayList<User>(); }
+		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); }
 	}
 	private boolean oneMoreQuery(String match, String current)
 	{

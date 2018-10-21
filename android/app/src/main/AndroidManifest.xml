@@ -38,7 +38,8 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:label="Register" />
-        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.MapActivity"></activity>
     </application>
 
 </manifest>

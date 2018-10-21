@@ -108,6 +108,9 @@ public class UserListFragment extends Fragment {
                         recyclerView.setVisibility(View.GONE);
                         getActivity().findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
                     }
+                    for (UserDetails user : users) {
+                        user.setProfilePic();
+                    }
                     recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener, isMatched));
                 }
             }

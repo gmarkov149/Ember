@@ -110,6 +110,10 @@ public class UserDetails implements Serializable {
         profilePic = BitmapHelper.convertStringToBmp(profilePicBytes);
     }
 
+    public void nullProfilePic() {
+        profilePic = null;
+    }
+
     public void setHobbiesString() {
         StringBuilder hobbiesSb = new StringBuilder();
         String[] hobbiesArr = hobbies.split(" ");
