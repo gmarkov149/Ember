@@ -1,4 +1,10 @@
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Map;
+import java.io.InputStream;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.net.URL;
 // For DB
 import java.sql.*;
 import java.util.stream.Stream;
@@ -10,7 +16,10 @@ public class UserController
 	private ArrayList<User> system;
 	private int id = 1; 
 	private ResultSet rs;
+	private ResultSet secondRS;
+	private ResultSet specialQueryRS;
 	private Statement statement;
+	private Statement otherStatement;
 	private final double DISTANCE_THRESHOLD = 0.03;
 
 	// Define Data Source
@@ -400,9 +409,9 @@ public class UserController
 		try {
 		    statement = conn.createStatement();
 		    
-		    System.out.println( statement.executeUpdate(
+		    statement.executeUpdate(
 			        "DELETE FROM SuggestedPartners " +
-			        "WHERE Username = '" + current + "' AND PartnerUsername ='" + match + "'"));
+			        "WHERE Username = '" + current + "' AND PartnerUsername ='" + match + "'");
 
 		} catch(SQLException e){ e.printStackTrace(); } 
 	}
@@ -457,73 +466,78 @@ public class UserController
 
 	public ArrayList<User> get10Potential(User current, int start, int end)
 	{
-		rs = null;
-		statement = null;
+		//because  we are using the toUserObject method, and that executes a statement into a result set
+		//we need another result set to store the results of the statement below
+		secondRS = null;
+		otherStatement = null;
 		ArrayList<User> temp = new ArrayList<User>();
 		// Remember to remove from users potenial list
 		try {
-		    statement = conn.createStatement();
-		    rs = statement.executeQuery(
+				otherStatement = conn.createStatement();
+		    
+				secondRS = otherStatement.executeQuery(
 		        "SELECT PartnerUsername " + 
 		        "FROM SuggestedPartners " +
 		        "WHERE SuggestedPartners.Username ='" + current.getUsername() + "' AND SuggestedPartners.Show = 'false' " +
 		    	"ORDER BY Score DESC " +
-		    	"LIMIT " + end + " ");
-		    rs.next();
+		    	"LIMIT " + end+1 + " ");
+		    secondRS.next();
 		    for(int i=0;i<start;i++)
 		    {
-		    	rs.next();
+		    	secondRS.next();
 		    }
 		    do 
 		    {
 		    	
-		    	temp.add(this.toUserObject(rs.getString("PartnerUsername")));
+		    	temp.add(this.toUserObject(secondRS.getString("PartnerUsername")));
+		    	
 		    }
-		    while(rs.next() && temp.size() < end);
+		    while(secondRS.next() && temp.size() < end);
+		    
 		    return temp;
 		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
 	}
 	public ArrayList<User> getMatches(User current, int start, int end)
 	{
-		rs = null;
-		statement = null;
+		secondRS = null;
+		otherStatement = null;
 		ArrayList<User> temp = new ArrayList<User>();
-		// Remember to remove from users potenial list
+		
 		try {
-		    statement = conn.createStatement();
-		    rs = statement.executeQuery(
+			otherStatement = conn.createStatement();
+			secondRS = otherStatement.executeQuery(
 		        "SELECT LikesUsername " + 
 		        "FROM LikedUsers " +
 		        "WHERE LikedUsers.Username ='" + current.getUsername() + "' " +
-		    	"LIMIT " + end + " ");
-		    rs.next();
+		    	"LIMIT " + end+1 + " ");
+			secondRS.next();
 		    for(int i=0;i<start;i++)
 		    {
-		    	rs.next();
+		    	secondRS.next();
 		    }
 		    do
 		    {
-		    	if(oneMoreQuery(rs.getString("LikesUsername"), current.getUsername()))
-		    	temp.add(this.toUserObject(rs.getString("LikesUsername")));
+		    	if(oneMoreQuery(secondRS.getString("LikesUsername"), current.getUsername()))
+		    	temp.add(this.toUserObject(secondRS.getString("LikesUsername")));
 		    }
-		    while(rs.next() && temp.size()<end);
+		    while(secondRS.next() && temp.size()<=end);
 		    return temp;
 		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
 	}
 	private boolean oneMoreQuery(String match, String current)
 	{
-		rs = null;
+		specialQueryRS = null;
 		statement = null;
 		
 		
 		try {
 		    statement = conn.createStatement();
-		    rs = statement.executeQuery(
+		    specialQueryRS = statement.executeQuery(
 		        "SELECT LikesUsername " + 
 		        "FROM LikedUsers " +
 		        "WHERE LikedUsers.Username ='" + match + "' ");
-		    rs.next();
-		    if(rs.getString("LikesUsername").equals(current))
+		    specialQueryRS.next();
+		    if(specialQueryRS.getString("LikesUsername").equals(current))
 		    {
 		    	return true;
 		    }

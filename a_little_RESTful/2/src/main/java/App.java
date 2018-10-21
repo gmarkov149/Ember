@@ -10,9 +10,9 @@ public class App
 {
     public static void main( String[] args )
     {
-    	//open a potentialMatches endpoint
-    	//add potential matches for previous users
-    	//add the filtering functionality
+    	
+    	
+    	
         UserController system = new UserController();
         post("/users", (request, response) -> {
 			response.type("application/json");
@@ -22,7 +22,7 @@ public class App
 		    	user.parseHobbies();
 
 		    	
-		    	//system.getPotentialMatches(user);
+		    	
 		    	system.addUser(user);
 		    	system.updatePotentialMatches(user);
 
@@ -38,10 +38,6 @@ public class App
         //method is useless if we're having trouble storing all users in the same place
         get("/users", (request, response) -> {
      	   response.type("application/json");
-     	   /*for(User user: system.getSystem())
-     	   {
-     		   System.out.println(user);
-     	   }*/
      	    return new Gson().toJson(
      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
      	        .toJsonTree(system.getSystem())));
@@ -58,30 +54,12 @@ public class App
         get("/users/matched/:username/:start/:end", (request, response) -> {
       	   response.type("application/json");
       	   User currentUser = system.toUserObject(request.params(":username"));
-      	   /*if(currentUser.getMatched().size() == 0)
-      	   {
-      		 system.initCurrentMatched(currentUser);
-      	   }*/
-      	   
       	    return new Gson().toJson(
       	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
       	        .toJsonTree(system.getMatches(currentUser, Integer.parseInt(request.params(":start")),
       	        		Integer.parseInt(request.params(":end"))))));
           });
-        // View a users matches
-        post("/users/matched", (request, response) -> {
-			response.type("application/json");
-		    User toReturnMatches = new Gson().fromJson(request.body(), User.class);
-		    User currentUser = system.findUser(toReturnMatches.getUsername());
-		    /*if(currentUser.getMatched().size() == 0)
-		    {
-		    	system.initCurrentMatched(currentUser);
-		    }*/
-		    
-      	    return new Gson().toJson(
-      	      new StandardResponse(StatusResponse.SUCCESS,new Gson()
-      	        .toJsonTree(currentUser.getMatched())));
-        });
+        
         get("/users/chat/:user/:match/:startIndex", (request, response) -> {
 			response.type("application/json");
 			ArrayList<String> messages = system.getChat(request.params(":user"), request.params(":match"), Integer.parseInt(request.params(":startIndex")));
@@ -142,7 +120,7 @@ public class App
 
       	   // Update potential matches for user
       	   system.updatePotentialMatches(currentUser); 
-
+      	   
       	   ArrayList<User> potentialMatches = system.get10Potential(system.toUserObject(request.params(":username")), Integer.parseInt(request.params(":start")), Integer.parseInt(request.params(":end")));
       	   
 
@@ -157,7 +135,7 @@ public class App
 		    User userToMatch = new Gson().fromJson(request.body(), User.class);
 		    User currentUser = system.toUserObject(request.params(":username"));
 
-		    // Add new match to BOTH users
+		    // Add new match to one user
 		    system.updateMatches(currentUser, userToMatch);
 
       	    return new Gson().toJson(
