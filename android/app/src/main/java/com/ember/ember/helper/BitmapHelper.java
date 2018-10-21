@@ -3,6 +3,7 @@ package com.ember.ember.helper;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -38,7 +39,7 @@ public class BitmapHelper {
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(photoPath, bmOptions);
         bmOptions = getBitmapOptions(bmOptions, targetW, targetH);
-        return BitmapFactory.decodeFile(photoPath, bmOptions);
+        return rotateBitmap(BitmapFactory.decodeFile(photoPath, bmOptions), 90);
     }
 
     /**
@@ -59,6 +60,12 @@ public class BitmapHelper {
         bmOptions = getBitmapOptions(bmOptions, targetW, targetH);
         inputStream = contentResolver.openInputStream(data);
         return BitmapFactory.decodeStream(inputStream, null, bmOptions);
+    }
+
+    private static Bitmap rotateBitmap(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     /**

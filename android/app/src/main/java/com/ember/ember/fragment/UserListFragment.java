@@ -16,6 +16,7 @@ import com.ember.ember.model.UserDetailsList;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,9 +84,18 @@ public class UserListFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        getOtherUsers(recyclerView);
+        return view;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+//        getOtherUsers(getActivity().findViewById(R.id.list));
+    }
+
+    private void getOtherUsers(RecyclerView recyclerView) {
         UserDetails userDetails = ((MainActivity) getActivity()).getUserDetails();
-
         Call<UserDetailsList> call = isMatched ?
                 HttpHelper.getMatches(userDetails.getUsername())
                 : HttpHelper.getPotentialMatches(userDetails.getUsername());
@@ -96,7 +106,7 @@ public class UserListFragment extends Fragment {
                     List<UserDetails> users = response.body().getData();
                     if (isMatched && users.isEmpty()) {
                         recyclerView.setVisibility(View.GONE);
-                        view.findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
+                        getActivity().findViewById(R.id.no_match_alert).setVisibility(View.VISIBLE);
                     }
                     recyclerView.setAdapter(new UserRecyclerViewAdapter(users, mListener, isMatched));
                 }
@@ -107,10 +117,7 @@ public class UserListFragment extends Fragment {
                 ErrorHelper.raiseToast(context, ErrorHelper.Problem.CALL_FAILED);
             }
         });
-
-        return view;
     }
-
 
     @Override
     public void onAttach(Context context) {

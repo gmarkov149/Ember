@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity
         implements UserListFragment.OnListFragmentInteractionListener, ViewProfileFragment.OnFragmentInteractionListener {
 
     private boolean expanded;
-    private static UserDetails userDetails;
+    private UserDetails userDetails;
 
-    public static UserDetails getUserDetails() {
+    public UserDetails getUserDetails() {
         return userDetails;
     }
 

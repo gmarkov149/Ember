@@ -253,6 +253,7 @@ public class RegisterActivity extends AppCompatActivity {
         RadioButton radioButton = findViewById(((RadioGroup) findViewById(R.id.gender)).getCheckedRadioButtonId());
         String gender = radioButton.getText().toString();
         boolean isRegister = userDetails == null;
+        Object address = findViewById(R.id.address).getTag();
         userDetails = new UserDetails(
             isRegister ? getTextField(R.id.username) : userDetails.getUsername(),
             getTextField(R.id.name),
@@ -262,7 +263,7 @@ public class RegisterActivity extends AppCompatActivity {
             getTextField(R.id.dob),
             hobbiesString.toString(),
             gender,
-            findViewById(R.id.address).getTag().toString(),
+            !(address instanceof String) ? "" : address.toString(),
             getTextField(R.id.address),
             ((Spinner) findViewById(R.id.languages)).getSelectedItem().toString(),
             photoChanged ? BitmapHelper.convertBmpToString(bitmap) : null,

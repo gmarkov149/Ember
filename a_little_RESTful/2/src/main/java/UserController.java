@@ -361,8 +361,16 @@ public class UserController
 						score++;
 					
 				}
-				
-				
+
+				rs = statement.executeQuery(
+						"SELECT COUNT(*) " +
+								"FROM SuggestedPartners " +
+								"WHERE SuggestedPartners.Username='" + user.getUsername() + "'" +
+						" AND SuggestedPartners.PartnerUsername='" + comparedUser.getUsername() + "'");
+
+				rs.next();
+				if (rs.getInt(1) > 0) continue;
+
 				statement.executeUpdate(
 				    "INSERT INTO SuggestedPartners " + 
 				    "VALUES " + 
@@ -386,6 +394,15 @@ public class UserController
 		// Remember to remove from users potenial list
 		try {
 		    statement = conn.createStatement();
+
+            rs = statement.executeQuery(
+                    "SELECT COUNT(*) " +
+                            "FROM LikedUsers " +
+                            "WHERE LikedUsers.Username='" + current.getUsername() + "'" +
+                            " AND LikedUsers.LikesUsername='" + match.getUsername() + "'");
+
+            rs.next();
+            if (rs.getInt(1) > 0) return;
 		    statement.executeUpdate(
 		        "INSERT INTO LikedUsers " + 
 		        "VALUES " + 
@@ -522,7 +539,7 @@ public class UserController
 		    }
 		    while(secondRS.next() && temp.size()<=end);
 		    return temp;
-		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
+		} catch(SQLException e){ return new ArrayList<User>(); }
 	}
 	private boolean oneMoreQuery(String match, String current)
 	{
@@ -536,15 +553,7 @@ public class UserController
 		        "SELECT LikesUsername " + 
 		        "FROM LikedUsers " +
 		        "WHERE LikedUsers.Username ='" + match + "' ");
-		    specialQueryRS.next();
-		    if(specialQueryRS.getString("LikesUsername").equals(current))
-		    {
-		    	return true;
-		    }
-		    else
-		    {
-		    	return false;
-		    }
+		    return specialQueryRS.next() && specialQueryRS.getString("LikesUsername").equals(current);
 		} catch(SQLException e){ e.printStackTrace(); return false; }
 	}
 	//manual reset back to empty tables PURELY FOR TESTING
@@ -570,7 +579,7 @@ public class UserController
 		    		"	`Gender` 	varchar(10) NOT NULL,\r\n" + 
 		    		"	`Location` 	varchar(50),\r\n" + 
 		    		"	`Languages` 		varchar(50) NOT NULL,\r\n" + 
-		    		"	`ProfilePicBytes` 	blob,\r\n" + 
+		    		"	`ProfilePicBytes` 	mediumblob,\r\n" +
 		    		"	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	`InterestedInWomen` varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	PRIMARY KEY (`ID`)\r\n" + 
