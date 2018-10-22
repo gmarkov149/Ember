@@ -482,10 +482,14 @@ public class UserController
 		        "WHERE SuggestedPartners.Username ='" + current.getUsername() + "' AND SuggestedPartners.Show = 'false' " +
 		    	"ORDER BY Score DESC " +
 		    	"LIMIT " + end+1 + " ");
-		    secondRS.next();
-		    for(int i=0;i<start;i++)
+				
+		    
+		    for(int i=0;i<=start;i++)
 		    {
-		    	secondRS.next();
+		    	if (!secondRS.next()) {
+		    		return temp;
+		    	}
+		    	
 		    }
 		    do 
 		    {
@@ -496,7 +500,11 @@ public class UserController
 		    while(secondRS.next() && temp.size() < end);
 		    
 		    return temp;
-		} catch(SQLException e){ e.printStackTrace(); return new ArrayList<User>(); } 
+		} catch(SQLException e){ e.printStackTrace(); return temp;} 
+		finally
+		{
+			return temp;
+		}
 	}
 	public ArrayList<User> getMatches(User current, int start, int end)
 	{
@@ -571,7 +579,7 @@ public class UserController
 		    		"	`Gender` 	varchar(10) NOT NULL,\r\n" + 
 		    		"	`Location` 	varchar(50),\r\n" + 
 		    		"	`Languages` 		varchar(50) NOT NULL,\r\n" + 
-		    		"	`ProfilePicBytes` 	blob,\r\n" + 
+		    		"	`ProfilePicBytes` 	mediumblob,\r\n" + 
 		    		"	`InterestedInMen` 	varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	`InterestedInWomen` varchar(10) NOT NULL DEFAULT \"false\",\r\n" + 
 		    		"	PRIMARY KEY (`ID`)\r\n" + 
