@@ -18,6 +18,7 @@ public class UserController
 	private ResultSet rs;
 	private ResultSet secondRS;
 	private ResultSet specialQueryRS;
+	private ResultSet tempRS;
 	private Statement statement;
 	private Statement otherStatement;
 	private final double DISTANCE_THRESHOLD = 0.03;
@@ -346,11 +347,24 @@ public class UserController
 		    }
 		    // For every filtered user, compare and apply matching
 	    	for(String compareTo:filteredUsers) {
+	    		tempRS = null;
+	    		statement = null;
+	    		statement = conn.createStatement();
+	    		System.out.println(compareTo);
+				System.out.println(user.getUsername());
+				tempRS = statement.executeQuery("SELECT COUNT(*) FROM SuggestedPartners WHERE SuggestedPartners.Username = '" + user.getUsername() + "' AND SuggestedPartners.PartnerUsername = '" + compareTo + "'");
 				User comparedUser = toUserObject(compareTo);
+				tempRS.next();
+				if(tempRS.getInt(1)>0)
+				{
+					continue;
+				}
+				
 				if(comparedUser == user)
 				{
 					continue;
 				}
+				
 				int score = 0;
 				//System.out.println("Here");
 				user.parseHobbies();
