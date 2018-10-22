@@ -19,9 +19,10 @@ public class UserController
 	private ResultSet secondRS;
 	private ResultSet specialQueryRS;
 	private ResultSet tempRS;
+	private ResultSet idk;
 	private Statement statement;
 	private Statement otherStatement;
-	private final double DISTANCE_THRESHOLD = 0.03;
+	private final double DISTANCE_THRESHOLD = 0.05;
 
 	// Define Data Source
 	private MysqlDataSource dataSource;
@@ -483,35 +484,35 @@ public class UserController
 	{
 		//because  we are using the toUserObject method, and that executes a statement into a result set
 		//we need another result set to store the results of the statement below
-		secondRS = null;
+		idk = null;
 		otherStatement = null;
 		ArrayList<User> temp = new ArrayList<User>();
 		// Remember to remove from users potenial list
 		try {
 				otherStatement = conn.createStatement();
 		    
-				secondRS = otherStatement.executeQuery(
+				idk = otherStatement.executeQuery(
 		        "SELECT PartnerUsername " + 
 		        "FROM SuggestedPartners " +
 		        "WHERE SuggestedPartners.Username ='" + current.getUsername() + "' AND SuggestedPartners.Show = 'false' " +
 		    	"ORDER BY Score DESC " +
 		    	"LIMIT " + end+1 + " ");
 				
-		    
-		    for(int i=0;i<=start;i++)
+		    idk.next();
+		    /*for(int i=0;i<start;i++)
 		    {
-		    	if (!secondRS.next()) {
+		    	if (!idk.next()) {
 		    		return temp;
 		    	}
 		    	
-		    }
+		    }*/
 		    do 
 		    {
 		    	
-		    	temp.add(this.toUserObject(secondRS.getString("PartnerUsername")));
+		    	temp.add(this.toUserObject(idk.getString("PartnerUsername")));
 		    	
 		    }
-		    while(secondRS.next() && temp.size() < end);
+		    while(idk.next() && temp.size() < end);
 		    
 		    return temp;
 		} catch(SQLException e){ e.printStackTrace(); return temp;} 
