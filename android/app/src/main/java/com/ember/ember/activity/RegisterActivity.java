@@ -252,7 +252,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         StringBuilder hobbiesString = new StringBuilder();
-        for (Hobbies hobby : hobbiesList) {
+        for (int i = 0; i < hobbiesList.size(); i++) {
+            Hobbies hobby = hobbiesList.get(i);
             hobbiesString.append(String.valueOf(hobby.isSelected()) + " ");
         }
         if (hobbiesString.length() > 0) {

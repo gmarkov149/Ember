@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
@@ -9,111 +9,118 @@
     android:padding="15dp"
     tools:context=".fragment.RegisterFragment">
 
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_baseline_account_circle_24px"
-        android:id="@+id/pic"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Take a picture"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/colorAccent"
-        android:onClick="dispatchTakePictureIntent"
-        android:layout_marginRight="5dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose from gallery"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/colorAccent"
-        android:onClick="pickImage"
-        android:layout_marginLeft="5dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Language: "
-            android:textSize="20sp"/>
-        <Spinner
-            android:id="@+id/languages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <Spinner
-        android:id="@+id/hobbies"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_baseline_account_circle_24px"
+            android:id="@+id/pic"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Address"
-                android:id="@+id/address"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:focusable="false"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Select Address"
-            android:id="@+id/address_button"
+            android:layout_height="wrap_content"
+            android:text="Take a picture"
+            android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/colorAccent"
-            android:onClick="showMapDialog" />
+            android:onClick="dispatchTakePictureIntent"
+            android:layout_marginRight="5dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose from gallery"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/colorAccent"
+            android:onClick="pickImage"
+            android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Language: "
+                android:textSize="20sp"/>
+            <Spinner
+                android:id="@+id/languages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/hobbies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Address"
+                    android:id="@+id/address"
+                    android:inputType="none"
+                    android:textIsSelectable="true"
+                    android:focusable="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Select Address"
+                android:id="@+id/address_button"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="showMapDialog" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interested in: "
+                android:textSize="20sp"/>
+            <CheckBox android:id="@+id/men"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Men"/>
+            <CheckBox android:id="@+id/women"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Women"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Interested in: "
-            android:textSize="20sp"/>
-        <CheckBox android:id="@+id/men"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Men"/>
-        <CheckBox android:id="@+id/women"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Women"/>
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

@@ -117,7 +117,7 @@ public class UserDetails implements Serializable {
     public void setHobbiesString() {
         StringBuilder hobbiesSb = new StringBuilder();
         String[] hobbiesArr = hobbies.split(" ");
-        for (int i = 0; i < hobbiesArr.length; i++) {
+        for (int i = 1; i < hobbiesArr.length; i++) {
             if (Boolean.parseBoolean(hobbiesArr[i])) {
                 hobbiesSb.append(possibleHobbies[i] + ", ");
             }
