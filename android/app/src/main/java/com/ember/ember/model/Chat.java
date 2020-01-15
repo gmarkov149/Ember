@@ -24,4 +24,16 @@ public class Chat {
     public Date getDate() {
         return date;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Chat other = (Chat) obj;
+        return this.outgoing == other.outgoing && this.message.equals(other.message) && this.date.equals(other.date);
+    }
 }

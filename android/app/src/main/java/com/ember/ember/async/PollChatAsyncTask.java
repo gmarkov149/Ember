@@ -79,7 +79,7 @@ public class PollChatAsyncTask extends AsyncTask<Object, Void, Void> {
      * @param me current logged in user's username
      * @throws ParseException exception when parsing date time
      */
-    private void addToChat(List<String> allChats, RecyclerView recyclerView, ChatRecycler chatRecycler, String me) throws ParseException {
+    public void addToChat(List<String> allChats, RecyclerView recyclerView, ChatRecycler chatRecycler, String me) throws ParseException {
         lastUpdate += allChats.size();
         List<Chat> toAdd = new ArrayList<>();
         for (String chatStr : allChats) {
